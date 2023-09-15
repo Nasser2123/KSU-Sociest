@@ -47,18 +47,13 @@ return [
         ],
         'api' => [
             'driver' => 'token',
-            'provider' => 'users ',
+            'provider' => 'users',
             'hash' => false,
         ],
 
-        'users' => [
+        'sanctum' => [
             'driver' => 'sanctum',
             'provider' => 'users',
-        ],
-
-        'admins' => [
-            'driver' => 'sanctum',
-            'provider' => 'admins',
         ],
     ],
 
@@ -83,10 +78,6 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
-        ],
-        'admins' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [
@@ -117,13 +108,6 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        'admins' => [
-            'provider' => 'admins',
-            'table' => 'password_resets',
-            'expire' => 60,
-            'throttle' => 60,
-        ],
-
     ],
 
     /*
