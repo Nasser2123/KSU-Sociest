@@ -7,10 +7,19 @@ import {SearchComponent} from "./search/search.component";
 import {LandingPageComponent} from "./core/home/landing-page/landing-page.component";
 import {AuthGuard} from "./core/authentication/services/auth.guard";
 import {ForgotPasswordComponent} from "./core/authentication/components/forgot-password/forgot-password.component";
+import {ProfileComponent} from "./core/authentication/components/profile/profile.component";
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: '/home',
+  },
+  {
+    path: 'home',
+    component: HomeComponent,
+    canActivate: [AuthGuard]
+  },
   {
     path: 'register',
     component: RegisterComponent,
@@ -21,14 +30,24 @@ const routes: Routes = [
     component: LoginComponent,
     canActivate: [AuthGuard],
   },
-  { path: 'search', component: SearchComponent},
-  { path: 'forgot-password', component: ForgotPasswordComponent },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'search',
+    component: SearchComponent
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent
+  },
   {
     path: 'landing-page',
     component: LandingPageComponent,
     canActivate: [AuthGuard], // Apply the AuthGuard to protect this route
   },
-
   {
     path: 'departments',
     loadChildren: () => import('./modules/department/department.module').then(m => m.DepartmentModule)

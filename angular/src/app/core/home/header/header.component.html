@@ -16,7 +16,7 @@
       <ul class="navbar-nav mx-auto">
         <!-- Common Links for Both Logged-in and Non-Logged-in Users -->
         <li class="nav-item">
-          <a class="nav-link" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/']" routerLinkActive="active">Home</a>
+          <a class="nav-link" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/']" routerLinkActive="active" *ngIf="!(isAuthenticated)">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/departments']" routerLinkActive="active">Departments</a>

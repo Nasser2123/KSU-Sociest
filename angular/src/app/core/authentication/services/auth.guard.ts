@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.authService.isLoggedIn()) {
       // User is logged in
-      if (state.url.includes('/login') || state.url.includes('/register')) {
+      if (state.url.includes('/login') || state.url.includes('/register') || state.url.includes('/home')) {
         // If logged in, prevent access to login or register pages
         this.router.navigate(['/landing-page']);
         return false;
