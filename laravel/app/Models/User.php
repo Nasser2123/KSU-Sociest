@@ -11,6 +11,7 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
  use Spatie\Permission\Traits\HasRoles;
+ use App\Notifications\ResetPasswordNotification;
 
  /**
   * @method static create($all)
@@ -58,6 +59,14 @@ use Laravel\Sanctum\HasApiTokens;
             set: fn ($password) => bcrypt($password)
         );
     }
+
+     public function sendPasswordResetNotification($token)
+     {
+
+         $url = 'http://127.0.0.1:4200/reset-password?token='.$token;
+
+         $this->notify(new ResetPasswordNotification($url));
+     }
      public function student(): BelongsTo
      {
          return $this->belongsTo(Student::class, 'id', 'id');

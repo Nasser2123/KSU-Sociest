@@ -5,7 +5,6 @@ use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\SendResetLinkRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Student;
-use App\Models\Supervisor;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Auth\Events\PasswordReset;
@@ -59,11 +58,11 @@ class  UserService
 
     public function sendLink(SendResetLinkRequest $request):JsonResponse
     {
-        $status = Password::sendResetLink($request->all());
+        $status = Password::sendResetLink($request->only('email'));
         if($status === Password::RESET_LINK_SENT){
-            return $this->success($status, 'We send a link to reset your password successful');
+            return $this->success(null, 'We send a link to your email, Please check your email');
         }else{
-            return $this->error($status, 'Filed to send a link to your email', 403);
+            return $this->error(null, 'Filed to send a link to your email , Please try again', 403);
         }
     }
 
@@ -76,9 +75,9 @@ class  UserService
             }
         );
         if($status === Password::PASSWORD_RESET){
-            return $this->success($status, 'We reset your password successful');
+            return $this->success(null, 'We reset your password successful');
         }else{
-            return $this->error($status, 'Filed to reset your password', 404);
+            return $this->error(null, 'Filed to reset your password', 500);
         }
     }
 }

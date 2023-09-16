@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Course extends Model
 {
     use HasFactory;
+
     protected $fillable = ['name' ,'slag', 'description' ,'hours' ,'prequisite','status','level' , 'supervisor_id'];
 
 
@@ -25,6 +26,11 @@ class Course extends Model
     public function department()
     {
         return $this->belongsToMany(Department::class);
+    }
+
+    public function resource()
+    {
+        return $this->hasMany(Resource::class);
     }
 
 }

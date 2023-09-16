@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ResourceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,10 +23,14 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('login', 'login');
 
     Route::group(['as' => 'password.', 'middleware' => 'guest'], function () {
+        // for send email
         Route::post('forgot-password', 'sendResetLink')->name('email');
-        Route::post('reset-password', 'resetPassword')->name('reset');
+
+        // for change password
+        Route::get('reset-password', 'resetPassword')->name('reset');
     });
 });
+
 Route::controller(VerifyEmailController::class)->group(function () {
     Route::group(['as' => 'verification.', 'prefix' => 'email'], function () {
 
@@ -39,6 +44,7 @@ Route::controller(VerifyEmailController::class)->group(function () {
 //------------------------------------------------------------------------------------------------------------
 Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
 
+
     Route::group(['middleware' => 'role:Admin'], function () {
         Route::apiResource('department', DepartmentController::class)->only('destroy', 'update', 'store');
     });
@@ -47,9 +53,11 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::apiResource('department/{department}/course', CourseController::class)->only('destroy', 'update', 'store');
     });
 
-
-    Route::apiResource('department/{department}/course', CourseController::class)->only('index', 'show');
     Route::apiResource('department', DepartmentController::class)->only('index', 'show');
+    Route::apiResource('department/{department}/course', CourseController::class)->only('index', 'show');
+
+    Route::apiResource('department/{department}/course/{course}/resource', ResourceController::class);
+
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('user/{user}/change-password', [AuthController::class, 'changePassword']);
 });

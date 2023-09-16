@@ -27,15 +27,12 @@ class UserResource extends JsonResource
             $response['id'] = $this->student->id;
             $response['first_name'] = $this->first_name ;
             $response['last_name'] = $this->last_name ;
-            $response['department'] = $this->student->department ;
         }
 
             if (!is_null($this->supervisor)) {
                 $response['id'] = $this->supervisor->id;
                 $response['first_name'] = $this->first_name ;
                 $response['last_name'] = $this->last_name ;
-                $response['department'] = $this->supervisor->department ;
-
             }
         $response += ['role' => UserRole::isAdmin() ? 'Admin' : $this->roles[0]['name']];
 

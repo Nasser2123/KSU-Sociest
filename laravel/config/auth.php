@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'sanctum',
-        'passwords' => 'users ',
+        'passwords' => 'users',
         //Email verification expire time
         'verification' => [
             'expire' => 1440,
@@ -103,7 +103,7 @@ return [
 
     'passwords' => [
         'users' => [
-            'provider' => 'users ',
+            'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

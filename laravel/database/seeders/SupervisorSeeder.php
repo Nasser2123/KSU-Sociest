@@ -25,7 +25,7 @@ class SupervisorSeeder extends Seeder
         ];
         $user = User::create($data1);
         $user->assignRole('Supervisor');
-        Supervisor::create(['id' => $user->id ,'department' =>'SWE' , 'department_id' => 1]);
+        Supervisor::create(['id' => $user->id  , 'department_id' => 1]);
 
         $data2 = [
             'first_name' => 'Nasser',
@@ -36,7 +36,7 @@ class SupervisorSeeder extends Seeder
         ];
         $user = User::create($data2);
         $user->assignRole('Supervisor');
-        Supervisor::create(['id' => $user->id ,'department' =>'CSC' , 'department_id' => 2]);
+        Supervisor::create(['id' => $user->id , 'department_id' => 2]);
 
         $data3 = [
             'first_name' => 'Nasser',
@@ -47,7 +47,7 @@ class SupervisorSeeder extends Seeder
         ];
         $user = User::create($data3);
         $user->assignRole('Supervisor');
-        Supervisor::create(['id' => $user->id ,'department' =>'IS' , 'department_id' => 3]);
+        Supervisor::create(['id' => $user->id , 'department_id' => 3]);
 
         $data4 = [
             'first_name' => 'Nasser',
@@ -58,6 +58,6 @@ class SupervisorSeeder extends Seeder
         ];
         $user = User::create($data4);
         $user->assignRole('Supervisor');
-        Supervisor::create(['id' => $user->id ,'department' =>'IS' , 'department_id' => 4]);
+        Supervisor::create(['id' => $user->id ,'department_id' => 4]);
     }
 }
