@@ -10,11 +10,18 @@ import {Router} from "@angular/router";
   providedIn: 'root'
 })
 export class AuthService {
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-
+  private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
   private baseUrl = 'http://localhost:8000/api';
 
   constructor(private http: HttpClient, private router: Router) { }
+
+  // Check if a token exists in local storage
+  private hasToken(): boolean {
+    const token = localStorage.getItem('token');
+    return !!token;
+  }
+  // Observable to track authentication status
+  isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
 
   register(user: UserModel): Observable<any> {
     return this.http.post(`${this.baseUrl}/register`,
@@ -27,29 +34,37 @@ export class AuthService {
       })}
 
   login(credentials: { email: string; password: string }): Observable<any> {
+    // Assuming you set the token upon successful login
     this.isAuthenticatedSubject.next(true);
-
     return this.http.post<any>(`${this.baseUrl}/login`, credentials);
   }
 
-  logout(): void {
-    // Clear the token and any other user-related data from local storage
-    localStorage.removeItem('token');
-    localStorage.removeItem('user'); // You might have stored user data as well
-
-    // Optionally, you can also perform other logout-related actions (e.g., navigate to the login page)
-    this.router.navigate(['/home']);
-    // Example: this.router.navigate(['/login']);
-    this.isAuthenticatedSubject.next(false);
-
+  // logout(): void {
+  //   // Clear the token and any other user-related data from local storage
+  //   localStorage.removeItem('token');
+  //   localStorage.removeItem('user'); // You might have stored user data as well
+  //   // Optionally, you can also perform other logout-related actions (e.g., navigate to the login page)
+  //   this.router.navigate(['/home']);
+  //   // Example: this.router.navigate(['/login']);
+  //   this.loggedIn = false;
+  // }
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/forgot-password`, email);
   }
-
   isLoggedIn(): boolean {
     // Implement a check to determine if the user is logged in (e.g., check for a valid token)
     const token = localStorage.getItem('token');
     return !!token; // Return true if a token is present, otherwise false
   }
-  isAuthenticated(): Observable<boolean> {
-    return this.isAuthenticatedSubject.asObservable();
+  logout(): void {
+    // Clear the token and any other user-related data from local storage
+    localStorage.removeItem('token');
+    localStorage.removeItem('user'); // You might have stored user data as well
+
+    // Update the isAuthenticatedSubject to false
+    this.isAuthenticatedSubject.next(false);
+
+    // Optionally, you can also perform other logout-related actions (e.g., navigate to the login page)
+    this.router.navigate(['/home']);
   }
 }

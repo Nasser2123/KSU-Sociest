@@ -14,11 +14,21 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.authService.isLoggedIn()) {
-      return true; // Allow access to the landing page if the user is logged in
+      // User is logged in
+      if (state.url.includes('/login') || state.url.includes('/register')) {
+        // If logged in, prevent access to login or register pages
+        this.router.navigate(['/landing-page']);
+        return false;
+      }
+      return true; // Allow access to other pages
     } else {
-      // Redirect to the login page if the user is not logged in
-      this.router.navigate(['/login']);
-      return false;
+      // User is not logged in
+      if (state.url.includes('/landing-page')) {
+        // If not logged in, prevent access to the landing page
+        this.router.navigate(['/login']);
+        return false;
+      }
+      return true; // Allow access to login and register pages
     }
   }
 }

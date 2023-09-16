@@ -1,74 +1,9 @@
-<!--<div class="container mt-5">-->
-<!--  <div class="row justify-content-center">-->
-<!--    <div class="col-md-6">-->
-<!--      <div class="card">-->
-<!--        <div class="card-header">Login</div>-->
-<!--        <div class="card-body">-->
-<!--          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!toggled">-->
-<!--            <div class="form-group">-->
-<!--              <label for="email">Email</label>-->
-<!--              <input [(ngModel)]="user.email" name="email" type="email" id="email" class="form-control" formControlName="email">-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--              <label for="password">Password</label>-->
-<!--              <input [(ngModel)]="user.password" name="password" type="password" id="password" class="form-control" formControlName="password">-->
-<!--            </div>-->
-<!--            <button type="submit" class="btn btn-primary mt-2" [disabled]="!loginForm.valid">Login</button>-->
-<!--            <a class="d-block mt-3 text-center link-primary btn" (click)="toggle()">Forgot Password?</a>-->
-<!--          </form>-->
 
-<!--          <form [formGroup]="passwordForm" (ngSubmit)="onForgotPassword()" *ngIf="toggled">-->
-<!--            <label for="email2">Email for reset password</label>-->
-<!--            <input [(ngModel)]="user.email" name="email" type="email" id="email2" class="form-control" formControlName="email">-->
-<!--            <a class="d-block mt-3 text-center link-primary btn" (click)="toggle()">Remember Password?</a>-->
-<!--            <button type="submit" class="btn btn-primary mt-2" [disabled]="!passwordForm.valid" >Reset Password</button>-->
-<!--          </form>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-<!--<div class="container mt-5">-->
-<!--  <div class="row justify-content-center">-->
-<!--    <div class="col-md-6">-->
-<!--      <div class="card">-->
-<!--        <div class="card-header">-->
-<!--          <img src="path/to/your/logo.png" alt="Logo" width="100">-->
-<!--          Login-->
-<!--        </div>-->
-<!--        <div class="card-body">-->
-<!--          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" *ngIf="!toggled">-->
-<!--            <div class="form-group">-->
-<!--              <label for="email"><i class="fas fa-envelope"></i> Email</label>-->
-<!--              <input [(ngModel)]="user.email" name="email" type="email" id="email" class="form-control" formControlName="email">-->
-<!--            </div>-->
-<!--            <div class="form-group">-->
-<!--              <label for="password"><i class="fas fa-lock"></i> Password</label>-->
-<!--              <input [(ngModel)]="user.password" name="password" type="password" id="password" class="form-control" formControlName="password">-->
-<!--            </div>-->
-<!--            <button type="submit" class="btn btn-primary mt-2" [disabled]="!loginForm.valid"><i class="fas fa-sign-in-alt"></i> Login</button>-->
-<!--            <a [routerLink]="['/forgot-password']" class="d-block mt-3 text-center link-primary btn"><i class="fas fa-question-circle"></i> Forgot Password?</a>-->
-<!--          </form>-->
-
-<!--          <form [formGroup]="passwordForm" (ngSubmit)="onForgotPassword()" *ngIf="toggled">-->
-<!--            <label for="email2"><i class="fas fa-envelope"></i> Email for reset password</label>-->
-<!--            <input [(ngModel)]="user.email" name="email" type="email" id="email2" class="form-control" formControlName="email">-->
-<!--            <a class="d-block mt-3 text-center link-primary btn" [routerLink]="['/login']"><i class="fas fa-undo"></i> Remember Password?</a>-->
-<!--            <button type="submit" class="btn btn-primary mt-2" [disabled]="!passwordForm.valid" ><i class="fas fa-redo-alt"></i> Reset Password</button>-->
-<!--          </form>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-<div class="container mt-5 mb-5">
+<<div class="container m-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
+      <h2 class="text-center mb-4">Login</h2>
       <div class="card">
-        <div class="card-header">
-          <img  alt="Logo" width="100">
-          Login
-        </div>
         <div class="card-body">
           <!-- Reactive Form -->
           <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
