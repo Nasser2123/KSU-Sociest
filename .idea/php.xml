@@ -126,6 +126,8 @@
       <path value="$PROJECT_DIR$/laravel/vendor/graham-campbell/result-type" />
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/uid" />
       <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-php83" />
+      <path value="$PROJECT_DIR$/laravel/vendor/symfony/polyfill-php81" />
+      <path value="$PROJECT_DIR$/laravel/vendor/doctrine/deprecations" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />

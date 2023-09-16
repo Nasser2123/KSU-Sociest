@@ -1,0 +1,38 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- Logo -->
+    <a class="navbar-brand" [routerLink]="['/']">
+      <img alt="Logo" src="./assets/svg/logo.svg" width="150px">
+    </a>
+
+    <!-- Navbar Toggler for Mobile -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar Links (center-aligned) -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/']" routerLinkActive="active">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/departments']" routerLinkActive="active">Departments</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/courses']" routerLinkActive="active">Courses</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/search']" routerLinkActive="active">Search</a>
+        </li>
+        <li class="nav-item" *ngIf="!(isAuthenticated$ | async)">
+          <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active">Login</a>
+        </li>
+        <li class="nav-item" *ngIf="!(isAuthenticated$ | async)">
+          <a class="nav-link" [routerLink]="['/register']" routerLinkActive="active">Register</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
