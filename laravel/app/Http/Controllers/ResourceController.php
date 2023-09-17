@@ -37,9 +37,9 @@ class ResourceController extends Controller
      */
     public function store(Department $department , Course $course ,ResourceRequest $request):JsonResponse
     {
-        $path = $this->uploadFiles($request , $course->id);
+        $path = $this->uploadFiles($request , $course['id']);
         $resource = Resource::create(array_merge(['course_id' => $course->id , 'path' => $path] , $request->all()));
-        return $this->success($resource, 'We save the Resource ');
+        return $this->success($resource, 'We save the Resource');
     }
 
     /**
@@ -76,5 +76,21 @@ class ResourceController extends Controller
     public function destroy($id)
     {
         return true ;
+    }
+
+    public function approve(Resource $resource):JsonResponse
+    {
+        $resource->approved = true;
+        $resource->save();
+
+        return $this->success($resource, 'We Approve the Resource ');
+    }
+
+    public function reject(Resource $resource):JsonResponse
+    {
+        $resource->course()->delete();
+        $resource->delete();
+        return $this->success(null, 'We reject the resource ');
+
     }
 }
