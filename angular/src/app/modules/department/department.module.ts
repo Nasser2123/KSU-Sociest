@@ -8,6 +8,7 @@ import {BrowserModule} from "@angular/platform-browser";
 import {AppRoutingModule} from "../../app-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {DepartmentRoutingModule} from "./department.routing.module";
+import {CourseModule} from "../course/course.module";
 
 
 
@@ -20,6 +21,7 @@ import {DepartmentRoutingModule} from "./department.routing.module";
   imports: [
     CommonModule,
     DepartmentRoutingModule,
+    CourseModule,
   ]
 })
 export class DepartmentModule { }

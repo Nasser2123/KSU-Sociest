@@ -55,7 +55,7 @@ const routes: Routes = [
     canActivate: [AuthGuard], // Apply the AuthGuard to protect this route
   },
   {
-    path: 'departments',
+    path: 'department',
     loadChildren: () => import('./modules/department/department.module').then(m => m.DepartmentModule)
   },
   {

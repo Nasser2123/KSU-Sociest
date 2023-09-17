@@ -2,7 +2,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { DepartmentAuthService } from '../../department-services/department-auth.service';
-import {Router} from "@angular/router";
+import {ActivatedRouteSnapshot, Router} from "@angular/router";
+import {AuthService} from "../../../../core/authentication/services/auth.service";
 
 @Component({
   selector: 'app-department-list',
@@ -12,7 +13,7 @@ import {Router} from "@angular/router";
 export class DepartmentListComponent implements OnInit {
   departments: any[] = [];
 
-  constructor(private departmentService: DepartmentAuthService, private router: Router) {}
+  constructor(private departmentService: DepartmentAuthService, private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.fetchDepartments();
@@ -32,7 +33,8 @@ export class DepartmentListComponent implements OnInit {
       }
     );
   }
-  getIntoDepartment(department: { id: any; }) {
-
+  getIntoDepartment(departmentId: number): void {
+    // Navigate to the department details page with the department ID
+    this.router.navigate(['/department', departmentId]);
   }
 }

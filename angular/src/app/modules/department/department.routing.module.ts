@@ -9,8 +9,8 @@ import { DepartmentFormComponent } from './components/department-form/department
 
 const routes: Routes = [
   {
-    path: '', pathMatch: 'full', // default path for department module
-    component: DepartmentListComponent
+    path: ':id', // dynamic route for viewing department details
+    component: DepartmentDetailComponent
   },
   {
     path: 'add',
@@ -21,9 +21,9 @@ const routes: Routes = [
     component: DepartmentFormComponent
   },
   {
-    path: ':id', // dynamic route for viewing department details
-    component: DepartmentDetailComponent
-  }
+    path: '', pathMatch: 'full', // default path for department module
+    component: DepartmentListComponent
+  },
 ];
 
 @NgModule({
