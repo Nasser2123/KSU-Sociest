@@ -17,6 +17,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {DropdownDirective} from "./shared/directives/dropdown.directive";
 import { ForgotPasswordComponent } from './core/authentication/components/forgot-password/forgot-password.component';
 import { ProfileComponent } from './core/authentication/components/profile/profile.component';
+import { ChangePasswordComponent } from './core/authentication/components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { ProfileComponent } from './core/authentication/components/profile/profi
     AdminComponent,
     DropdownDirective,
     ForgotPasswordComponent,
-    ProfileComponent
+    ProfileComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

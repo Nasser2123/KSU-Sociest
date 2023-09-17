@@ -23,6 +23,10 @@ export class AuthService {
   // Observable to track authentication status
   isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
 
+  getUserProfile() {
+
+  }
+
   register(user: UserModel): Observable<any> {
     return this.http.post(`${this.baseUrl}/register`,
       {
@@ -39,18 +43,19 @@ export class AuthService {
     return this.http.post<any>(`${this.baseUrl}/login`, credentials);
   }
 
-  // logout(): void {
-  //   // Clear the token and any other user-related data from local storage
-  //   localStorage.removeItem('token');
-  //   localStorage.removeItem('user'); // You might have stored user data as well
-  //   // Optionally, you can also perform other logout-related actions (e.g., navigate to the login page)
-  //   this.router.navigate(['/home']);
-  //   // Example: this.router.navigate(['/login']);
-  //   this.loggedIn = false;
-  // }
   forgotPassword(email: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/forgot-password`, email);
   }
+
+  changePassword(data: any, id): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/user/${id}/change-password`, {
+      old_password: data.old_password,
+      password: data.password,
+      password_confirmation: data.password_confirmation
+    });
+  }
+
+
   isLoggedIn(): boolean {
     // Implement a check to determine if the user is logged in (e.g., check for a valid token)
     const token = localStorage.getItem('token');

@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
       return true; // Allow access to other pages
     } else {
       // User is not logged in
-      if (state.url.includes('/landing-page')) {
+      if (state.url.includes('/landing-page') || state.url.includes('/change-password')) {
         // If not logged in, prevent access to the landing page
         this.router.navigate(['/login']);
         return false;

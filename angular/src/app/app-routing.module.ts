@@ -8,6 +8,7 @@ import {LandingPageComponent} from "./core/home/landing-page/landing-page.compon
 import {AuthGuard} from "./core/authentication/services/auth.guard";
 import {ForgotPasswordComponent} from "./core/authentication/components/forgot-password/forgot-password.component";
 import {ProfileComponent} from "./core/authentication/components/profile/profile.component";
+import {ChangePasswordComponent} from "./core/authentication/components/change-password/change-password.component";
 
 const routes: Routes = [
   {
@@ -33,6 +34,11 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'change-password',
+    component: ChangePasswordComponent,
     canActivate: [AuthGuard]
   },
   {
