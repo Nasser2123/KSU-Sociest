@@ -54,7 +54,9 @@ export class AuthService {
       password_confirmation: data.password_confirmation
     });
   }
-
+  getDepartments(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/department`);
+  }
 
   isLoggedIn(): boolean {
     // Implement a check to determine if the user is logged in (e.g., check for a valid token)

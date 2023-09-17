@@ -1,1 +1,16 @@
-<p>department-detail works!</p>
+<div class="container mt-5 mb-3">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title">{{ department.name }}</h2>
+          <p class="card-text">{{ department.description }}</p>
+          <p class="card-text">Level: {{ department.level }}</p>
+          <!-- Add any additional department details here -->
+          <app-course-list></app-course-list>
+          <a [routerLink]="['../']" class="btn btn-primary">Back to Departments</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

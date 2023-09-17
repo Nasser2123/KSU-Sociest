@@ -6,8 +6,8 @@
         <div class="card-body">
           <h5 class="card-title">{{ department.name }}</h5>
           <p class="card-text">{{ department.description }}</p>
-          <p class="card-text">Number of courses: {{ department.courses.length }}</p>
-          <button class="btn btn-primary" (click)="getIntoDepartment(department)">See Department</button>
+          <p class="card-text">Number of courses: {{ department.id }}</p>
+          <button class="btn btn-primary" (click)="getIntoDepartment(department.id)">See Department</button>
         </div>
       </div>
     </div>
