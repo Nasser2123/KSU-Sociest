@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('type');
             $table->integer('year');
+            $table->boolean('approved')->default(false);
             $table->unsignedBigInteger('course_id');
             $table->foreign('course_id')->references('id')->on('courses');
             $table->string('path');

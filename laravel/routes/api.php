@@ -44,21 +44,22 @@ Route::controller(VerifyEmailController::class)->group(function () {
 //------------------------------------------------------------------------------------------------------------
 Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
 
-
     Route::group(['middleware' => 'role:Admin'], function () {
         Route::apiResource('department', DepartmentController::class)->only('destroy', 'update', 'store');
     });
 
     Route::group(['middleware' => 'role:Supervisor'], function () {
         Route::apiResource('department/{department}/course', CourseController::class)->only('destroy', 'update', 'store');
+        Route::post('resource/{resource}', [ResourceController::class , 'approve']);
+        Route::post('resource/{resource}', [ResourceController::class , 'reject']);
     });
 
-    Route::apiResource('department', DepartmentController::class)->only('index', 'show');
-    Route::apiResource('department/{department}/course', CourseController::class)->only('index', 'show');
 
     Route::apiResource('department/{department}/course/{course}/resource', ResourceController::class);
-
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('user/{user}/change-password', [AuthController::class, 'changePassword']);
 });
+
+Route::apiResource('department', DepartmentController::class)->only('index', 'show');
+Route::apiResource('department/{department}/course', CourseController::class)->only('index', 'show');
 

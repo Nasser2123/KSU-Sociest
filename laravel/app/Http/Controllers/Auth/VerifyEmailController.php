@@ -14,9 +14,9 @@ class VerifyEmailController extends Controller
         if (!$user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
             event(new Verified($user));
-            return request()->wantsJson() ? new JsonResponse('', 204) : redirect()->away('http://127.0.0.1:4200/');
+            return request()->wantsJson() ? new JsonResponse($user->email, 204) : redirect()->away('http://localhost:4200/login');
         }
-        return request()->wantsJson() ? new JsonResponse('', 204) : redirect()->away('http://127.0.0.1:4200/');
+        return request()->wantsJson() ? new JsonResponse($user->email, 204) : redirect()->away('http://localhost:4200/login');
     }
 
     public function resend():JsonResponse

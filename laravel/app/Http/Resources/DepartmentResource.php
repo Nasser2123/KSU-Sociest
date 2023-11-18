@@ -19,7 +19,7 @@ class DepartmentResource extends JsonResource
             'name' => $this->name ,
             'description' => $this->description,
             'level' => $this->level,
-//            'admin' => $this->admin->user,
+            'courses' => $this->course
         ];
     }
 }
