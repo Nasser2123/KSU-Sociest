@@ -56,12 +56,21 @@ const routes: Routes = [
   },
   {
     path: 'department',
-    loadChildren: () => import('./modules/department/department.module').then(m => m.DepartmentModule)
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./modules/department/department.module').then(m => m.DepartmentModule)
+      },
+      {
+        path: ':departmentId/courses',
+        loadChildren: () => import('./modules/course/course.module').then(m => m.CourseModule)
+      }
+    ]
   },
   {
     path: 'courses',
     loadChildren: () => import('./modules/course/course.module').then(m => m.CourseModule)
-  }
+  },
 ];
 
 @NgModule({

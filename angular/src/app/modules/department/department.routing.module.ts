@@ -9,15 +9,19 @@ import { DepartmentFormComponent } from './components/department-form/department
 
 const routes: Routes = [
   {
-    path: ':id', // dynamic route for viewing department details
+    path: ':departmentId', // dynamic route for viewing department details
     component: DepartmentDetailComponent
+  },
+  {
+    path: ':departmentId/course',
+    loadChildren: () => import('../course/course.module').then(m => m.CourseModule)
   },
   {
     path: 'add',
     component: DepartmentFormComponent
   },
   {
-    path: 'edit/:id',
+    path: 'edit/:departmentId',
     component: DepartmentFormComponent
   },
   {

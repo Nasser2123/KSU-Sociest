@@ -2,8 +2,9 @@
 
 import { Component, OnInit } from '@angular/core';
 import { DepartmentAuthService } from '../../department-services/department-auth.service';
-import {ActivatedRouteSnapshot, Router} from "@angular/router";
+import {ActivatedRoute, ActivatedRouteSnapshot, Router} from "@angular/router";
 import {AuthService} from "../../../../core/authentication/services/auth.service";
+import {Department} from "../../../../shared/models/department.model";
 
 @Component({
   selector: 'app-department-list',
@@ -11,30 +12,28 @@ import {AuthService} from "../../../../core/authentication/services/auth.service
   styleUrls: ['./department-list.component.css']
 })
 export class DepartmentListComponent implements OnInit {
-  departments: any[] = [];
+  departments: Department[] = [];
 
-  constructor(private departmentService: DepartmentAuthService, private router: Router, private authService: AuthService) {}
+  constructor(private departmentService: DepartmentAuthService, private router: Router, private route: ActivatedRoute, private authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.fetchDepartments();
-  }
-
-  fetchDepartments(): void {
+  ngOnInit() {
     this.departmentService.getDepartments().subscribe(
       (response) => {
-        if (response.status === 'Success' && response.data) {
+        if (response.status === 'Success' && Array.isArray(response.data)) {
           this.departments = response.data;
         } else {
-          console.error('Failed to fetch departments:', response.message);
+          console.error('Unexpected response format:', response);
         }
       },
       (error) => {
-        console.error('Error fetching departments:', error);
+        console.error('Error fetching departments', error);
       }
     );
   }
+
   getIntoDepartment(departmentId: number): void {
     // Navigate to the department details page with the department ID
-    this.router.navigate(['/department', departmentId]);
+    this.router.navigate([departmentId], { relativeTo: this.route });
   }
+
 }

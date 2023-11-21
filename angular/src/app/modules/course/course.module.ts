@@ -4,6 +4,8 @@ import { CourseDetailComponent } from './components/course-detail/course-detail.
 import { CourseListComponent } from './components/course-list/course-list.component';
 import { CourseFormComponent } from './components/course-form/course-form.component';
 import {RouterLink} from "@angular/router";
+import {CourseRoutingModule} from "./course-routing.module";
+
 
 
 
@@ -18,7 +20,9 @@ import {RouterLink} from "@angular/router";
     ],
   imports: [
     CommonModule,
-    RouterLink
+    RouterLink,
+    CourseRoutingModule,
+
   ]
 })
 export class CourseModule { }

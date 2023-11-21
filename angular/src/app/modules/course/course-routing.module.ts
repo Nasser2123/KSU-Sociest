@@ -10,21 +10,22 @@ import {CourseDetailComponent} from "./components/course-detail/course-detail.co
 
 const routes: Routes = [
   {
-    path: '', // default path for course module
+    path: '', pathMatch: 'full',// default path for course module
     component: CourseListComponent
+  },
+  {
+    path: ':courseId',
+    component: CourseDetailComponent
   },
   {
     path: 'add',
     component: CourseFormComponent
   },
   {
-    path: 'edit/:id',
+    path: 'edit/:courseId',
     component: CourseFormComponent
   },
-  {
-    path: ':id', // dynamic route for viewing course details
-    component: CourseDetailComponent
-  }
+
 ];
 
 @NgModule({
