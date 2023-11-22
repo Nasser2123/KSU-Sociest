@@ -6,6 +6,9 @@ import { DepartmentFormComponent } from './components/department-form/department
 
 import {DepartmentRoutingModule} from "./department.routing.module";
 import {CourseModule} from "../course/course.module";
+import {ReactiveFormsModule} from "@angular/forms";
+import {AddDepartmentComponent} from "./components/department-form/add-department/add-department.component";
+
 
 
 
@@ -13,13 +16,15 @@ import {CourseModule} from "../course/course.module";
   declarations: [
     DepartmentDetailComponent,
     DepartmentListComponent,
-    DepartmentFormComponent
+    DepartmentFormComponent,
+    AddDepartmentComponent
   ],
-  imports: [
-    CommonModule,
-    DepartmentRoutingModule,
-    CourseModule,
+    imports: [
+        CommonModule,
+        DepartmentRoutingModule,
+        CourseModule,
+        ReactiveFormsModule,
 
-  ]
+    ]
 })
 export class DepartmentModule { }

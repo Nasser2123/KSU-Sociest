@@ -2,7 +2,7 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, map, Observable} from 'rxjs';
 import { UserModel } from '../../../shared/models/user.model';
 import {Router} from "@angular/router";
 
@@ -14,6 +14,23 @@ export class AuthService {
   private baseUrl = 'http://localhost:8000/api';
 
   constructor(private http: HttpClient, private router: Router) { }
+
+ /* isAdmin(): boolean {
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+
+    try {
+      const payload = token.split('.')[1]; // Get the payload
+      const decodedPayload = atob(payload); // Base64 decode
+      const payloadObj = JSON.parse(decodedPayload); // Parse JSON
+
+      // Assuming the role information is stored in a property called 'role'
+      return payloadObj.data.user.role === 'Admin';
+    } catch (error) {
+      console.error('Error decoding token', error);
+      return false;
+    }
+  }*/
 
   // Check if a token exists in local storage
   private hasToken(): boolean {
@@ -37,12 +54,35 @@ export class AuthService {
         password_confirmation: user.confirmPassword
       })}
 
-  login(credentials: { email: string; password: string }): Observable<any> {
+  /*login(credentials: { email: string; password: string }): Observable<any> {
     // Assuming you set the token upon successful login
     this.isAuthenticatedSubject.next(true);
     return this.http.post<any>(`${this.baseUrl}/login`, credentials);
+  }*/
+  login(credentials: { email: string; password: string }): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/login`, credentials).pipe(
+      map(response => {
+        if (response.status === 'Success') {
+          // Store the token and role in local storage
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('role', response.data.user.role);
+
+          // Update the isAuthenticatedSubject
+          this.isAuthenticatedSubject.next(true);
+        }
+        return response;
+      })
+    );
+  }
+  isAdmin(): boolean {
+    const role = localStorage.getItem('role');
+    return role === 'Admin';
   }
 
+  isSupervisor(): boolean {
+    const role = localStorage.getItem('role');
+    return role === 'Supervisor'
+  }
   forgotPassword(email: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/forgot-password`, email);
   }
@@ -53,9 +93,6 @@ export class AuthService {
       password: data.password,
       password_confirmation: data.password_confirmation
     });
-  }
-  getDepartments(): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/department`);
   }
 
   isLoggedIn(): boolean {

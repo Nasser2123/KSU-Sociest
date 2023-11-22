@@ -19,6 +19,7 @@ import { ForgotPasswordComponent } from './core/authentication/components/forgot
 import { ProfileComponent } from './core/authentication/components/profile/profile.component';
 import { ChangePasswordComponent } from './core/authentication/components/change-password/change-password.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +34,8 @@ import { ChangePasswordComponent } from './core/authentication/components/change
     DropdownDirective,
     ForgotPasswordComponent,
     ProfileComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+
   ],
   imports: [
     BrowserModule,

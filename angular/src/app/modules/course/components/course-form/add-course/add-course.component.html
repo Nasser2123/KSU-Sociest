@@ -1,0 +1,42 @@
+<!-- add-course.component.html -->
+<div class="container mt-4">
+  <h2>Add New Course</h2>
+  <form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="name" class="form-label">Course Name</label>
+      <input type="text" class="form-control" id="name" formControlName="name">
+    </div>
+
+    <div class="mb-3">
+      <label for="slag" class="form-label">Slag</label>
+      <input type="text" class="form-control" id="slag" formControlName="slag">
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea class="form-control" id="description" formControlName="description"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="hours" class="form-label">Hours</label>
+      <input type="number" class="form-control" id="hours" formControlName="hours">
+    </div>
+
+    <div class="mb-3">
+      <label for="prerequisite" class="form-label">Prerequisite</label>
+      <input type="text" class="form-control" id="prerequisite" formControlName="prerequisite">
+    </div>
+
+    <div class="mb-3">
+      <label for="status" class="form-label">Status</label>
+      <input type="text" class="form-control" id="status" formControlName="status">
+    </div>
+
+    <div class="mb-3">
+      <label for="level" class="form-label">Level</label>
+      <input type="number" class="form-control" id="level" formControlName="level">
+    </div>
+
+    <button type="submit" class="btn btn-dark">Add Course</button>
+  </form>
+</div>

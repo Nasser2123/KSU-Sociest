@@ -3,6 +3,8 @@ import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Route
 import { Observable } from 'rxjs';
 import {AuthService} from "./auth.service";
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -31,4 +33,6 @@ export class AuthGuard implements CanActivate {
       return true; // Allow access to login and register pages
     }
   }
+
+
 }

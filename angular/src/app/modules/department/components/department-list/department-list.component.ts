@@ -13,10 +13,11 @@ import {Department} from "../../../../shared/models/department.model";
 })
 export class DepartmentListComponent implements OnInit {
   departments: Department[] = [];
-
+  isAdmin: boolean = false;
   constructor(private departmentService: DepartmentAuthService, private router: Router, private route: ActivatedRoute, private authService: AuthService) {}
 
   ngOnInit() {
+    this.isAdmin = this.authService.isAdmin();
     this.departmentService.getDepartments().subscribe(
       (response) => {
         if (response.status === 'Success' && Array.isArray(response.data)) {
@@ -30,10 +31,24 @@ export class DepartmentListComponent implements OnInit {
       }
     );
   }
-
+  addNewDepartment(){
+    this.router.navigate(['AddDepartment'], { relativeTo: this.route });
+  }
   getIntoDepartment(departmentId: number): void {
     // Navigate to the department details page with the department ID
     this.router.navigate([departmentId], { relativeTo: this.route });
+  }
+
+  deleteDepartment(departmentId: number): void {
+    if(confirm('Are you sure you want to delete?')) {
+      this.departmentService.deleteDepartments(departmentId).subscribe(
+        (response) => {
+          this.router.navigate(['../'], {relativeTo: this.route});
+          alert('Department has been deleted!');
+        }, (error) => {
+          console.log("Error: ", error);
+        });
+    } else alert("Delete has been canceled!")
   }
 
 }

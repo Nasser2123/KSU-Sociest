@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CourseListComponent } from './components/course-list/course-list.component';
 import {CourseFormComponent} from "./components/course-form/course-form.component";
 import {CourseDetailComponent} from "./components/course-detail/course-detail.component";
+import {AddCourseComponent} from "./components/course-form/add-course/add-course.component";
 
 
 const routes: Routes = [
@@ -22,8 +23,8 @@ const routes: Routes = [
     component: CourseFormComponent
   },
   {
-    path: 'edit/:courseId',
-    component: CourseFormComponent
+    path: 'edit',
+    component: AddCourseComponent
   },
 
 ];

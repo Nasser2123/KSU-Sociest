@@ -2,6 +2,8 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { DepartmentAuthService } from '../../department-services/department-auth.service';
 import {Department} from "../../../../shared/models/department.model";
+import {AuthGuard} from "../../../../core/authentication/services/auth.guard";
+import {AuthService} from "../../../../core/authentication/services/auth.service";
 
 @Component({
   selector: 'app-department-detail',
@@ -11,10 +13,13 @@ import {Department} from "../../../../shared/models/department.model";
 export class DepartmentDetailComponent implements OnInit {
   department: Department | null = null;
   isLoading = true; // To handle loading state
-
-  constructor(private route: ActivatedRoute, private router: Router, private departmentService: DepartmentAuthService, private changeDetectorRef: ChangeDetectorRef) {}
+  isAdmin: boolean = false;
+  isSupervisor: boolean = false;
+  constructor(private route: ActivatedRoute, private router: Router, private departmentService: DepartmentAuthService, private changeDetectorRef: ChangeDetectorRef, private authService: AuthService) {}
 
   ngOnInit() {
+    this.isAdmin = this.authService.isAdmin();
+    this.isSupervisor = this.authService.isSupervisor();
     const id = +this.route.snapshot.params['departmentId']; // '+' converts the parameter to a number
     this.departmentService.getDepartmentById(id).subscribe(
       (department) => {
@@ -28,6 +33,7 @@ export class DepartmentDetailComponent implements OnInit {
         this.isLoading = false;
       }
     );
+
   }
 
   goToCourseDetails(courseId: number) {
@@ -37,6 +43,17 @@ export class DepartmentDetailComponent implements OnInit {
     this.router.navigate(['courses', courseId], { relativeTo: this.route });
 
   }
+  updateDepartment(departmentId: number){
+    this.router.navigate(['edit'], { relativeTo: this.route });
+  }
+
+  addCourse(){
+    this.router.navigate(['course/edit']);
+  }
+  deleteCourse(courseId: number, departmentId: number) {
+    // TODO: delete the course by calling deleteCourse()
+  }
+
   /*ngOnInit(): void {
     // Get the department id from the route parameter
     this.route.paramMap.subscribe(params => {
@@ -62,4 +79,16 @@ export class DepartmentDetailComponent implements OnInit {
       }
     );
   }*/
+
 }
+/*
+how to implement department-form in order to edit current department (name, description, and level).
+and this is Postman api:
+POST:
+key | value
+_method | PUT
+name | any name
+description | ...discription
+level | any number
+Authorization type Bearer Token
+*/
