@@ -4,6 +4,7 @@ import { DepartmentAuthService } from '../../department-services/department-auth
 import {Department} from "../../../../shared/models/department.model";
 import {AuthGuard} from "../../../../core/authentication/services/auth.guard";
 import {AuthService} from "../../../../core/authentication/services/auth.service";
+import {CourseAuthService} from "../../../course/components/course-services/course-auth.service";
 
 @Component({
   selector: 'app-department-detail',
@@ -15,7 +16,7 @@ export class DepartmentDetailComponent implements OnInit {
   isLoading = true; // To handle loading state
   isAdmin: boolean = false;
   isSupervisor: boolean = false;
-  constructor(private route: ActivatedRoute, private router: Router, private departmentService: DepartmentAuthService, private changeDetectorRef: ChangeDetectorRef, private authService: AuthService) {}
+  constructor(private route: ActivatedRoute, private router: Router, private departmentService: DepartmentAuthService, private changeDetectorRef: ChangeDetectorRef, private authService: AuthService, private courseAuthService: CourseAuthService) {}
 
   ngOnInit() {
     this.isAdmin = this.authService.isAdmin();
@@ -47,48 +48,27 @@ export class DepartmentDetailComponent implements OnInit {
     this.router.navigate(['edit'], { relativeTo: this.route });
   }
 
-  addCourse(){
-    this.router.navigate(['course/edit']);
+  addCourse(departmentId: number){
+    this.router.navigate([`department/${departmentId}/course/edit`]);
   }
-  deleteCourse(courseId: number, departmentId: number) {
-    // TODO: delete the course by calling deleteCourse()
-  }
-
-  /*ngOnInit(): void {
-    // Get the department id from the route parameter
-    this.route.paramMap.subscribe(params => {
-      const departmentId = params.get('id');
-      if (departmentId) {
-        // Fetch department details using the departmentId
-        this.fetchDepartmentDetails(departmentId);
-      }
-    });
-  }
-
-  fetchDepartmentDetails(departmentId: string): void {
-    this.departmentService.getDepartmentById(departmentId).subscribe(
-      (response) => {
-        if (response.status === 'Success' && response.data) {
-          this.department = response.data;
-        } else {
-          console.error('Failed to fetch department details:', response.message);
+  deleteCourse(courseId: number) {
+    if (confirm('Are you sure you want to delete this course?')) {
+      // @ts-ignore
+      this.courseAuthService.deleteCourse(this.department.id, courseId).subscribe(
+        () => {
+          // Handle successful deletion
+          // Optionally, remove the course from the department.courses array to update the UI
+          // @ts-ignore
+          this.department.courses = this.department.courses.filter(course => course.id !== courseId);
+        },
+        error => {
+          // Handle error
+          console.error('Error deleting course:', error);
         }
-      },
-      (error) => {
-        console.error('Error fetching department details:', error);
-      }
-    );
-  }*/
+      );
+    }
+
+  }
 
 }
-/*
-how to implement department-form in order to edit current department (name, description, and level).
-and this is Postman api:
-POST:
-key | value
-_method | PUT
-name | any name
-description | ...discription
-level | any number
-Authorization type Bearer Token
-*/
+

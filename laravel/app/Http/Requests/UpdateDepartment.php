@@ -26,7 +26,7 @@ class UpdateDepartment extends FormRequest
     public function rules():array
     {
         return [
-            'name' => ['Required' , 'max:25' , 'Exists:departments,name'],
+            'name' => ['Required' , 'max:25'],
             'description' => ['Required' , 'max:2500'],
             'level' => ['Required' , 'numeric']
 

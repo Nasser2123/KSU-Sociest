@@ -22,7 +22,7 @@ export class CourseAuthService{
     formData.append('slag', course.slag);
     formData.append('description', course.description);
     formData.append('hours', course.hours.toString());
-    formData.append('prequisite', course.prequisite);
+    formData.append('prerequisite', course.prerequisite);
     formData.append('status', course.status);
     formData.append('level', course.level.toString());
 

@@ -11,8 +11,8 @@ import {AddCourseComponent} from "./components/course-form/add-course/add-course
 
 const routes: Routes = [
   {
-    path: '', pathMatch: 'full',// default path for course module
-    component: CourseListComponent
+    path: 'edit',
+    component: AddCourseComponent
   },
   {
     path: ':courseId',
@@ -23,8 +23,8 @@ const routes: Routes = [
     component: CourseFormComponent
   },
   {
-    path: 'edit',
-    component: AddCourseComponent
+    path: '', pathMatch: 'full',// default path for course module
+    component: CourseListComponent
   },
 
 ];

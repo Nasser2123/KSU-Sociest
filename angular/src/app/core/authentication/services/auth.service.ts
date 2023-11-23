@@ -1,7 +1,7 @@
 // src/app/core/authentication/services/auth.service.ts
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, map, Observable} from 'rxjs';
 import { UserModel } from '../../../shared/models/user.model';
 import {Router} from "@angular/router";
@@ -84,15 +84,26 @@ export class AuthService {
     return role === 'Supervisor'
   }
   forgotPassword(email: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/forgot-password`, email);
+    return this.http.post<any>(`${this.baseUrl}/forgot-password`, {
+      email: email
+    });
   }
 
-  changePassword(data: any, id): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/user/${id}/change-password`, {
-      old_password: data.old_password,
-      password: data.password,
-      password_confirmation: data.password_confirmation
+  changePassword(userId: number, oldPassword: string, newPassword: string, confirmPassword: string): Observable<any> {
+    const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     });
+
+    const body = {
+      old_password: oldPassword,
+      password: newPassword,
+      password_confirmation: confirmPassword,
+      id: userId
+    };
+
+    return this.http.post(`${this.baseUrl}/user/${userId}/change-password`, body, { headers });
   }
 
   isLoggedIn(): boolean {

@@ -26,44 +26,9 @@ export class ProfileComponent implements OnInit {
       console.log('User data not found in local storage');
     }
   }
-
-
-  // loadUserProfile(): void {
-  //   if (this.authService.isLoggedIn()) {
-  //     // If the user is logged in (has a valid token), fetch the user profile data
-  //     this.authService.getUserProfile().subscribe(
-  //       (userData) => {
-  //         this.user = userData;
-  //       },
-  //       (error) => {
-  //         console.error('Error loading user profile:', error);
-  //       }
-  //     );
-  //   } else {
-  //     // Handle the case where the user is not logged in
-  //     console.log('User is not logged in.');
-  //     // You can choose to redirect to the login page or show a message to the user.
-  //   }
-  // }
-
   editProfile(): void {
     // Enable editing mode
-    this.router.navigate(['/change-password'])
+    this.router.navigate([`user/${this.user.id}/change-password`]);
   }
 
-  // editProfile(): void {
-  //   // Save the edited profile data to your AuthService or API
-  //   this.authService.updateUserProfile(this.user).subscribe(
-  //     () => {
-  //       // Profile update successful
-  //       this.isEditing = false; // Disable editing mode
-  //       alert('Profile updated successfully.');
-  //     },
-  //     (error) => {
-  //       // Handle profile update error
-  //       console.error('Error updating user profile:', error);
-  //       alert('Error updating user profile. Please try again.');
-  //     }
-  //   );
-  // }
 }
