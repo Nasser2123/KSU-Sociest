@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import { DepartmentDetailComponent } from './components/department-detail/department-detail.component';
 import { DepartmentListComponent } from './components/department-list/department-list.component';
 import { DepartmentFormComponent } from './components/department-form/department-form.component';
-import {HttpClientModule} from "@angular/common/http";
-import {BrowserModule} from "@angular/platform-browser";
-import {AppRoutingModule} from "../../app-routing.module";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+
 import {DepartmentRoutingModule} from "./department.routing.module";
 import {CourseModule} from "../course/course.module";
+import {ReactiveFormsModule} from "@angular/forms";
+import {AddDepartmentComponent} from "./components/department-form/add-department/add-department.component";
+
 
 
 
@@ -16,12 +16,15 @@ import {CourseModule} from "../course/course.module";
   declarations: [
     DepartmentDetailComponent,
     DepartmentListComponent,
-    DepartmentFormComponent
+    DepartmentFormComponent,
+    AddDepartmentComponent
   ],
-  imports: [
-    CommonModule,
-    DepartmentRoutingModule,
-    CourseModule,
-  ]
+    imports: [
+        CommonModule,
+        DepartmentRoutingModule,
+        CourseModule,
+        ReactiveFormsModule,
+
+    ]
 })
 export class DepartmentModule { }

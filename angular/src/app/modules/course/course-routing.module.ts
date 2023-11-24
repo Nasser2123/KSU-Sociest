@@ -6,25 +6,27 @@ import { RouterModule, Routes } from '@angular/router';
 import { CourseListComponent } from './components/course-list/course-list.component';
 import {CourseFormComponent} from "./components/course-form/course-form.component";
 import {CourseDetailComponent} from "./components/course-detail/course-detail.component";
+import {AddCourseComponent} from "./components/course-form/add-course/add-course.component";
 
 
 const routes: Routes = [
   {
-    path: '', // default path for course module
+    path: '', pathMatch: 'full',// default path for course module
     component: CourseListComponent
+  },
+  {
+    path: ':courseId',
+    component: CourseDetailComponent
   },
   {
     path: 'add',
     component: CourseFormComponent
   },
   {
-    path: 'edit/:id',
-    component: CourseFormComponent
+    path: 'edit',
+    component: AddCourseComponent
   },
-  {
-    path: ':id', // dynamic route for viewing course details
-    component: CourseDetailComponent
-  }
+
 ];
 
 @NgModule({

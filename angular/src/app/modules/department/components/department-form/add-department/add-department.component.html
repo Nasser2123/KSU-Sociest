@@ -1,6 +1,6 @@
 <!-- department-form.component.html -->
 <div class="container mt-4" *ngIf="isAdmin">
-  <h2>Edit Department</h2>
+  <h2>Add Department</h2>
   <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()">
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
@@ -14,6 +14,6 @@
       <label for="level" class="form-label">Level</label>
       <input type="number" class="form-control" id="level" formControlName="level">
     </div>
-    <button type="submit" class="btn btn-dark m-3">Update Department</button>
+    <button type="submit" class="btn btn-dark m-3">Add Department</button>
   </form>
 </div>

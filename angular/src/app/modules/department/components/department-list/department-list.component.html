@@ -1,13 +1,17 @@
 <div class="container mt-5">
   <div class="row">
+    <div *ngIf="isAdmin" class="edit-department">
+      <button class="btn btn-dark m-3" (click)="addNewDepartment()">Add Department</button>
+    </div>
     <!-- Looping through each department -->
     <div *ngFor="let department of departments" class="col-md-6 mb-4">
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{ department.name }}</h5>
           <p class="card-text">{{ department.description }}</p>
-          <p class="card-text">Number of courses: {{ department.id }}</p>
-          <button class="btn btn-primary" (click)="getIntoDepartment(department.id)">See Department</button>
+          <p class="card-text" >Number of levels: {{ department.level }}</p>
+          <button class="btn btn-dark" (click)="getIntoDepartment(department.id)">See Department</button>
+          <button class="btn btn-dark m-2" *ngIf="isAdmin" (click)="deleteDepartment(department.id)">Delete Department</button>
         </div>
       </div>
     </div>

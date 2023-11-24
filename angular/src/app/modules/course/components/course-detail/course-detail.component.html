@@ -1,15 +1,36 @@
-<div class="container mt-5 mb-3">
+<div *ngIf="isLoading" class="text-center">
+  <div class="spinner-grow text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="!isLoading && course" class="container m-5">
   <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card">
+    <div class="col-lg-10">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <h3 class="mb-0">{{ course.name }}</h3>
+        </div>
         <div class="card-body">
-          <h2 class="card-title">{{ course.name }}</h2>
+          <h5 class="card-title">Level: {{ course.level }}</h5>
           <p class="card-text">{{ course.description }}</p>
-          <p class="card-text">Level: {{ course.level }}</p>
-          <!-- Add any additional course details here -->
-          <a [routerLink]="['../']" class="btn btn-dark">Back to Courses</a>
         </div>
       </div>
     </div>
   </div>
+  <div *ngIf="userIsLoggedIn" class="chat-section container mt-4">
+    <h4>Course Chat</h4>
+    <button class="btn btn-dark">Go To {{course.name}} Chat</button>
+  </div>
 </div>
+
+
+<ng-template #noCourse>
+  <div class="container mt-5">
+    <div class="alert alert-warning" role="alert">
+      Course not found.
+    </div>
+  </div>
+</ng-template>
+
+
