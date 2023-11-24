@@ -1,8 +1,8 @@
 <?php
 namespace App\Services;
 
-use App\Http\Requests\ResetPasswordRequest;
-use App\Http\Requests\SendResetLinkRequest;
+use App\Http\Requests\Auth\ResetPasswordRequest;
+use App\Http\Requests\Auth\SendResetLinkRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Student;
 use App\Models\User;

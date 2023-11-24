@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
-            $table->string('slag');
             $table->string('name');
             $table->string('type');
             $table->integer('year');

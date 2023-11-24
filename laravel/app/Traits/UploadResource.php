@@ -4,6 +4,7 @@ namespace App\Traits;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 trait UploadResource
 {
@@ -11,7 +12,7 @@ trait UploadResource
     {
         $file = $request->file('file');
         $fileName = $file->getClientOriginalName();
-        $path = $file->storeAs('resource/'.$id, $fileName, 'public');
+        $path = $file->storeAs('resource/'.$id, $fileName, 's3');
         return $path;
     }
 

@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\SupervisorDepartment;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\CourseRequest;
-use App\Http\Requests\UpdateCourseRequest;
+use App\Http\Requests\Course\CourseRequest;
+use App\Http\Requests\Course\UpdateCourseRequest;
 use App\Http\Resources\CourseResource;
+use App\Http\Resources\CoursesResource;
 use App\Models\Course;
 use App\Models\Department;
+use App\Services\CourseService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -18,19 +18,13 @@ class CourseController extends Controller
     public function index(Department $department):JsonResponse
     {
         $courses =$department->course()->get();
-        if($courses->isEmpty())
-        {
-            return $this->error(null, "The department is empty" , 404);
-        }
-        return $this->success(CourseResource::collection($courses), "All courses belong to This " . $department->name);
+        return $this->success(CoursesResource::collection($courses), "All courses belong to This " . $department->name);
     }
 
-    public function store(CourseRequest $request ,Department $department):JsonResponse
+    public function store(CourseRequest $request ,Department $department , CourseService $courseService):JsonResponse
     {
         if(SupervisorDepartment::isSupervisor($department)) {
-            $course = Course::create(array_merge($request->all(), ['supervisor_id' => Auth::id()]));
-            $course->department()->attach($department);
-            return $this->success($course, 'We save the Course ');
+          return $courseService->store($request ,$department);
         }
         return $this->error(null, "You can not store course in this department (Not Auth)".$department->name , 404);
 
@@ -38,28 +32,30 @@ class CourseController extends Controller
 
     public function show(Department $department , Course $course):JsonResponse
     {
-        return $this->success(new CourseResource($course) , 'This is a course info');
+        return $this->success(new CoursesResource($course) , 'This is a course info belong'.$department->name );
     }
 
-    public function update(UpdateCourseRequest $request, Department $department , Course $course):JsonResponse
+    public function update(UpdateCourseRequest $request, Department $department , Course $course ,CourseService $courseService):JsonResponse
     {
         if(SupervisorDepartment::isSupervisor($department)) {
-            $course->update(array_merge($request->all()));
-            return $this->success(new CourseResource($course), 'We update the course successfully' );
-
+           return $courseService->update($request ,$course);
         }
         return $this->error(null, "You can not store course in this department (Not Auth)".$department->name  , 404);
 
     }
 
-    public function destroy(Department $department , Course $course):JsonResponse
+    public function destroy(Department $department , Course $course , CourseService $courseService):JsonResponse
     {
         if(SupervisorDepartment::isSupervisor($department)) {
-            $course->department()->detach();
-            $course->delete();
-            return $this->success(null, 'We delete the Course ');
+           return $courseService->destroy($course);
         }
         return $this->error(null, "You can not store course in this department (Not Auth)".$department->name  , 404);
 
+    }
+
+    public function All():JsonResponse
+    {
+        $courses =Course::all();
+        return $this->success(CoursesResource::collection($courses), "All courses");
     }
 }

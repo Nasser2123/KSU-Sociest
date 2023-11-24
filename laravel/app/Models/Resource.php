@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static create(array|false[]|string[] $array_merge)
+ */
 class Resource extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['slag','name' ,'type','year' , 'course_id' ,'path'];
+    protected $fillable = ['name' ,'type','year' , 'course_id' ,'path'];
 
 
     public function course()

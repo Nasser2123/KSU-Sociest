@@ -52,7 +52,7 @@ class SupervisorSeeder extends Seeder
         $data4 = [
             'first_name' => 'Nasser',
             'last_name' => 'Nafe',
-            'email' => '4@student.ksu.edu.sa',
+            'email' => '44@student.ksu.edu.sa',
             'email_verified_at' => now(),
             'password' => '123',
         ];

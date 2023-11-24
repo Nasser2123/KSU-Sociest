@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateCourseRequest extends FormRequest
+class SendResetLinkRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,16 +26,9 @@ class UpdateCourseRequest extends FormRequest
     public function rules():array
     {
         return [
-            'name' => ['Required' , 'max:55' , 'Exists:courses,name'],
-            'slag' => ['Required' , 'max:6'],
-            'description' => ['Required' , 'max:2500'],
-            'hours' => ['Required' , 'max:12' , 'numeric'],
-            'prequisite' => ['max:25'],
-            'status' => 'Required',
-            'level' => ['Required' ,'max:10', 'numeric']
+            'email' => 'required|email|Exists:users,email'
         ];
     }
-
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
