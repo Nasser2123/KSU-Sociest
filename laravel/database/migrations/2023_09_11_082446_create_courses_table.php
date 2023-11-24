@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('slag');
             $table->text('description');
             $table->string('hours');
-            $table->string('prequisite')->nullable();
+            $table->string('prerequisite')->nullable();
             $table->string('status');
             $table->integer('level');
             $table->unsignedBigInteger('supervisor_id');

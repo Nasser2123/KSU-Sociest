@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateDepartment extends FormRequest
+class RegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,9 +26,11 @@ class UpdateDepartment extends FormRequest
     public function rules():array
     {
         return [
-            'name' => ['Required' , 'max:25' , 'Exists:departments,name'],
-            'description' => ['Required' , 'max:2500'],
-            'level' => ['Required' , 'numeric']
+            'first_name' =>['Required' , 'String' ,'max:25'],
+            'last_name' =>['Required' , 'String' ,'max:25'],
+            'email' =>['Required','email','ends_with:@student.ksu.edu.sa', 'unique:users'],
+            'password' =>['Required' , 'String' , 'Confirmed' , 'max:16'],
+            'password_confirmation' =>['Required'],
 
         ];
     }
@@ -39,4 +41,6 @@ class UpdateDepartment extends FormRequest
             'errors' => $validator->errors(),
         ], 422));
     }
+
+
 }

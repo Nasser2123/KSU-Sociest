@@ -7,23 +7,23 @@ use Illuminate\Http\JsonResponse;
 trait HttpResponses
 {
 
-
-    protected function success($data = null, $message = null, $code = 200):JsonResponse
+    protected function success($data = null, $message = null, $code = 200)
     {
+
         return response()->json([
-            'status' => 'Success',
-            'data' => $data,
+            'status' => 'success',
             'message' => $message,
+            'data' => $data
         ], $code);
     }
 
 
-    protected function error($data = null, $message = null, $code = null):JsonResponse
+    protected function error($data = null, $message = null, $code)
     {
         return response()->json([
-            'status' => 'Error',
-            'data' => $data,
+            'status' => 'error',
             'message' => $message,
+            'data' => $data
         ], $code);
     }
 }

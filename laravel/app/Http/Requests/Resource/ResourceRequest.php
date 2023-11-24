@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Resource;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,7 +11,7 @@ class ResourceRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize():Bool
     {
         return true;
     }
@@ -21,14 +21,13 @@ class ResourceRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'slag' => ['Required' , 'max:6'],
             'name' => ['Required' , 'max:255'] ,
             'type' => ['Required'] ,
-            'year' => ['Required' , 'numeric' , 'min:2017'] ,
-            'file' => 'required|mimes:jpeg,png,pdf|max:2048',
+            'year' => ['Required' , 'numeric' , 'min:2018'] ,
+            'file' => 'required|mimes:jpeg,png,pdf,pptx,doc|max:4096',
         ];
     }
 }

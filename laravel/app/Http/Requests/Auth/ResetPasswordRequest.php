@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Rules\CheckOldPasswordRule;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ChangePasswordRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,16 +26,16 @@ class ChangePasswordRequest extends FormRequest
     public function rules():array
     {
         return [
-            'old_password' => ['required', 'string' , new CheckOldPasswordRule],
-            'password' => ['required', 'string', 'confirmed' , 'max:12'],
+            'token' => 'required',
+            'email' => 'required|email|Exists:users,email',
+            'password' => 'required|max:12|confirmed',
             'password_confirmation' => 'required',
         ];
     }
-
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException(response()->json([
-            'error' => $validator->errors(),
+            'errors' => $validator->errors(),
         ], 422));
     }
 }

@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Department;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class AdminRegisterRequest extends FormRequest
+class UpdateDepartment extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize():bool
     {
         return true;
     }
@@ -26,11 +26,9 @@ class AdminRegisterRequest extends FormRequest
     public function rules():array
     {
         return [
-            'first_name' =>['Required' , 'String' ,'max:25'],
-            'last_name' =>['Required' , 'String' ,'max:25'],
-            'email' =>['Required','email','ends_with:@student.ksu.edu.sa', 'unique:admins'],
-            'password' =>['Required' , 'String' , 'Confirmed' , 'max:16'],
-            'password_confirmation' =>['Required'],
+            'name' => ['Required' , 'max:50' , 'unique:departments,name'],
+            'description' => ['Required' , 'max:2500'],
+            'level' => ['Required' , 'numeric' , 'max:10']
 
         ];
     }

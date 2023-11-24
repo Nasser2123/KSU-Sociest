@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 
 /**
@@ -14,21 +15,21 @@ class Course extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name' ,'slag', 'description' ,'hours' ,'prequisite','status','level' , 'supervisor_id'];
+    protected $fillable = ['name' ,'slag', 'description' ,'hours' ,'prerequisite','status','level' , 'supervisor_id'];
 
 
 
-    public function supervisor()
+    public function supervisor(): BelongsToMany
     {
         return $this->belongsToMany(Supervisor::class);
     }
 
-    public function department()
+    public function department(): BelongsToMany
     {
         return $this->belongsToMany(Department::class);
     }
 
-    public function resource()
+    public function resource(): HasMany
     {
         return $this->hasMany(Resource::class);
     }

@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Course;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class DepartmentRequest extends FormRequest
+class UpdateCourseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize():bool
     {
         return true;
     }
@@ -23,13 +23,16 @@ class DepartmentRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules():array
     {
         return [
-            'name' => ['Required' , 'max:25' , 'unique:departments,name'],
+            'name' => ['Required' , 'max:55' , 'Exists:courses,name'],
+            'slag' => ['Required' , 'max:6'],
             'description' => ['Required' , 'max:2500'],
-            'level' => ['Required' , 'numeric']
-
+            'hours' => ['Required' , 'max:12' , 'numeric'],
+            'prerequisite' => ['max:25'],
+            'status' => 'Required',
+            'level' => ['Required' ,'max:10', 'numeric']
         ];
     }
 

@@ -27,7 +27,7 @@ Route::controller(AuthController::class)->group(function () {
         Route::post('forgot-password', 'sendResetLink')->name('email');
 
         // for change password
-        Route::get('reset-password', 'resetPassword')->name('reset');
+        Route::get('reset-password/{token}', 'resetPassword')->name('reset');
     });
 });
 
@@ -49,17 +49,21 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
     });
 
     Route::group(['middleware' => 'role:Supervisor'], function () {
+
         Route::apiResource('department/{department}/course', CourseController::class)->only('destroy', 'update', 'store');
         Route::post('resource/{resource}', [ResourceController::class , 'approve']);
-        Route::post('resource/{resource}', [ResourceController::class , 'reject']);
+        Route::post('department/{department}/resource/{resource}', [ResourceController::class , 'reject']);
     });
 
-
-    Route::apiResource('department/{department}/course/{course}/resource', ResourceController::class);
+    Route::apiResource('course/{course}/resource', ResourceController::class);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('user/{user}/change-password', [AuthController::class, 'changePassword']);
 });
 
+
+
 Route::apiResource('department', DepartmentController::class)->only('index', 'show');
 Route::apiResource('department/{department}/course', CourseController::class)->only('index', 'show');
+Route::get('courses', [CourseController::class , 'all']);
 
+Route::get('department/{department}/resource', [ResourceController::class , 'all']);

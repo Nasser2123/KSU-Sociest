@@ -2,53 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\DepartmentRequest;
-use App\Http\Requests\UpdateDepartment;
+use App\Helpers\UserRole;
+use App\Http\Requests\Department\DepartmentRequest;
+use App\Http\Requests\Department\UpdateDepartment;
+use App\Http\Resources\CoursesResource;
 use App\Http\Resources\DepartmentResource;
 use App\Models\Department;
+use App\Services\DepartmentService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Auth;
-use App\Helpers\UserRole;
+
 class DepartmentController extends Controller
 {
 
     public function index():JsonResponse
     {
         return $this->success(DepartmentResource::collection(Department::all()), 'This is all Department');
-
     }
 
-    public function store(DepartmentRequest $request):JsonResponse
+    public function store(DepartmentRequest $request , DepartmentService $departmentService): JsonResponse
     {
         if (UserRole::isAdmin()) {
-            $department = Department::create(array_merge($request->all(), ['admin_id' => Auth::id()]));
-            return $this->success(new DepartmentResource($department), 'We save the Department');
+            return $departmentService->store($request);
         }
-        return $this->error(null, 'You do not have the Auth to create a department');
+        return $this->error(null, 'You do not have the Auth to create a department', 401);
     }
 
     public function show(Department $department):JsonResponse
     {
-        return $this->success(new DepartmentResource($department) , 'This is specific ' .$department->name);
+        return $this->success([
+            'department' => new DepartmentResource($department),
+                'courses' => CoursesResource::collection($department->course()->get())
+            ]
+            , 'This is specific ' .$department->name);
     }
 
-    public function update(UpdateDepartment $request, Department $department):JsonResponse
+    public function update(UpdateDepartment $request, Department $department , DepartmentService $departmentService):JsonResponse
     {
         if (UserRole::isAdmin()) {
-            $department->update(array_merge($request->all(), ['admin_id' => Auth::id()]));
-            return $this->success(new DepartmentResource($department), 'We update the '.$department->name);
+         return $departmentService->update($department , $request);
         }
-        return $this->error(null, 'You do not have the Auth to update the department');
+        return $this->error(null, 'You do not have the Auth to update the department' , 401);
     }
 
-    public function destroy(Department $department):JsonResponse
+    public function destroy(Department $department , DepartmentService $departmentService):JsonResponse
     {
         if(UserRole::isAdmin()) {
-            $department->delete();
-            return $this->success(null, 'We delete the department');
+           return $departmentService->destroy($department);
         }
-        return $this->error(null, 'You do not have the Auth to delete the department');
+        return $this->error(null, 'You do not have the Auth to delete the department' , 401);
 
     }
 }

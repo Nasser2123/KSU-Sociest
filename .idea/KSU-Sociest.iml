@@ -9,9 +9,23 @@
       <sourceFolder url="file://$MODULE_DIR$/laravel/tests" isTestSource="true" packagePrefix="Tests\" />
       <sourceFolder url="file://$MODULE_DIR$/laravel/tests/Feature" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/laravel/tests/Unit" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/laravel/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/doctrine/deprecations" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/polyfill-php81" />
-      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/polyfill-php83" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/doctrine/instantiator" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/spatie/laravel-permission" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/console" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/aws/aws-crt-php" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/aws/aws-sdk-php" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/flysystem" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/flysystem-aws-s3-v3" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/flysystem-local" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/league/mime-type-detection" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/mtdowling/jmespath.php" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/psr/http-client" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/deprecation-contracts" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

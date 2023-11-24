@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Traits\HttpResponses;
-use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
