@@ -27,7 +27,7 @@ class ResourceController extends Controller
      */
     public function index(Course $course):JsonResponse
     {
-        $resources =$course->resource()->where('approved' , '=' , '1')->get();
+        $resources =$course->resource()->where('approved' , '=' , '0')->get();
         if($resources->isEmpty())
         {
             return $this->error(null, "The course do not have resources" , 404);
@@ -42,11 +42,11 @@ class ResourceController extends Controller
      * @param ResourceRequest $request
      * @return JsonResponse
      */
-    public function store(Course $course ,ResourceRequest $request):JsonResponse
+    public function store(Course $course ,ResourceRequest $request): JsonResponse
     {
         $path = $this->uploadFiles($request , $course['id']);
         $resource = Resource::create(array_merge(['course_id' => $course['id'] , 'path' => $path] , $request->all()));
-        return $this->success(new FileResource($resource) , 'We save the Resource');
+        return $this->success(new FileResource($resource), 'We save the Resource');
     }
 
     /**
@@ -63,7 +63,7 @@ class ResourceController extends Controller
             return Storage::disk('s3')->response($resource['path']);
         }
         else{
-            return $this->error(null, "The resource dose not exist in ". $course['id'], 404);
+            return $this->error(null, "The resource dose not exist in ". $course['name'], 404);
         }
     }
 

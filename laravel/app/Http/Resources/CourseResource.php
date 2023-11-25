@@ -11,8 +11,7 @@ class CourseResource extends JsonResource
     {
         return [
 
-            'resource' => $this->resource,
-
+            'resource' => $this->resource->resource,
         ];
     }
 }
