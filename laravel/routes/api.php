@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
     Route::group(['middleware' => 'role:Supervisor'], function () {
 
         Route::apiResource('department/{department}/course', CourseController::class)->only('destroy', 'update', 'store');
+        Route::get('department/{department}/resource', [ResourceController::class , 'all']);
         Route::post('resource/{resource}', [ResourceController::class , 'approve']);
         Route::post('department/{department}/resource/{resource}', [ResourceController::class , 'reject']);
     });
@@ -66,4 +67,3 @@ Route::apiResource('department', DepartmentController::class)->only('index', 'sh
 Route::apiResource('department/{department}/course', CourseController::class)->only('index', 'show');
 Route::get('courses', [CourseController::class , 'all']);
 
-Route::get('department/{department}/resource', [ResourceController::class , 'all']);
