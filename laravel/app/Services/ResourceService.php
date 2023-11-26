@@ -33,7 +33,6 @@ class ResourceService
     public function reject($resource): JsonResponse
     {
         Storage::disk('s3')->delete($resource['path']);
-        $resource->course()->delete();
         $resource->delete();
         return $this->success(null, 'We reject the resource ');
     }

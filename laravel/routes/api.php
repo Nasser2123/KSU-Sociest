@@ -52,8 +52,8 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
 
         Route::apiResource('department/{department}/course', CourseController::class)->only('destroy', 'update', 'store');
         Route::get('department/{department}/resource', [ResourceController::class , 'all']);
-        Route::post('resource/{resource}', [ResourceController::class , 'approve']);
-        Route::post('department/{department}/resource/{resource}', [ResourceController::class , 'reject']);
+        Route::post('department/{department}/resource/{resource}/approve', [ResourceController::class , 'approve']);
+        Route::post('department/{department}/resource/{resource}/reject', [ResourceController::class , 'reject']);
     });
 
     Route::apiResource('course/{course}/resource', ResourceController::class);
