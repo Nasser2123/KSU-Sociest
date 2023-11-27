@@ -1,19 +1,35 @@
-<!-- department-form.component.html -->
-<div class="container mt-4" *ngIf="isAdmin">
-  <h2>Edit Department</h2>
-  <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-      <label for="name" class="form-label">Name</label>
-      <input type="text" class="form-control" id="name" formControlName="name">
-    </div>
-    <div class="mb-3">
-      <label for="description" class="form-label">Description</label>
-      <textarea class="form-control" id="description" formControlName="description"></textarea>
-    </div>
-    <div class="mb-3">
-      <label for="level" class="form-label">Level</label>
-      <input type="number" class="form-control" id="level" formControlName="level">
-    </div>
-    <button type="submit" class="btn btn-dark m-3">Update Department</button>
-  </form>
+<div *ngIf="isLoading" class="text-center">
+  <div class="spinner-grow text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
 </div>
+
+<div *ngIf="department" class="container m-5">
+  <!-- Edit Course Details -->
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+          <input type="text" class="form-control" [(ngModel)]="editedDepartment.name">
+        </div>
+        <div class="card-body">
+          <input type="text" class="form-control mb-3" placeholder="Department Description" [(ngModel)]="editedDepartment.description">
+          <input type="number" class="form-control mb-3" placeholder="Department Levels" [(ngModel)]="editedDepartment.level">
+
+          <!-- Add other fields as necessary -->
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-dark" (click)="onSubmit()">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #noCourse>
+  <div class="container mt-5">
+    <div class="alert alert-warning" role="alert">
+      Course not found.
+    </div>
+  </div>
+</ng-template>

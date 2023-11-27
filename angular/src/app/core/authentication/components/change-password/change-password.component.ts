@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {UserModel} from "../../../../shared/models/user.model"; // Replace with the correct path
 
 @Component({
@@ -13,7 +13,7 @@ export class ChangePasswordComponent implements OnInit {
   changePasswordForm: FormGroup;
   userId: number; // Set this to the current user's ID
   errorMessage: string;
-  constructor(private authService: AuthService, private fb: FormBuilder, private route: ActivatedRoute) {}
+  constructor(private authService: AuthService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.changePasswordForm = new FormGroup({
@@ -32,6 +32,7 @@ export class ChangePasswordComponent implements OnInit {
         () => {
           // Handle success
           alert('Password changed successfully');
+          this.router.navigate(['/profile'])
         },
         error => {
           // Handle error

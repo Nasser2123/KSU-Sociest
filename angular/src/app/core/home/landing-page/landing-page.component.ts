@@ -7,7 +7,7 @@ import {UserModel} from "../../../shared/models/user.model";
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent implements OnInit {
-  user: any; // Declare user property
+  user: UserModel; // Declare user property
 
   constructor() { }
 

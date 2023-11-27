@@ -15,22 +15,6 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
- /* isAdmin(): boolean {
-    const token = localStorage.getItem('token');
-    if (!token) return false;
-
-    try {
-      const payload = token.split('.')[1]; // Get the payload
-      const decodedPayload = atob(payload); // Base64 decode
-      const payloadObj = JSON.parse(decodedPayload); // Parse JSON
-
-      // Assuming the role information is stored in a property called 'role'
-      return payloadObj.data.user.role === 'Admin';
-    } catch (error) {
-      console.error('Error decoding token', error);
-      return false;
-    }
-  }*/
 
   // Check if a token exists in local storage
   private hasToken(): boolean {
@@ -39,10 +23,6 @@ export class AuthService {
   }
   // Observable to track authentication status
   isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
-
-  getUserProfile() {
-
-  }
 
   register(user: UserModel): Observable<any> {
     return this.http.post(`${this.baseUrl}/register`,
@@ -54,41 +34,28 @@ export class AuthService {
         password_confirmation: user.confirmPassword
       })}
 
-  /*login(credentials: { email: string; password: string }): Observable<any> {
-    // Assuming you set the token upon successful login
+
+  login(email: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/login`, { email, password });
+  }
+  // Call this method after successful login
+  loginSuccess() {
     this.isAuthenticatedSubject.next(true);
-    return this.http.post<any>(`${this.baseUrl}/login`, credentials);
-  }*/
-  login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/login`, credentials).pipe(
-      map(response => {
-        if (response.status === 'Success') {
-          // Store the token and role in local storage
-          localStorage.setItem('token', response.data.token);
-          localStorage.setItem('role', response.data.user.role);
-
-          // Update the isAuthenticatedSubject
-          this.isAuthenticatedSubject.next(true);
-        }
-        return response;
-      })
-    );
   }
-  isAdmin(): boolean {
-    const role = localStorage.getItem('role');
-    return role === 'Admin';
+  isLoggedIn(): boolean {
+    // Implement a check to determine if the user is logged in (e.g., check for a valid token)
+    const token = localStorage.getItem('token');
+    return !!token; // Return true if a token is present, otherwise false
   }
 
-  isSupervisor(): boolean {
-    const role = localStorage.getItem('role');
-    return role === 'Supervisor'
+  getCurrentUserRole(): string {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const user: UserModel = JSON.parse(userData);
+      return user.role;
+    }
+    return '';
   }
-  forgotPassword(email: string): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/forgot-password`, {
-      email: email
-    });
-  }
-
   changePassword(userId: number, oldPassword: string, newPassword: string, confirmPassword: string): Observable<any> {
     const token = localStorage.getItem('token'); // Retrieve the token from localStorage
     const headers = new HttpHeaders({
@@ -106,16 +73,17 @@ export class AuthService {
     return this.http.post(`${this.baseUrl}/user/${userId}/change-password`, body, { headers });
   }
 
-  isLoggedIn(): boolean {
-    // Implement a check to determine if the user is logged in (e.g., check for a valid token)
-    const token = localStorage.getItem('token');
-    return !!token; // Return true if a token is present, otherwise false
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/forgot-password`, {
+      email: email
+    });
   }
+
   logout(): void {
     // Clear the token and any other user-related data from local storage
     localStorage.removeItem('token');
-    localStorage.removeItem('user'); // You might have stored user data as well
-
+    localStorage.removeItem('role');
+    localStorage.removeItem('user');
     // Update the isAuthenticatedSubject to false
     this.isAuthenticatedSubject.next(false);
 
@@ -123,3 +91,5 @@ export class AuthService {
     this.router.navigate(['/home']);
   }
 }
+
+

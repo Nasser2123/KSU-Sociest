@@ -10,6 +10,7 @@
           <h5 class="card-title">{{ department.name }}</h5>
           <p class="card-text">{{ department.description }}</p>
           <p class="card-text" >Number of levels: {{ department.level }}</p>
+          <p class="card-text" >Number of Courses: {{ department.numberOfCourses }}</p>
           <button class="btn btn-dark" (click)="getIntoDepartment(department.id)">See Department</button>
           <button class="btn btn-dark m-2" *ngIf="isAdmin" (click)="deleteDepartment(department.id)">Delete Department</button>
         </div>

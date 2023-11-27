@@ -1,1 +1,43 @@
-<p>course-form works!</p>
+<div *ngIf="isLoading" class="text-center">
+  <div class="spinner-grow text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="course" class="container m-5">
+    <!-- Edit Course Details -->
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <div class="card shadow-sm">
+          <div class="card-header bg-dark text-white">
+            <input type="text" class="form-control" [(ngModel)]="editedCourse.name">
+          </div>
+          <div class="card-body">
+            <input type="text" class="form-control mb-3" placeholder="Course Slag" [(ngModel)]="editedCourse.slag">
+            <input type="text" class="form-control mb-3" placeholder="Course description" [(ngModel)]="editedCourse.description">
+            <input type="number" class="form-control mb-3" placeholder="Course hours" [(ngModel)]="editedCourse.hours">
+            <input type="text" class="form-control mb-3" placeholder="Course prequisite" [(ngModel)]="editedCourse.prequisite">
+            <input type="text" class="form-control mb-3" placeholder="Course status" [(ngModel)]="editedCourse.status">
+            <input type="number" class="form-control mb-3" placeholder="Course level" [(ngModel)]="editedCourse.level">
+            <!-- Add other fields as necessary -->
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-dark" (click)="onSubmit()">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div *ngIf="getRole == 'Supervisor'" class="chat-section container mt-4">
+    <h4>Course Chat</h4>
+    <button class="btn btn-dark">Go To {{course.name}} Chat</button>
+  </div>
+</div>
+
+<ng-template #noCourse>
+  <div class="container mt-5">
+    <div class="alert alert-warning" role="alert">
+      Course not found.
+    </div>
+  </div>
+</ng-template>

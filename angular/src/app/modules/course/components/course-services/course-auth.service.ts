@@ -12,9 +12,12 @@ export class CourseAuthService{
 
   constructor(private http: HttpClient){}
 
-  // getCourses(): Observable<Course[]> {
-  //   return this.http.get<Course[]>(`${this.baseUrl}/courses`);
-  // }
+  getCourses(): Observable<Course[]> {
+    // Include the headers in the HTTP request
+    return this.http.get<Course[]>('http://localhost:8000/api/courses').pipe(
+      map(response => response['data'])
+    );
+  }
 
   addCourse(departmentId: number, course: Course): Observable<Course> {
     const formData = new FormData();
@@ -22,7 +25,7 @@ export class CourseAuthService{
     formData.append('slag', course.slag);
     formData.append('description', course.description);
     formData.append('hours', course.hours.toString());
-    formData.append('prerequisite', course.prerequisite);
+    formData.append('prequisite', course.prequisite);
     formData.append('status', course.status);
     formData.append('level', course.level.toString());
 
@@ -35,13 +38,31 @@ export class CourseAuthService{
     return this.http.post<Course>(`${this.apiUrl}/${departmentId}/course`, formData, { headers });
   }
 
+  updateCourse(departmentId: number, course: Course): Observable<any> {
+    const url = `${this.apiUrl}/${departmentId}/course`;
+      const body = {
+          ...course,
+          _method: 'PUT'
+      };
+
+      return this.http.post(url, body, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}` // Retrieve token from local storage
+      }
+    });
+  }
   getCourseDetails(departmentId: number, courseId: number): Observable<Course> {
     return this.http.get<{ status: string, data: Course }>(`${this.apiUrl}/${departmentId}/course/${courseId}`)
       .pipe(
         map(response => response.data) // Extract the course data from the response
       );
   }
-
+  getCoursesBelongsToDepartment(departmentId: number): Observable<Course[]>{
+    return this.http.get<{ status: string, data: Course[] }>(`${this.apiUrl}/${departmentId}/course`)
+        .pipe(
+          map(response => response.data)
+        )
+  }
   deleteCourse(departmentId: number, courseId: number): Observable<Course> {
     const data = {_method: 'DELETE'};
     // Get the token from localStorage

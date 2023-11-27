@@ -6,7 +6,7 @@ import { CourseFormComponent } from './components/course-form/course-form.compon
 import {RouterLink} from "@angular/router";
 import {CourseRoutingModule} from "./course-routing.module";
 import {AddCourseComponent} from "./components/course-form/add-course/add-course.component";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -21,12 +21,13 @@ import {ReactiveFormsModule} from "@angular/forms";
     exports: [
         CourseListComponent
     ],
-  imports: [
-    CommonModule,
-    RouterLink,
-    CourseRoutingModule,
-    ReactiveFormsModule,
+    imports: [
+        CommonModule,
+        RouterLink,
+        CourseRoutingModule,
+        ReactiveFormsModule,
+        FormsModule,
 
-  ]
+    ]
 })
 export class CourseModule { }

@@ -5,6 +5,7 @@ import {Department} from "../../../../shared/models/department.model";
 import {AuthGuard} from "../../../../core/authentication/services/auth.guard";
 import {AuthService} from "../../../../core/authentication/services/auth.service";
 import {CourseAuthService} from "../../../course/components/course-services/course-auth.service";
+import {Course} from "../../../../shared/models/course.model";
 
 @Component({
   selector: 'app-department-detail',
@@ -12,35 +13,41 @@ import {CourseAuthService} from "../../../course/components/course-services/cour
   styleUrls: ['./department-detail.component.css']
 })
 export class DepartmentDetailComponent implements OnInit {
-  department: Department | null = null;
+  isLogin = this.authService.isLoggedIn();
+
+  department: any | null = null;
+  departmentId = this.route.snapshot.params["departmentId"];
   isLoading = true; // To handle loading state
-  isAdmin: boolean = false;
-  isSupervisor: boolean = false;
+  getRole: string;
+  courses: Course[] = [];
   constructor(private route: ActivatedRoute, private router: Router, private departmentService: DepartmentAuthService, private changeDetectorRef: ChangeDetectorRef, private authService: AuthService, private courseAuthService: CourseAuthService) {}
 
   ngOnInit() {
-    this.isAdmin = this.authService.isAdmin();
-    this.isSupervisor = this.authService.isSupervisor();
-    const id = +this.route.snapshot.params['departmentId']; // '+' converts the parameter to a number
-    this.departmentService.getDepartmentById(id).subscribe(
-      (department) => {
-        // console.log('Department data:', department);
-        this.department = department;
+    this.getRole = this.authService.getCurrentUserRole();
+    const id = +this.route.snapshot.params['departmentId'];
+    this.departmentService.getDepartmentById(id).subscribe({
+      next: (data) => {
+        this.department = data; // Adjust to access nested department
         this.isLoading = false;
         this.changeDetectorRef.detectChanges();
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching department details', error);
         this.isLoading = false;
-      }
-    );
-
+      },
+        // complete: () => console.log('department details have been retrieved!');
+      });
+    this.courseAuthService.getCoursesBelongsToDepartment(this.departmentId).subscribe({
+    next:(data) => {
+      this.courses = data;
+    },
+    error: (error) => {
+      console.error('Error fetching courses');
+    }
+  })
   }
 
   goToCourseDetails(courseId: number) {
-    /*const departmentId = this.route.snapshot.params['departmentId'];
-    // Navigate to the course-detail component
-    this.router.navigate(['/department', departmentId, 'course', courseId]); // Adjust the path as per your routing configuration*/
     this.router.navigate(['courses', courseId], { relativeTo: this.route });
 
   }
@@ -49,17 +56,19 @@ export class DepartmentDetailComponent implements OnInit {
   }
 
   addCourse(departmentId: number){
-    this.router.navigate([`department/${departmentId}/course/edit`]);
+    this.router.navigate([`department/${departmentId}/courses/addCourse`]);
   }
   deleteCourse(courseId: number) {
     if (confirm('Are you sure you want to delete this course?')) {
-      // @ts-ignore
       this.courseAuthService.deleteCourse(this.department.id, courseId).subscribe(
         () => {
           // Handle successful deletion
-          // Optionally, remove the course from the department.courses array to update the UI
-          // @ts-ignore
-          this.department.courses = this.department.courses.filter(course => course.id !== courseId);
+          if (Array.isArray(this.department.courses)) {
+            this.department.courses = this.department.courses.filter(course => course.id !== courseId);
+          }
+          this.ngOnInit();
+          // Optionally, refresh the component or perform other update actions
+          // Calling ngOnInit() directly is usually not recommended; consider refactoring
         },
         error => {
           // Handle error
@@ -67,7 +76,6 @@ export class DepartmentDetailComponent implements OnInit {
         }
       );
     }
-
   }
 
 }

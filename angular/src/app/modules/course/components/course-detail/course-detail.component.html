@@ -12,15 +12,19 @@
           <h3 class="mb-0">{{ course.name }}</h3>
         </div>
         <div class="card-body">
-          <h5 class="card-title">Level: {{ course.level }}</h5>
-          <p class="card-text">{{ course.description }}</p>
+          <h5 class="card-title">Course Slag: {{ course.slag }}</h5>
+          <p class="card-text">Course hours: {{ course.hours }}</p>
+          <p class="card-text">Course level: {{ course.level }}</p>
+        </div>
+        <div *ngIf="getRole == 'Supervisor'" class="edit-department">
+          <button class="btn btn-dark m-3 float-end" (click)="editCourse()">Edit Course</button>
         </div>
       </div>
+      <div *ngIf="isLogin" class="chat-section container mt-4">
+        <h4>Department Chat</h4>
+        <button class="btn btn-dark">Go To {{course.name}} Chat</button>
+      </div>
     </div>
-  </div>
-  <div *ngIf="userIsLoggedIn" class="chat-section container mt-4">
-    <h4>Course Chat</h4>
-    <button class="btn btn-dark">Go To {{course.name}} Chat</button>
   </div>
 </div>
 

@@ -4,7 +4,7 @@ export class Course {
   description: string;
   slag: string;
   hours: number;
-  prerequisite: string;
+  prequisite: string;
   status: string;
   level: number;
 }

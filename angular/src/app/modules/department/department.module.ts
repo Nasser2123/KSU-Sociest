@@ -6,7 +6,7 @@ import { DepartmentFormComponent } from './components/department-form/department
 
 import {DepartmentRoutingModule} from "./department.routing.module";
 import {CourseModule} from "../course/course.module";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AddDepartmentComponent} from "./components/department-form/add-department/add-department.component";
 
 
@@ -24,6 +24,7 @@ import {AddDepartmentComponent} from "./components/department-form/add-departmen
         DepartmentRoutingModule,
         CourseModule,
         ReactiveFormsModule,
+        FormsModule,
 
     ]
 })

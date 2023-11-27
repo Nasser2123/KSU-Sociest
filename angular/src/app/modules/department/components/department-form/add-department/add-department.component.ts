@@ -11,7 +11,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 })
 export class AddDepartmentComponent implements OnInit {
   departmentForm: FormGroup;
-  isAdmin: boolean;
+  getRole: string;
 
   constructor(
     private departmentService: DepartmentAuthService,
@@ -20,7 +20,7 @@ export class AddDepartmentComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.isAdmin = this.authService.isAdmin(); // Check if user is Admin
+    this.getRole = this.authService.getCurrentUserRole(); // Check if user is Admin
     this.departmentForm = new FormGroup({
       name: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),

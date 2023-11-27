@@ -31,7 +31,7 @@ export class AddCourseComponent implements OnInit {
       slag: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
       hours: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
-      prerequisite: new FormControl(''),
+      prequisite: new FormControl(''),
       status: new FormControl('', Validators.required),
       level: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)])
     });
@@ -42,7 +42,7 @@ export class AddCourseComponent implements OnInit {
       this.courseService.addCourse(this.departmentId, this.courseForm.value as Course).subscribe(
         response => {
           alert('Course added successfully!');
-          this.router.navigate(['/department', this.departmentId, 'course']);
+          this.router.navigate(['/department', this.departmentId]);
         },
         error => {
           console.error('Error adding course:', error);

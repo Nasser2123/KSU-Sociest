@@ -5,5 +5,6 @@ export interface Department {
   name: string;
   description: string;
   level: number;
+  numberOfCourses: number;
   courses: Course[];  // This will store the names or IDs of the courses.
 }

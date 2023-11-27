@@ -25,6 +25,10 @@ const routes: Routes = [
     component: DepartmentFormComponent
   },
   {
+    path: ':departmentId/courses',
+    loadChildren: () => import('../course/course.module').then(m => m.CourseModule)
+  },
+  {
     path: '', pathMatch: 'full', // default path for department module
     component: DepartmentListComponent
   },

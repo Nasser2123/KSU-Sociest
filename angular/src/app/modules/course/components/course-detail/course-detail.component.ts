@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {DepartmentAuthService} from "../../../department/department-services/department-auth.service";
 import {HttpClient} from "@angular/common/http";
 import {Course} from "../../../../shared/models/course.model";
@@ -14,27 +14,36 @@ import {AuthService} from "../../../../core/authentication/services/auth.service
 export class CourseDetailComponent implements OnInit {
   course: Course | null = null;
   isLoading = true;
-  userIsLoggedIn = false;
+  isLogin = this.authService.isLoggedIn();
+  getRole: string;
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseAuthService,
-    private authService: AuthService
+    private authService: AuthService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.userIsLoggedIn = this.authService.isLoggedIn();
+    this.getRole = this.authService.getCurrentUserRole();
     const departmentId = +this.route.snapshot.params['departmentId'];
     const courseId = +this.route.snapshot.params['courseId'];
-    this.courseService.getCourseDetails(departmentId, courseId).subscribe(
-      (course) => {
-        this.course = course;
+
+    this.courseService.getCourseDetails(departmentId, courseId).subscribe({
+      next: (data) => {
+        this.course = data; // Adjust to access nested department
+        this.isLoading = false;
+        this.changeDetectorRef.detectChanges();
+      },
+      error: (error) => {
+        console.error('Error fetching department details', error);
         this.isLoading = false;
       },
-      (error) => {
-        console.error('Error fetching course details', error);
-        this.isLoading = false;
-      }
-    );
-  }
+      // complete: () => console.log('department details have been retrieved!');
+    });
 
+  }
+  editCourse() {
+    this.router.navigate(['edit'], { relativeTo: this.route });
+  }
 }

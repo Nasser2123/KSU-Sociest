@@ -1,5 +1,5 @@
 <!-- department-form.component.html -->
-<div class="container mt-4" *ngIf="isAdmin">
+<div class="container mt-4" *ngIf="getRole == 'Admin'">
   <h2>Add Department</h2>
   <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()">
     <div class="mb-3">

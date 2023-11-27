@@ -17,19 +17,15 @@ export class DepartmentListComponent implements OnInit {
   constructor(private departmentService: DepartmentAuthService, private router: Router, private route: ActivatedRoute, private authService: AuthService) {}
 
   ngOnInit() {
-    this.isAdmin = this.authService.isAdmin();
-    this.departmentService.getDepartments().subscribe(
-      (response) => {
-        if (response.status === 'Success' && Array.isArray(response.data)) {
-          this.departments = response.data;
-        } else {
-          console.error('Unexpected response format:', response);
-        }
+    this.isAdmin = this.authService.getCurrentUserRole() === 'Admin';
+    this.departmentService.getDepartments().subscribe({
+      next: (data) => {
+        // console.log("Received data:", data); // Debugging line
+        this.departments = data;
       },
-      (error) => {
-        console.error('Error fetching departments', error);
-      }
-    );
+      error: (err) => console.error(err),
+      // complete: () => console.log('Department data retrieval complete')
+    });
   }
   addNewDepartment(){
     this.router.navigate(['AddDepartment'], { relativeTo: this.route });
@@ -38,17 +34,17 @@ export class DepartmentListComponent implements OnInit {
     // Navigate to the department details page with the department ID
     this.router.navigate([departmentId], { relativeTo: this.route });
   }
-
   deleteDepartment(departmentId: number): void {
     if(confirm('Are you sure you want to delete?')) {
       this.departmentService.deleteDepartments(departmentId).subscribe(
         (response) => {
-          this.router.navigate(['../'], {relativeTo: this.route});
           alert('Department has been deleted!');
+          this.router.navigate(['department']);
+          this.ngOnInit();
         }, (error) => {
           console.log("Error: ", error);
         });
-    } else alert("Delete has been canceled!")
+    } else alert("Delete has been canceled!");
   }
 
 }
