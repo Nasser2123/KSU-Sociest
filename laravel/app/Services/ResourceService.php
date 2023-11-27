@@ -16,11 +16,12 @@ class ResourceService
     public function all($department): JsonResponse
     {
         $courses = $department->course()->with('resource')->get();
-        $resources = CourseResource::collection($courses);
+        $resources =  CourseResource::collection($courses);
         if ($courses->isEmpty()) {
             return $this->error(null, "The Department do not have resources", 404);
         }
-        return $this->success($resources, "All resource belong to This " . $department['name']);
+         return $this->success($resources, "All resource belong to This " . $department['name']);
+
     }
 
     public function approve($resource): JsonResponse
@@ -32,7 +33,6 @@ class ResourceService
     public function reject($resource): JsonResponse
     {
         Storage::disk('s3')->delete($resource['path']);
-        $resource->course()->delete();
         $resource->delete();
         return $this->success(null, 'We reject the resource ');
     }

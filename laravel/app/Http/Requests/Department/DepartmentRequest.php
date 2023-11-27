@@ -28,7 +28,7 @@ class DepartmentRequest extends FormRequest
         return [
             'name' => ['Required' , 'max:25' , 'unique:departments,name'],
             'description' => ['Required' , 'max:2500'],
-            'level' => ['Required' , 'numeric']
+            'level' => ['Required' , 'numeric' ,'max:10']
 
         ];
     }
