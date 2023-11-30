@@ -4,22 +4,24 @@
   </div>
 </div>
 
-<div *ngIf="department" class="container m-5">
-  <!-- Edit Course Details -->
+<div *ngIf="department" class="container mt-4">
   <div class="row justify-content-center">
     <div class="col-lg-10">
-      <div class="card shadow-sm">
-        <div class="card-header bg-dark text-white">
-          <input type="text" class="form-control" [(ngModel)]="editedDepartment.name">
+      <div class="card shadow-sm m-3">
+        <div class="card-header bg-gradient text-white">
+          <input type="text" class="form-control" [(ngModel)]="editedDepartment.name" placeholder="Department Name">
+          <div *ngIf="nameError" class="text-danger mt-2">
+            Name must be less than 20 characters.
+          </div>
         </div>
         <div class="card-body">
-          <input type="text" class="form-control mb-3" placeholder="Department Description" [(ngModel)]="editedDepartment.description">
-          <input type="number" class="form-control mb-3" placeholder="Department Levels" [(ngModel)]="editedDepartment.level">
-
-          <!-- Add other fields as necessary -->
+          <textarea class="form-control mb-3" placeholder="Department Description" [(ngModel)]="editedDepartment.description"></textarea>
+          <select class="form-control mb-3" [(ngModel)]="editedDepartment.level">
+            <option *ngFor="let lvl of levels" [value]="lvl">{{ lvl }}</option>
+          </select>
         </div>
         <div class="card-footer">
-          <button class="btn btn-dark" (click)="onSubmit()">Save Changes</button>
+          <button class="btn btn-dark" (click)="onSubmit()" [disabled]="!isValidForm()">Save Changes</button>
         </div>
       </div>
     </div>

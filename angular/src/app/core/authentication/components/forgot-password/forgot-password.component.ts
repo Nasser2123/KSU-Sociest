@@ -30,7 +30,7 @@ export class ForgotPasswordComponent {
         },
         (error) => {
           // Handle error
-          this.errorMessage = error.message || 'An error occurred during password reset.';
+          this.errorMessage = 'your email is not valid!, please enter your student email';
           this.successMessage = '';
         }
       );

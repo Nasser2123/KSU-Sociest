@@ -9,16 +9,20 @@ import {UserModel} from "../../../shared/models/user.model";
 export class LandingPageComponent implements OnInit {
   user: UserModel; // Declare user property
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
     // Retrieve the user data from local storage in the ngOnInit method
-    const userData = localStorage.getItem('user');
-
-    if (userData) {
-      this.user = JSON.parse(userData); // Assign the entire user object
-    } else {
-      console.log('User data not found in local storage');
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+      const userData = JSON.parse(userJson);
+      this.user = {
+        id: userData.id,
+        firstName: userData.first_name,
+        lastName: userData.last_name,
+        role: userData.role,
+      }
     }
   }
 }

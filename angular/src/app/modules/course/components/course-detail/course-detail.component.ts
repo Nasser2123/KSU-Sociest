@@ -1,10 +1,10 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {DepartmentAuthService} from "../../../department/department-services/department-auth.service";
-import {HttpClient} from "@angular/common/http";
+import {ResourceAuthService} from "../../../resource/resource-services/resource-auth.service";
 import {Course} from "../../../../shared/models/course.model";
 import {CourseAuthService} from "../course-services/course-auth.service";
-import {AuthService} from "../../../../core/authentication/services/auth.service"; // Import your course service
+import {AuthService} from "../../../../core/authentication/services/auth.service";
+import {ResourceModel} from "../../../../shared/models/resource.model";
 
 @Component({
   selector: 'app-course-detail',
@@ -16,12 +16,14 @@ export class CourseDetailComponent implements OnInit {
   isLoading = true;
   isLogin = this.authService.isLoggedIn();
   getRole: string;
+  resources: ResourceModel[] = [];
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseAuthService,
     private authService: AuthService,
     private changeDetectorRef: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private resourceService: ResourceAuthService
   ) {}
 
   ngOnInit() {
@@ -36,12 +38,19 @@ export class CourseDetailComponent implements OnInit {
         this.changeDetectorRef.detectChanges();
       },
       error: (error) => {
-        console.error('Error fetching department details', error);
+        console.error('Error fetching course details', error);
         this.isLoading = false;
       },
       // complete: () => console.log('department details have been retrieved!');
     });
-
+    this.resourceService.getAllResourceBelongCourse(1).subscribe({
+      next:(data) => {
+        this.resources = data;
+      },
+      error: (error) => {
+        console.error('Error fetching resources', error);
+      }
+    })
   }
   editCourse() {
     this.router.navigate(['edit'], { relativeTo: this.route });
