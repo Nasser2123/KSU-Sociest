@@ -27,7 +27,7 @@ class ResourceController extends Controller
      */
     public function index(Course $course):JsonResponse
     {
-        $resources =$course->resource()->where('approved' , '=' , '0')->get();
+        $resources =$course->resource()->where('approved' , '=' , '1')->get();
         if($resources->isEmpty())
         {
             return $this->error(null, "The course do not have resources" , 404);
@@ -58,13 +58,17 @@ class ResourceController extends Controller
      */
     public function show(Course $course , Resource $resource): StreamedResponse|JsonResponse
     {
-        if(Storage::disk('s3')->exists($resource['path']))
-        {
-            return Storage::disk('s3')->response($resource['path']);
+        if($resource['approved'] === 1) {
+            if(Storage::disk('s3')->exists($resource['path']))
+            {
+                return Storage::disk('s3')->response($resource['path']);
+            }
+            else{
+                return $this->error(null, "The resource dose not exist in ". $course['name'], 404);
+            }
         }
-        else{
-            return $this->error(null, "The resource dose not exist in ". $course['name'], 404);
-        }
+        return $this->error(null , 'the resource not approved yet' , 200);
+
     }
 
     public function all(Department $department , ResourceService $resourceService):JsonResponse

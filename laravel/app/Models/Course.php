@@ -32,6 +32,7 @@ class Course extends Model
     public function resource(): HasMany
     {
         return $this->hasMany(Resource::class);
+//        return $this->hasMany(Resource::class)->where('approved', false);
     }
 
 }

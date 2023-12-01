@@ -63,7 +63,7 @@ use Laravel\Sanctum\HasApiTokens;
      public function sendPasswordResetNotification($token)
      {
 
-         $url = 'http://127.0.0.1:4200/reset-password?token='.$token;
+         $url = 'http://localhost:4200/reset-password?token='.$token;
 
          $this->notify(new ResetPasswordNotification($url));
      }

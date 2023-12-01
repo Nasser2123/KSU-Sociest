@@ -26,7 +26,7 @@ class LoginRequest extends FormRequest
     public function rules():array
     {
         return [
-            'email' => 'required|email|Exists:users,email',
+            'email' => 'required|email|Exists:users,email|ends_with:@student.ksu.edu.sa',
             'password' => 'required' ,
         ];
     }
