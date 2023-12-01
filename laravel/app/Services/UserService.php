@@ -22,9 +22,6 @@ class  UserService
         event(new Registered($user));
         $user->assignRole('Student');
         Student::create(array_merge($request->all(), ['id' => $user->id]));
-//        $user->assignRole('Supervisor');
-//        Supervisor::create(['id' => $user->id ,'department' =>'IS' , 'department_id' => 2]);
-
         return $this->success(new UserResource($user) , 'Please verify your email');
     }
 

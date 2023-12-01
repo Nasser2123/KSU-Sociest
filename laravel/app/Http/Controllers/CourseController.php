@@ -32,7 +32,7 @@ class CourseController extends Controller
 
     public function show(Department $department , Course $course):JsonResponse
     {
-        return $this->success(new CoursesResource($course) , 'This is a course info belong'.$department->name );
+        return $this->success(new CourseResource($course) , 'This is a course info belong'.$department->name );
     }
 
     public function update(UpdateCourseRequest $request, Department $department , Course $course ,CourseService $courseService):JsonResponse

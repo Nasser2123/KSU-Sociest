@@ -24,7 +24,7 @@ class CourseService
     public function update($request, $course): JsonResponse
     {
         $course->update($request->all());
-        return $this->success(new CoursesResource($course), 'We update the course successfully' );
+        return $this->success(new CourseResource($course), 'We update the course successfully' );
     }
     public function destroy($course): JsonResponse
     {

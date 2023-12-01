@@ -27,7 +27,7 @@ class UpdateCourseRequest extends FormRequest
     {
         return [
             'name' => ['Required' , 'max:55' , 'Exists:courses,name'],
-            'slag' => ['Required' , 'max:6'],
+            'slag' => ['Required' , 'max:7'],
             'description' => ['Required' , 'max:2500'],
             'hours' => ['Required' , 'max:12' , 'numeric'],
             'prerequisite' => ['max:25'],
