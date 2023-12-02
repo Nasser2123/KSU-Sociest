@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use ShiftOneLabs\LaravelCascadeDeletes\CascadesDeletes;
@@ -26,8 +27,8 @@ class Student extends Model
     {
         return $this->hasOne(User::class, 'id', 'id');
     }
-    public function department(): hasOne
+    public function department(): BelongsTo
     {
-        return $this->hasOne(Department::class, 'id', 'department_id');
+        return $this->belongsTo(Department::class, 'department_id', 'id');
     }
 }

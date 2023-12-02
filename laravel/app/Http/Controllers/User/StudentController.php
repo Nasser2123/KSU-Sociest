@@ -3,53 +3,54 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AddSupervisorRequest;
-use App\Http\Requests\UpdateStudentRequest;
 use App\Http\Resources\StudentResource;
+use App\Http\Resources\SupervisorResource;
+use App\Models\Department;
 use App\Models\Student;
 use App\Models\Supervisor;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
     use HttpResponses ;
 
-    public function index():JsonResponse
+    public function index(Department $department):JsonResponse
     {
-        $students = Student::All();
-        $studentsId = $students->pluck('id')->toArray();
-        $users = DB::table('users')
-            ->whereIn('id', $studentsId)
-            ->get();
-
-        return $this->success(($users) ,'All Student');
+        $students = Student::with('department')->where('department_id' , '=' , $department['id'])->get();
+        if ($students->isEmpty()){
+            return $this->error(null ,'There is no student in this '.$department->name , 404);
+        }
+        return $this->success(StudentResource::collection($students) ,'All Student belong to '. $department->name);
     }
 
-    public function update(User $user ,UpdateStudentRequest $request): JsonResponse
+    public function addSupervisor(User $user): JsonResponse
     {
-        $student = Student::find($user['id']);
-        $student->department_name = $request['department_name'];
-        $student->department_id = $request['department_id'];
-        $student->save();
-        return $this->success( StudentResource::collection($student->user()->get()),'The student has updated');
-    }
+        $student = $user->student()->get();
+        if($student->isEmpty()){
+            return $this->error(null ,'There is no student in this ', 404);
+        }
 
-    public function addSupervisor(User $user ,AddSupervisorRequest $request): JsonResponse
-    {
-        $roles = $user->removeRole('Student');
+        $old_supervisor = Supervisor::withTrashed()->find($user['id']);
+        if($old_supervisor->restore()){
+            $user->removeRole('Student');
+            $user->assignRole("Supervisor");
+            $user->student()->delete();
+            return $this->success(new SupervisorResource($old_supervisor) ,"done");
+        }
+
         $supervisor =Supervisor::create([
-            'id' => $roles['id'] ,
-            'department_name' => $request['department_name'],
-            'department_id' => $request['department_id']
+            'id' => $user['id'] ,
+            'department_name' => $user['student']->department_name,
+            'department_id' => $user['student']->department_id
         ]);
-
+        $user->removeRole('Student');
         $user->assignRole("Supervisor");
         $user->student()->delete();
 
-        return $this->success($supervisor ,'All ');
+        return $this->success(new SupervisorResource($supervisor) ,"done");
+
 
     }
 }
