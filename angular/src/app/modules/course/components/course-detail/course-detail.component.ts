@@ -17,6 +17,8 @@ export class CourseDetailComponent implements OnInit {
   isLogin = this.authService.isLoggedIn();
   getRole: string;
   resources: ResourceModel[] = [];
+  courseId: number;
+  departmentId: number;
   constructor(
     private route: ActivatedRoute,
     private courseService: CourseAuthService,
@@ -28,10 +30,10 @@ export class CourseDetailComponent implements OnInit {
 
   ngOnInit() {
     this.getRole = this.authService.getCurrentUserRole();
-    const departmentId = +this.route.snapshot.params['departmentId'];
-    const courseId = +this.route.snapshot.params['courseId'];
+    this.departmentId = +this.route.snapshot.params['departmentId'];
+    this.courseId = +this.route.snapshot.params['courseId'];
 
-    this.courseService.getCourseDetails(departmentId, courseId).subscribe({
+    this.courseService.getCourseDetails(this.departmentId, this.courseId).subscribe({
       next: (data) => {
         this.course = data; // Adjust to access nested department
         this.isLoading = false;
@@ -43,9 +45,9 @@ export class CourseDetailComponent implements OnInit {
       },
       // complete: () => console.log('department details have been retrieved!');
     });
-    this.resourceService.getAllResourceBelongCourse(1).subscribe({
+    this.resourceService.getAllResourceBelongCourse(this.courseId).subscribe({
       next:(data) => {
-        this.resources = data;
+        this.resources = data.data;
       },
       error: (error) => {
         console.error('Error fetching resources', error);
@@ -54,5 +56,20 @@ export class CourseDetailComponent implements OnInit {
   }
   editCourse() {
     this.router.navigate(['edit'], { relativeTo: this.route });
+  }
+
+  addResource(){
+    this.router.navigate([`addResource`], { relativeTo: this.route });
+  }
+
+  downloadResource(resourceId: number, resourceName: string) {
+    this.resourceService.getPresignedUrl(this.courseId, resourceId).subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = resourceName;  // Set the file name for download
+      link.click();
+      window.URL.revokeObjectURL(url);
+    });
   }
 }

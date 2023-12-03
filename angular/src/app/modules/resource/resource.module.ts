@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ResourceDetailComponent } from './components/resource-detail/resource-detail.component';
 import { ResourceListComponent } from './components/resource-list/resource-list.component';
 import { ResourceFormComponent } from './components/resource-form/resource-form.component';
+import {AddResourceComponent} from "./components/resource-form/add-resource/add-resource.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -10,10 +12,12 @@ import { ResourceFormComponent } from './components/resource-form/resource-form.
   declarations: [
     ResourceDetailComponent,
     ResourceListComponent,
-    ResourceFormComponent
+    ResourceFormComponent,
+    AddResourceComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ]
 })
 export class ResourceModule { }

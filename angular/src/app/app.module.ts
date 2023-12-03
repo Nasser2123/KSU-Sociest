@@ -8,11 +8,11 @@ import { RegisterComponent } from './core/authentication/components/register/reg
 import { HomeComponent } from './core/home/home/home.component';
 import { HeaderComponent } from './core/home/header/header.component';
 import { FooterComponent } from './core/home/footer/footer.component';
-import { LandingPageComponent } from './core/home/landing-page/landing-page.component';
+import { DashboardComponent } from './core/home/dashboard/dashboard.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { SearchComponent } from './search/search.component';
-import { AdminComponent } from './core/authentication/components/admin/admin.component';
+import { ResetPasswordComponent } from './core/authentication/components/reset-password/reset-password.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {DropdownDirective} from "./shared/directives/dropdown.directive";
 import { ForgotPasswordComponent } from './core/authentication/components/forgot-password/forgot-password.component';
@@ -28,9 +28,9 @@ import { ChangePasswordComponent } from './core/authentication/components/change
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    LandingPageComponent,
+    DashboardComponent,
     SearchComponent,
-    AdminComponent,
+    ResetPasswordComponent,
     DropdownDirective,
     ForgotPasswordComponent,
     ProfileComponent,

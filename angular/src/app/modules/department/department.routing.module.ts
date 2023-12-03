@@ -5,11 +5,13 @@ import { DepartmentListComponent } from './components/department-list/department
 import { DepartmentDetailComponent } from './components/department-detail/department-detail.component';
 import { DepartmentFormComponent } from './components/department-form/department-form.component';
 import {AddDepartmentComponent} from "./components/department-form/add-department/add-department.component";
+import {CourseDetailComponent} from "../course/components/course-detail/course-detail.component";
+import {AddResourceComponent} from "../resource/components/resource-form/add-resource/add-resource.component";
 
 const routes: Routes = [
 
   {
-    path: ':departmentId/course',
+    path: ':departmentId/courses',
     loadChildren: () => import('../course/course.module').then(m => m.CourseModule)
   },
   {
@@ -26,12 +28,13 @@ const routes: Routes = [
   },
   {
     path: ':departmentId/courses',
-    loadChildren: () => import('../course/course.module').then(m => m.CourseModule)
+    loadChildren: () => import('../resource/resource.module').then(m => m.ResourceModule)
   },
   {
     path: '', pathMatch: 'full', // default path for department module
     component: DepartmentListComponent
   },
+
 ];
 
 @NgModule({

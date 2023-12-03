@@ -11,7 +11,31 @@ export class ResourceAuthService {
   private apiUrl = 'http://localhost:8000/api'
   constructor(private http: HttpClient) { }
 
-  getAllResourceBelongCourse(resourceId: number) {
-    return this.http.get<any>(`${this.apiUrl}/course/${resourceId}/resource`)
+  addResource(courseId: number, formData: FormData) {
+    const url = `${this.apiUrl}/course/${courseId}/resource`;
+
+    // If you are using HttpHeaders for setting the Authorization header
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`, // Assuming token is stored in localStorage
+      'Accept': 'application/json'
+    });
+
+    return this.http.post(url, formData, { headers: headers });
+  }
+  getAllResourceBelongCourse(courseId: number) {
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`, // Assuming token is stored in localStorage
+    });
+    return this.http.get<any>(`${this.apiUrl}/course/${courseId}/resource`, { headers: headers});
+  }
+  getPresignedUrl(courseId: number, resourceId: number): Observable<Blob> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`, // Assuming token is stored in localStorage
+    });
+    return this.http.get(`${this.apiUrl}/course/${courseId}/resource/${resourceId}`, {
+      headers: headers,
+      responseType: 'blob'  // Set responseType to 'blob'
+    });
   }
 }
