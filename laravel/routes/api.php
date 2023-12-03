@@ -49,7 +49,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
     Route::group(['middleware' => 'role:Admin'], function () {
         Route::apiResource('department', DepartmentController::class)->only('destroy', 'update', 'store');
 
-        Route::get('supervisors', [SupervisorController::class , 'index']);
+        Route::get('supervisors/{department}', [SupervisorController::class , 'index']);
         Route::Post('supervisor/{user}/removeSupervisor', [SupervisorController::class , 'removeSupervisor']);
 
 

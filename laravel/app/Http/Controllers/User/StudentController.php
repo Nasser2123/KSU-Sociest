@@ -29,11 +29,13 @@ class StudentController extends Controller
     {
         $student = $user->student()->get();
         if($student->isEmpty()){
-            return $this->error(null ,'There is no student in this ', 404);
+            return $this->error(null ,'There is no student with this id', 404);
         }
 
         $old_supervisor = Supervisor::withTrashed()->find($user['id']);
-        if($old_supervisor->restore()){
+
+        if(!(is_null($old_supervisor))){
+            $old_supervisor->restore();
             $user->removeRole('Student');
             $user->assignRole("Supervisor");
             $user->student()->delete();

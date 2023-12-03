@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StudentResource;
 use App\Http\Resources\SupervisorResource;
+use App\Models\Department;
 use App\Models\Student;
 use App\Models\Supervisor;
 use App\Models\User;
@@ -14,11 +15,11 @@ use Illuminate\Http\JsonResponse;
 class SupervisorController extends Controller
 {
     use HttpResponses;
-    public function index(): JsonResponse
+    public function index(Department $department): JsonResponse
     {
-        $supervisors = Supervisor::with('department')->get();
+        $supervisors = Supervisor::with('department')->where('department_id' , '=' , $department['id'])->get();
         if ($supervisors->isEmpty()){
-            return $this->error(null ,'There is no student in this ', 404);
+            return $this->error(null ,'There is no supervisor', 404);
         }
         return $this->success(SupervisorResource::collection($supervisors) ,'All supervisor belong to ');
     }
@@ -37,7 +38,7 @@ class SupervisorController extends Controller
             $user->assignRole("Student");
             $user->supervisor()->delete();
 
-            return $this->success(new StudentResource($old_student),'All ');
+            return $this->success(new StudentResource($old_student),'There is no supervisor ');
 
     }
 

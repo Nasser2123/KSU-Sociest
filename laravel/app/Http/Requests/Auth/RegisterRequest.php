@@ -36,7 +36,7 @@ class RegisterRequest extends FormRequest
 
         ];
     }
-    public function messages()
+    public function messages(): array
     {
         return [
             'department_name.exists' => 'The selected department does not exist.',
