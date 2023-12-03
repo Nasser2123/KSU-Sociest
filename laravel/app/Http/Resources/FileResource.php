@@ -20,7 +20,7 @@ class FileResource extends JsonResource
             'name' => $this['name'],
             'type' => $this['type'],
             'year' => $this['year'],
-            'approved' => $this['approved'],
+//            'approved' => $this['approved'],
             'path' => $this['path'],
 
         ];

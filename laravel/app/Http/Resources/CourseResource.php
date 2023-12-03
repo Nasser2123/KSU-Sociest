@@ -18,7 +18,7 @@ class CourseResource extends JsonResource
             'level' => $this['level'],
             'prerequisite' => $this['prerequisite'],
             'status' => $this['status'],
-            'resource' => $this['resource'],
+            'resource' => FileResource::collection($this['resource']),
         ];
     }
 }
