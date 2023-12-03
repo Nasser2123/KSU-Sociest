@@ -53,7 +53,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::Post('supervisor/{user}/removeSupervisor', [SupervisorController::class , 'removeSupervisor']);
 
 
-        Route::get('students', [StudentController::class , 'index']);
+        Route::get('students/{department}', [StudentController::class , 'index']);
         Route::Post('student/{user}/addSupervisor', [StudentController::class , 'addSupervisor']);
     });
 
@@ -67,9 +67,6 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::post('department/{department}/resource/{resource}/reject', [ResourceController::class , 'reject']);
     });
 
-    Route::group(['middleware' => 'role:Student'], function () {
-        Route::put('user/{user}/update-profile', [StudentController::class, "update"]);
-    });
 
     Route::apiResource('course/{course}/resource', ResourceController::class);
     Route::post('logout', [AuthController::class, 'logout']);

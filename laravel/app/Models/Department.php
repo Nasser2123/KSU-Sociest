@@ -26,7 +26,10 @@ class Department extends Model
     {
         return $this->hasMany(Supervisor::class);
     }
-
+    public function student()
+    {
+        return $this->hasMany(Student::class);
+    }
     public function course()
     {
         return $this->belongsToMany(Course::class);

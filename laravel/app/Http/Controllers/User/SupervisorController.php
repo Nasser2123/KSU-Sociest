@@ -3,40 +3,41 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StudentResource;
+use App\Http\Resources\SupervisorResource;
 use App\Models\Student;
 use App\Models\Supervisor;
 use App\Models\User;
 use App\Traits\HttpResponses;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 
 class SupervisorController extends Controller
 {
     use HttpResponses;
     public function index(): JsonResponse
     {
-        $supervisor = Supervisor::All();
-        $supervisorId = $supervisor->pluck('id')->toArray();
-        $supervisors = DB::table('users')
-            ->whereIn('id', $supervisorId)
-            ->get();
-        return $this->success($supervisors ,'All supervisor');
+        $supervisors = Supervisor::with('department')->get();
+        if ($supervisors->isEmpty()){
+            return $this->error(null ,'There is no student in this ', 404);
+        }
+        return $this->success(SupervisorResource::collection($supervisors) ,'All supervisor belong to ');
     }
 
     public function removeSupervisor(User $user):JsonResponse
     {
         $supervisor = $user->supervisor()->get();
-        $user->removeRole('Supervisor');
+        if($supervisor->isEmpty()){
+            return $this->error(null ,'There is no supervisor', 404);
+        }
 
-        $student = Student::withTrashed()->find($user['id']);
-        $student->restore();
-        $student->department_name = $supervisor[0]->department_name ;
-        $student->department_id = $supervisor[0]->department_id ;
-        $student->save();
 
-        $user->assignRole("Student");
-        $user->supervisor()->delete();
-        return $this->success( $student,'All ');
+        $old_student = Student::withTrashed()->find($user['id']);
+        $old_student->restore();
+            $user->removeRole('Supervisor');
+            $user->assignRole("Student");
+            $user->supervisor()->delete();
+
+            return $this->success(new StudentResource($old_student),'All ');
 
     }
 
