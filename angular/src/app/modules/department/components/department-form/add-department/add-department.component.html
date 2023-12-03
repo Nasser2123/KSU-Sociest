@@ -1,10 +1,12 @@
-<!-- department-form.component.html -->
 <div class="container mt-4" *ngIf="getRole == 'Admin'">
   <h2>Add Department</h2>
   <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()">
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
       <input type="text" class="form-control" id="name" formControlName="name">
+      <div *ngIf="departmentForm.get('name')?.errors?.['maxlength'] && departmentForm.get('name')?.touched" class="text-danger">
+        Name must be less than 20 characters.
+      </div>
     </div>
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>
@@ -12,8 +14,10 @@
     </div>
     <div class="mb-3">
       <label for="level" class="form-label">Level</label>
-      <input type="number" class="form-control" id="level" formControlName="level">
+      <select class="form-control" id="level" formControlName="level">
+        <option *ngFor="let lvl of levels" [value]="lvl">{{ lvl }}</option>
+      </select>
     </div>
-    <button type="submit" class="btn btn-dark m-3">Add Department</button>
+    <button type="submit" class="btn btn-dark m-3" [disabled]="!departmentForm.valid">Add Department</button>
   </form>
 </div>

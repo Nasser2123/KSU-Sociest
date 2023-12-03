@@ -42,6 +42,7 @@ export class DepartmentListComponent implements OnInit {
           this.router.navigate(['department']);
           this.ngOnInit();
         }, (error) => {
+          alert('there was an error deleting the department!');
           console.log("Error: ", error);
         });
     } else alert("Delete has been canceled!");

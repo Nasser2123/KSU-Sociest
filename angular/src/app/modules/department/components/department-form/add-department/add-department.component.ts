@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {DepartmentAuthService} from "../../../department-services/department-auth.service";
-import {Router} from "@angular/router";
-import {AuthService} from "../../../../../core/authentication/services/auth.service";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { Component, OnInit } from '@angular/core';
+import { DepartmentAuthService } from "../../../department-services/department-auth.service";
+import { Router } from "@angular/router";
+import { AuthService } from "../../../../../core/authentication/services/auth.service";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-add-department',
@@ -12,6 +12,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 export class AddDepartmentComponent implements OnInit {
   departmentForm: FormGroup;
   getRole: string;
+  levels: number[] = Array.from({length: 10}, (_, i) => i + 1); // Levels from 1 to 20
 
   constructor(
     private departmentService: DepartmentAuthService,
@@ -22,9 +23,9 @@ export class AddDepartmentComponent implements OnInit {
   ngOnInit() {
     this.getRole = this.authService.getCurrentUserRole(); // Check if user is Admin
     this.departmentForm = new FormGroup({
-      name: new FormControl('', Validators.required),
+      name: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       description: new FormControl('', Validators.required),
-      level: new FormControl('', Validators.required)
+      level: new FormControl('', [Validators.required, Validators.max(20)])
     });
   }
 

@@ -1,20 +1,18 @@
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {CourseAuthService} from "../../course-services/course-auth.service";
-import {Course} from "../../../../../shared/models/course.model";
-
-class CourseService {
-}
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { CourseAuthService } from "../../course-services/course-auth.service";
+import { Course } from "../../../../../shared/models/course.model";
 
 @Component({
   selector: 'add-course',
   templateUrl: './add-course.component.html',
-
 })
 export class AddCourseComponent implements OnInit {
   courseForm: FormGroup;
   departmentId: number;
+  levels: number[] = Array.from({ length: 10 }, (_, i) => i + 1); // Levels 1 to 10
+  hours: number[] = Array.from({ length: 6 }, (_, i) => i + 1); // Levels 1 to 10
 
   constructor(
     private courseService: CourseAuthService,
@@ -23,17 +21,16 @@ export class AddCourseComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Retrieve the departmentId from the route parameters or some other means
     this.departmentId = +this.route.snapshot.params['departmentId'];
 
     this.courseForm = new FormGroup({
-      name: new FormControl('', Validators.required),
-      slag: new FormControl('', Validators.required),
+      name: new FormControl('', [Validators.required, Validators.maxLength(45)]),
+      slag: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]),
       description: new FormControl('', Validators.required),
-      hours: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)]),
+      hours: new FormControl('', [Validators.required, Validators.max(6)]),
       prequisite: new FormControl(''),
       status: new FormControl('', Validators.required),
-      level: new FormControl('', [Validators.required, Validators.pattern(/^\d+$/)])
+      level: new FormControl('', [Validators.required, Validators.min(1), Validators.max(10)])
     });
   }
 

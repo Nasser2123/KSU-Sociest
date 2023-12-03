@@ -89,6 +89,11 @@ export class AuthService {
 
     // Optionally, you can also perform other logout-related actions (e.g., navigate to the login page)
     this.router.navigate(['/home']);
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    this.http.post(`${this.baseUrl}/logout`, { headers: headers});
   }
 }
 

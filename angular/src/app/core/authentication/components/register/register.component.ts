@@ -30,8 +30,8 @@ export class RegisterComponent {
         this.router.navigate(['/home']);
       },
       error => {
-        alert(error.message.toString());
-        this.errorMessage = error.message + 'error while registration' || 'An error occurred during registration.';
+        alert('Error registering, please make sure you have entered correct values and try again!');
+        // this.errorMessage = error.message + 'error while registration' || 'An error occurred during registration.';
       }
     );
   }

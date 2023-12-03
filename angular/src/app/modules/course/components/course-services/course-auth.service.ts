@@ -38,18 +38,18 @@ export class CourseAuthService{
     return this.http.post<Course>(`${this.apiUrl}/${departmentId}/course`, formData, { headers });
   }
 
-  updateCourse(departmentId: number, course: Course): Observable<any> {
-    const url = `${this.apiUrl}/${departmentId}/course`;
+  updateCourse(departmentId: number, course: Course, courseId: number): Observable<any> {
+    const url = `${this.apiUrl}/${departmentId}/course/${courseId}`;
       const body = {
           ...course,
           _method: 'PUT'
       };
-
-      return this.http.post(url, body, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}` // Retrieve token from local storage
-      }
+    // If you are using HttpHeaders for setting the Authorization header
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`, // Assuming token is stored in localStorage
+      'Content-Type': 'application/json'
     });
+      return this.http.post(url, body, { headers });
   }
   getCourseDetails(departmentId: number, courseId: number): Observable<Course> {
     return this.http.get<{ status: string, data: Course }>(`${this.apiUrl}/${departmentId}/course/${courseId}`)

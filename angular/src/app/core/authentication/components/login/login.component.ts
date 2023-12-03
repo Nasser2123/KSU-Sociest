@@ -11,7 +11,7 @@ import {of} from "rxjs";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
+  getUserRole: string;
   loginForm: FormGroup;
 
   constructor(private authService: AuthService,
@@ -38,7 +38,10 @@ export class LoginComponent {
           localStorage.setItem('role', JSON.stringify(response.data.user.role));
           // Navigate to the dashboard or home page after successful login
           this.authService.loginSuccess();
+          if (this.getUserRole !== 'Student')
           this.router.navigate(['/home'])
+          else
+            this.router.navigate(['/department'])
         }
       },
       error => {

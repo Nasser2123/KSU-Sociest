@@ -7,6 +7,7 @@ import { CourseListComponent } from './components/course-list/course-list.compon
 import {CourseFormComponent} from "./components/course-form/course-form.component";
 import {CourseDetailComponent} from "./components/course-detail/course-detail.component";
 import {AddCourseComponent} from "./components/course-form/add-course/add-course.component";
+import {AddResourceComponent} from "../resource/components/resource-form/add-resource/add-resource.component";
 
 
 const routes: Routes = [
@@ -19,12 +20,20 @@ const routes: Routes = [
     component: CourseDetailComponent
   },
   {
+    path: ':courseId/addResource',
+    component: AddResourceComponent,
+  },
+  {
     path: ':courseId/edit',
     component: CourseFormComponent
   },
   {
     path: '', pathMatch: 'full',// default path for course module
     component: CourseListComponent
+  },
+  {
+    path: 'resources',
+    loadChildren: () => import('../resource/resource.module').then(m => m.ResourceModule)
   },
 
 ];

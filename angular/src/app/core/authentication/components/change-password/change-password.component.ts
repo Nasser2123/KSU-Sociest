@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import {ActivatedRoute, Router} from "@angular/router";
-import {UserModel} from "../../../../shared/models/user.model"; // Replace with the correct path
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'app-change-password',
@@ -12,31 +11,36 @@ import {UserModel} from "../../../../shared/models/user.model"; // Replace with 
 export class ChangePasswordComponent implements OnInit {
   changePasswordForm: FormGroup;
   userId: number; // Set this to the current user's ID
-  errorMessage: string;
+
   constructor(private authService: AuthService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    this.changePasswordForm = new FormGroup({
-      oldPassword: new FormControl('', [Validators.required]),
-      newPassword: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl('', [Validators.required])
-    });
+    this.userId = +this.route.snapshot.params['userId'];
+    this.changePasswordForm = this.fb.group({
+      oldPassword: ['', [Validators.required]],
+      newPassword: ['', [Validators.required]],
+      confirmPassword: ['', [Validators.required]]
+    }, { validator: this.passwordMatchValidator });
+  }
+
+  passwordMatchValidator(form: FormGroup) {
+    return form.get('newPassword')?.value === form.get('confirmPassword')?.value
+      ? null : { 'mismatch': true };
   }
 
   onChangePassword() {
-    this.userId = +this.route.snapshot.params['userId'];
-
     if (this.changePasswordForm.valid) {
       const { oldPassword, newPassword, confirmPassword } = this.changePasswordForm.value;
       this.authService.changePassword(this.userId, oldPassword, newPassword, confirmPassword).subscribe(
         () => {
           // Handle success
           alert('Password changed successfully');
-          this.router.navigate(['/profile'])
+          this.router.navigate(['/profile']);
         },
         error => {
           // Handle error
-          console.error('Error changing password:', error);
+          alert('Old password is incorrect!! Please enter your old password correctly');
+          // console.error('Error changing password:', error);
         }
       );
     } else {

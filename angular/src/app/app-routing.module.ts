@@ -4,11 +4,14 @@ import {HomeComponent} from "./core/home/home/home.component";
 import {RegisterComponent} from "./core/authentication/components/register/register.component";
 import {LoginComponent} from "./core/authentication/components/login/login.component";
 import {SearchComponent} from "./search/search.component";
-import {LandingPageComponent} from "./core/home/landing-page/landing-page.component";
+import {DashboardComponent} from "./core/home/dashboard/dashboard.component";
 import {AuthGuard} from "./core/authentication/services/auth.guard";
 import {ForgotPasswordComponent} from "./core/authentication/components/forgot-password/forgot-password.component";
 import {ProfileComponent} from "./core/authentication/components/profile/profile.component";
 import {ChangePasswordComponent} from "./core/authentication/components/change-password/change-password.component";
+import {ResetPasswordComponent} from "./core/authentication/components/reset-password/reset-password.component";
+import {AddResourceComponent} from "./modules/resource/components/resource-form/add-resource/add-resource.component";
+import {CourseDetailComponent} from "./modules/course/components/course-detail/course-detail.component";
 
 const routes: Routes = [
   {
@@ -25,6 +28,10 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'reset-password/:token',
+    component: ResetPasswordComponent
   },
   {
     path: 'login',
@@ -51,7 +58,7 @@ const routes: Routes = [
   },
   {
     path: 'landing-page',
-    component: LandingPageComponent,
+    component: DashboardComponent,
     canActivate: [AuthGuard], // Apply the AuthGuard to protect this route
   },
   {
@@ -64,7 +71,7 @@ const routes: Routes = [
       {
         path: ':departmentId/courses',
         loadChildren: () => import('./modules/course/course.module').then(m => m.CourseModule)
-      }
+      },
     ]
   },
   {
