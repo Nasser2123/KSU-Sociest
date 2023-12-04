@@ -11,10 +11,11 @@ import {Router} from "@angular/router";
 export class HeaderComponent implements OnInit {
   isAuthenticated: boolean = false;
   private authSubscription: Subscription;
-
+  getRole: string;
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
+    this.getRole = this.authService.getCurrentUserRole();
     this.authSubscription = this.authService.isAuthenticated$.subscribe(
       (authStatus) => {
         this.isAuthenticated = authStatus;

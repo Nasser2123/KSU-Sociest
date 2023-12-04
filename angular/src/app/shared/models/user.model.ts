@@ -7,4 +7,6 @@ export class UserModel {
     email?: string;
     password?: string;
     confirmPassword?: string;
+    departmentId: number | null;
+    departmentName: string;
 }

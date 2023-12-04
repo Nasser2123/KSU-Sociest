@@ -1,10 +1,83 @@
-<!--
-<div>
-  <h1>THIS IS DASHBOARD YOU WILL FIND YOUR DATA AS {{user.role}}</h1>
-  <ng-container *ngIf="user">
-    <p>Hi {{ user.firstName }} {{ user.lastName }}</p>
-    &lt;!&ndash; Add more properties as needed &ndash;&gt;
-  </ng-container>
-  <p *ngIf="!user">User data not found in local storage</p>
+<h1>hi {{getRole}} {{name}}</h1>
+
+
+<div class="container m-4" *ngIf="getRole == 'Supervisor'">
+    <h2>Resources for Approval</h2>
+    <div class="list-group">
+      <div *ngFor="let resource of resources" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ resource.name }}</h5>
+          <small>Year: {{ resource.year }}</small>
+        </div>
+        <p class="mb-1">Type: {{ resource.type }}</p>
+        <button class="btn btn-secondary btn-sm me-2" (click)="reviewResource(resource.id??0)">Download</button>
+        <button class="btn btn-success btn-sm float-end" (click)="approveResource(resource.id??0)">Approve</button>
+        <button class="btn btn-danger btn-sm float-end" (click)="rejectResource(resource.id??0)">Reject</button>
+      </div>
+    </div>
 </div>
--->
+
+
+
+
+
+<div class="container" *ngIf="getRole == 'Admin'">
+  <div class="container mt-4">
+    <!-- Supervisors Section -->
+    <div class="row mb-4">
+      <div class="col">
+        <h2>Supervisors</h2>
+        <button class="btn btn-secondary mb-2" (click)="loadSupervisors()">Load Supervisors</button>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let supervisor of supervisors">
+            <td>{{ supervisor.id }}</td>
+            <td>{{ supervisor.first_name }}</td>
+            <td>{{ supervisor.department_name }}</td>
+            <td>
+            <button class="btn btn-danger btn-sm" (click)="removeSupervisor(supervisor.id)">Remove Supervisor</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Students Section -->
+    <div class="row">
+      <div class="col">
+        <h2>Students</h2>
+        <button class="btn btn-secondary mb-2" (click)="loadStudents()">Load Students</button>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let student of students">
+            <td>{{ student.id }}</td>
+            <td>{{ student.first_name }} {{student.last_name}}</td>
+            <td>{{ student.department_name }}</td>
+            <td>
+              <button class="btn btn-success btn-sm" (click)="assignSupervisor(student.id, student.department_name,student.department_id)">Assign Supervisor</button>
+
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -57,7 +57,7 @@ const routes: Routes = [
     component: ForgotPasswordComponent
   },
   {
-    path: 'landing-page',
+    path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard], // Apply the AuthGuard to protect this route
   },

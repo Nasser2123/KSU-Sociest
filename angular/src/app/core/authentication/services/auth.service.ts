@@ -25,15 +25,16 @@ export class AuthService {
   isAuthenticated$: Observable<boolean> = this.isAuthenticatedSubject.asObservable();
 
   register(user: UserModel): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`,
-      {
-        email: user.email,
-        first_name: user.firstName,
-        last_name: user.lastName,
-        password: user.password,
-        password_confirmation: user.confirmPassword
-      })}
-
+    return this.http.post(`${this.baseUrl}/register`, {
+      first_name: user.firstName,
+      last_name: user.lastName,
+      email: user.email,
+      password: user.password,
+      password_confirmation: user.confirmPassword,
+      department_id: user.departmentId,
+      department_name: user.departmentName // Include this if required
+    });
+  }
 
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/login`, { email, password });
@@ -47,7 +48,6 @@ export class AuthService {
     const token = localStorage.getItem('token');
     return !!token; // Return true if a token is present, otherwise false
   }
-
   getCurrentUserRole(): string {
     const userData = localStorage.getItem('user');
     if (userData) {
@@ -62,23 +62,19 @@ export class AuthService {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     });
-
     const body = {
       old_password: oldPassword,
       password: newPassword,
       password_confirmation: confirmPassword,
       id: userId
     };
-
     return this.http.post(`${this.baseUrl}/user/${userId}/change-password`, body, { headers });
   }
-
   forgotPassword(email: string): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/forgot-password`, {
       email: email
     });
   }
-
   logout(): void {
     // Clear the token and any other user-related data from local storage
     localStorage.removeItem('token');
@@ -95,6 +91,40 @@ export class AuthService {
 
     this.http.post(`${this.baseUrl}/logout`, { headers: headers});
   }
+
+  assignSupervisor(studentId: number, departmentId: number, departmentName: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.http.post(`${this.baseUrl}/student/${studentId}/addSupervisor`, {
+      department_id: departmentId,
+      department_name: departmentName
+    }, { headers });
+  }
+  removeSupervisor(studentId: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.http.post(`${this.baseUrl}/supervisor/${studentId}/removeSupervisor`, {}, { headers });
+  }
+  getAllSupervisors(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.http.get(`${this.baseUrl}/supervisors`, { headers });
+  }
+  getStudents(departmentId: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.http.get(`${this.baseUrl}/students/${departmentId}`, { headers });
+  }
+
+
 }
 
 

@@ -72,4 +72,18 @@ export class CourseDetailComponent implements OnInit {
       window.URL.revokeObjectURL(url);
     });
   }
+
+  removeResource(resourceId: number) {
+    this.resourceService.rejectResource(this.departmentId, resourceId).subscribe(
+      response => {
+        alert('Rejecting resource successfully, it has been deleted')
+        console.log(response);
+        this.ngOnInit(); // Reload resources to reflect changes
+      },
+      error => {
+        alert('Error while rejecting resource!')
+        console.error('Error rejecting resource', error)
+      }
+    );
+  }
 }

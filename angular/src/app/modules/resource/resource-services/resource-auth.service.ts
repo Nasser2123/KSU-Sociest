@@ -38,4 +38,34 @@ export class ResourceAuthService {
       responseType: 'blob'  // Set responseType to 'blob'
     });
   }
+  reviewResource(resourceId: number): Observable<Blob> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    // @ts-ignore
+    return this.http.get(`${this.apiUrl}/downloadResource/${resourceId}`, { headers, responseType: 'blob' as 'json' });
+  }
+
+  getResources(departmentId: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.http.get(`${this.apiUrl}/department/${departmentId}/resource`, { headers });
+  }
+  approveResource(departmentId: number, resourceId: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.http.post(`${this.apiUrl}/department/${departmentId}/resource/${resourceId}/approve`, {}, { headers });
+  }
+  rejectResource(departmentId: number, resourceId: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.http.post(`${this.apiUrl}/department/${departmentId}/resource/${resourceId}/reject`, {}, { headers });
+  }
 }

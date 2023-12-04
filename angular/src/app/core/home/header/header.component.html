@@ -15,6 +15,9 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
         <!-- Common Links for Both Logged-in and Non-Logged-in Users -->
+        <li class="nav-item" *ngIf="isAuthenticated && getRole != 'Student'">
+          <a class="nav-link" [routerLink]="['/dashboard']">Dashboard</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" [routerLinkActiveOptions]="{ exact: true }" [routerLink]="['/']" routerLinkActive="active" *ngIf="!(isAuthenticated)">Home</a>
         </li>

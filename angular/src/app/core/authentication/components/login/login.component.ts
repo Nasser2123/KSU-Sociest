@@ -39,7 +39,7 @@ export class LoginComponent {
           // Navigate to the dashboard or home page after successful login
           this.authService.loginSuccess();
           if (this.getUserRole !== 'Student')
-          this.router.navigate(['/home'])
+          this.router.navigate(['/dashboard']);
           else
             this.router.navigate(['/department'])
         }

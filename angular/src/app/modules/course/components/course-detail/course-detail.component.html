@@ -24,7 +24,7 @@
         <h4>Department Chat</h4>
         <button class="btn btn-dark">Go To {{course.name}} Chat</button>
       </div>
-      <div *ngIf="getRole" class="edit-department">
+      <div *ngIf="getRole == 'Supervisor' || getRole == 'Student'" class="edit-department">
         <button class="btn btn-dark m-1 float-end" (click)="addResource()">Add Resource</button>
       </div>
       <h3 class="mt-3">Course Resources:</h3>
@@ -39,7 +39,7 @@
 
               <button class="btn btn-dark" (click)="downloadResource(resource.id??0, resource.name)">Download</button>
               <div *ngIf="getRole == 'Supervisor'" class="edit-department float-end">
-                <button class="btn btn-dark float-start" >Delete Course</button>
+                <button class="btn btn-dark float-start" (click)="removeResource(resource.id??0)">Delete Course</button>
               </div>
             </div>
           </div>

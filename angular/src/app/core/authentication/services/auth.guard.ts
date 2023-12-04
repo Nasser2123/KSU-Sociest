@@ -15,24 +15,39 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+
     if (this.authService.isLoggedIn()) {
-      // User is logged in
-      if (state.url.includes('/login') || state.url.includes('/register') || state.url.includes('/home')) {
-        // If logged in, prevent access to login or register pages
-        this.router.navigate(['/landing-page']);
+      const userRole = this.authService.getCurrentUserRole(); // Get the current user's role
+
+      // Prevent logged-in users from accessing login or register pages
+      if (state.url.includes('/login') || state.url.includes('/register')) {
+        this.router.navigate(['/department']);
         return false;
       }
-      return true; // Allow access to other pages
+
+      // Allow only 'Admin' or 'Supervisor' to access the dashboard
+      if (state.url.includes('/dashboard') && (userRole === 'Admin' || userRole === 'Supervisor')) {
+        return true;
+      } else if (state.url.includes('/dashboard')) {
+        // Redirect non-Admin/Supervisor users trying to access the dashboard
+        this.router.navigate(['/department']);
+        return false;
+      }
+
+      // Allow access to other pages for logged-in users
+      return true;
     } else {
-      // User is not logged in
-      if (state.url.includes('/landing-page') || state.url.includes('/change-password')) {
-        // If not logged in, prevent access to the landing page
+      // Redirect non-logged-in users trying to access restricted pages to login
+      if (state.url.includes('/dashboard') || state.url.includes('/change-password')) {
         this.router.navigate(['/login']);
         return false;
       }
-      return true; // Allow access to login and register pages
+
+      // Allow non-logged-in users to access login and register pages
+      return true;
     }
   }
+
 
 
 }

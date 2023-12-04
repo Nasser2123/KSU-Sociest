@@ -5,4 +5,6 @@ export class ResourceModel {
   year: string;
   approved?: boolean;
   path?: string;
+  course_id?: number;
+
 }
