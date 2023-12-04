@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
       const userRole = this.authService.getCurrentUserRole(); // Get the current user's role
 
       // Prevent logged-in users from accessing login or register pages
-      if (state.url.includes('/login') || state.url.includes('/register')) {
+      if (state.url.includes('/login') || state.url.includes('/register') || state.url.includes('/reset-password')) {
         this.router.navigate(['/department']);
         return false;
       }
