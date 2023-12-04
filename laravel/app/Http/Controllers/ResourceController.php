@@ -59,6 +59,7 @@ class ResourceController extends Controller
     public function show(Course $course , Resource $resource): StreamedResponse|JsonResponse
     {
         if($resource['approved'] === 1) {
+
             if(Storage::disk('s3')->exists($resource['path']))
             {
                 return Storage::disk('s3')->response($resource['path']);
@@ -94,6 +95,14 @@ class ResourceController extends Controller
           return $resourceService->reject($resource);
         }
         return $this->error(null, "You can not reject resource in this department (Not Auth)".$department->name  , 404);
+    }
+
+    public function download(Resource $resource): StreamedResponse|JsonResponse
+    {
+        if(Storage::exists($resource['path'])) {
+            return Storage::disk('s3')->response($resource['path']);
+        }
+        return $this->error(null, "There is no resource", 404);
 
     }
 }
