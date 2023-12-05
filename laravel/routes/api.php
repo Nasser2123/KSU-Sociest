@@ -8,6 +8,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\User\SupervisorController;
 use App\Http\Controllers\User\StudentController;
+use App\Http\Controllers\ChatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,9 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
         Route::post('department/{department}/resource/{resource}/approve', [ResourceController::class , 'approve']);
         Route::post('department/{department}/resource/{resource}/reject', [ResourceController::class , 'reject']);
     });
+
+
+    Route::apiResource('course/{course}/message', ChatController::class)->only('index' , 'store' , 'destroy');
 
 
     Route::apiResource('course/{course}/resource', ResourceController::class);

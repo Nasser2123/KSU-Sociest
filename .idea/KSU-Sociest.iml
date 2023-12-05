@@ -10,6 +10,8 @@
       <sourceFolder url="file://$MODULE_DIR$/laravel/tests/Feature" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/laravel/tests/Unit" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/laravel/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/doctrine/instantiator" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/spatie/laravel-permission" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/console" />
@@ -24,6 +26,9 @@
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/deprecation-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/carbonphp/carbon-doctrine-types" />
       <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/symfony/polyfill-php83" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/paragonie/random_compat" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/paragonie/sodium_compat" />
+      <excludeFolder url="file://$MODULE_DIR$/laravel/vendor/pusher/pusher-php-server" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

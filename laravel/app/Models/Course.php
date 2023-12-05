@@ -34,5 +34,9 @@ class Course extends Model
         return $this->hasMany(Resource::class);
 //        return $this->hasMany(Resource::class)->where('approved', false);
     }
+    public function message(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
 
 }
