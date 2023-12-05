@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('course_id');
             $table->foreign('course_id')->references('id')->on('courses');
-            $table->text('message');
+            $table->text('content');
             $table->timestamps();
             $table->softDeletes();
 

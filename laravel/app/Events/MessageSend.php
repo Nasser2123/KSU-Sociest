@@ -2,6 +2,7 @@
 
 namespace App\Events;
 
+use App\Models\Course;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -15,21 +16,19 @@ class MessageSend implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public string $message;
+    public Course $course;
 
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
-    public function __construct($message)
+    public function __construct($message , $course)
     {
         $this->message = $message;
+        $this->course = $course;
+
     }
 
 
     public function broadcastOn()
     {
-        return new Channel('chat');
+        return ['chat'.$this->course->id];
     }
 
     public function broadcastAs()

@@ -6,14 +6,12 @@ use App\Events\MessageSend;
 use App\Http\Requests\MessageRequest;
 use App\Models\Course;
 use App\Models\Message;
-use App\Traits\HttpResponses;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use function broadcast;
 
 class ChatController extends Controller
 {
-    use HttpResponses;
 
     /**
      * Display a listing of the resource.
@@ -36,9 +34,10 @@ class ChatController extends Controller
      */
     public function store(Course $course ,MessageRequest $request): JsonResponse
     {
-        $message = Message::create(array_merge(['user_id' => Auth::id() , "course_id" => $course['id']] , $request->all()));
-        broadcast(new MessageSend($request['message']));
-        return $this->success($message, "Message send successfully");
+        $user = Auth::user();
+        $message = Message::create(array_merge($request->all() ,['user_id' => Auth::id() , "course_id" => $course['id']]));
+        broadcast(new MessageSend($request['message'] , $course));
+        return $this->success($message, "Message send successfully from ".$user['first_name']);
 
     }
 
