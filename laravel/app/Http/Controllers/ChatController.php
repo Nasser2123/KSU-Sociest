@@ -36,8 +36,8 @@ class ChatController extends Controller
     {
         $user = Auth::user();
         $message = Message::create(array_merge($request->all() ,['user_id' => Auth::id() , "course_id" => $course['id']]));
-        broadcast(new MessageSend($request['message'] , $course));
-        return $this->success($message, "Message send successfully from ".$user['first_name']);
+        broadcast(new MessageSend($request['message'] , $course , $user));
+        return $this->success($message, "Message send successfully from ".$user['first_name']." ".$user['last_name']);
 
     }
 
