@@ -24,8 +24,6 @@ class MessageRequest extends FormRequest
     public function rules()
     {
         return [
-//            "user_id" => ['Required' , 'Exists:users,id'],
-//            "course_id" => ['Required' , 'Exists:courses,id'],
             "message" => ['Required' , 'max:550']
         ];
     }

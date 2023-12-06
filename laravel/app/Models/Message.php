@@ -14,19 +14,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Message extends Model
 {
     use HasFactory , SoftDeletes;
-
     protected $fillable = ['user_id', 'course_id' , 'message'];
 
-
-
-
-    public function course(): BelongsTo
-    {
-        return $this->belongsTo(Course::class ,'course_id' , 'id');
-    }
 
     public function user(): HasOne
     {
         return $this->hasOne(User::class ,'user_id' , 'id');
+    }
+    public function course(): BelongsTo
+    {
+        return $this->belongsTo(Course::class ,'course_id' , 'id');
     }
 }
