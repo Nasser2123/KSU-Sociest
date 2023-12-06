@@ -9,7 +9,7 @@ import { ChatFormComponent } from './components/chat-form/chat-form.component';
 
 const routes: Routes = [
   {
-    path: '', // default path for department module
+    path: '', pathMatch: 'full',// default path for department module
     component: ChatListComponent
   },
   {

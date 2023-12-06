@@ -18,6 +18,7 @@ import {DropdownDirective} from "./shared/directives/dropdown.directive";
 import { ForgotPasswordComponent } from './core/authentication/components/forgot-password/forgot-password.component';
 import { ProfileComponent } from './core/authentication/components/profile/profile.component';
 import { ChangePasswordComponent } from './core/authentication/components/change-password/change-password.component';
+import {ChatModule} from "./modules/chat/chat.module";
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { ChangePasswordComponent } from './core/authentication/components/change
   ],
   imports: [
     BrowserModule,
+    ChatModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

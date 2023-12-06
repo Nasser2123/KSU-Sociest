@@ -56,6 +56,14 @@ export class AuthService {
     }
     return '';
   }
+  getCurrentUserDepartment(): string {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const user: any = JSON.parse(userData);
+      return user.department_name;
+    }
+    return '';
+  }
   changePassword(userId: number, oldPassword: string, newPassword: string, confirmPassword: string): Observable<any> {
     const token = localStorage.getItem('token'); // Retrieve the token from localStorage
     const headers = new HttpHeaders({

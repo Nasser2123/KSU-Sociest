@@ -22,7 +22,7 @@
       </div>
       <div *ngIf="isLogin" class="chat-section container mt-4">
         <h4>Department Chat</h4>
-        <button class="btn btn-dark">Go To {{course.name}} Chat</button>
+        <button class="btn btn-dark" (click)="goToChat(courseId, course.name)">Go To {{course.name}} Chat</button>
       </div>
       <div *ngIf="getRole == 'Supervisor' || getRole == 'Student'" class="edit-department">
         <button class="btn btn-dark m-1 float-end" (click)="addResource()">Add Resource</button>

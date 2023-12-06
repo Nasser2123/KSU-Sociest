@@ -19,7 +19,7 @@
         <div *ngIf="getRole == 'Admin'" class="edit-department">
           <button class="btn btn-dark m-3" (click)="updateDepartment(department.id)">Edit Department</button>
         </div>
-        <div *ngIf="getRole == 'Supervisor'" class="edit-department">
+        <div *ngIf="getRole == 'Supervisor' && getDep == department.name" class="edit-department">
           <button class="btn btn-dark m-3" (click)="addCourse(department.id)">Add Course</button>
         </div>
       </div>
@@ -37,7 +37,7 @@
               <p class="card-text">Hours: {{ course.hours }}</p>
               <p class="card-text">Level: {{ course.level }}</p>
               <button (click)="goToCourseDetails(course.id)" class="btn btn-dark">Go to Course Details</button>
-              <div *ngIf="getRole == 'Supervisor'" class="edit-department">
+              <div *ngIf="getRole == 'Supervisor' && getDep == department.name" class="edit-department">
                 <button class="btn btn-dark m-3" (click)="deleteCourse(course.id)">Delete Course</button>
               </div>
             </div>

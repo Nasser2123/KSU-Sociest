@@ -86,4 +86,8 @@ export class CourseDetailComponent implements OnInit {
       }
     );
   }
+
+  goToChat(courseId: number, courseName: string){
+    this.router.navigate([`chat/${this.departmentId}/${courseId}/${courseName}`]);
+  }
 }

@@ -14,16 +14,17 @@ import {Course} from "../../../../shared/models/course.model";
 })
 export class DepartmentDetailComponent implements OnInit {
   isLogin = this.authService.isLoggedIn();
-
   department: any | null = null;
   departmentId = this.route.snapshot.params["departmentId"];
   isLoading = true; // To handle loading state
   getRole: string;
+  getDep: string;
   courses: Course[] = [];
   constructor(private route: ActivatedRoute, private router: Router, private departmentService: DepartmentAuthService, private changeDetectorRef: ChangeDetectorRef, private authService: AuthService, private courseAuthService: CourseAuthService) {}
 
   ngOnInit() {
     this.getRole = this.authService.getCurrentUserRole();
+    this.getDep = this.authService.getCurrentUserDepartment();
     const id = +this.route.snapshot.params['departmentId'];
     this.departmentService.getDepartmentById(id).subscribe({
       next: (data) => {
