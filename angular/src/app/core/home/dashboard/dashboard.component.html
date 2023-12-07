@@ -3,7 +3,7 @@
 <div class="container" *ngIf="getRole == 'Supervisor'">
   <h2>Resources for Approval</h2>
   <div class="list-group">
-    <div *ngFor="let resource of resources" class="list-group-item list-group-item-action">
+    <div *ngFor="let resource of resources | paginate: { itemsPerPage: 5, currentPage: currentResourcePage }" class="list-group-item list-group-item-action">
       <div class="d-flex w-100 justify-content-between">
         <h5 class="mb-1">{{ resource.name }}</h5>
         <small>Year: {{ resource.year }}</small>
@@ -16,13 +16,15 @@
       </div>
     </div>
   </div>
+  <pagination-controls (pageChange)="currentResourcePage = $event"></pagination-controls>
 </div>
+
 <div class="container" *ngIf="getRole == 'Admin'">
   <div class="container mt-4">
     <!-- Supervisors Section -->
     <div class="row mb-4">
       <div class="col">
-        <h2>Supervisors</h2>
+        <h2>1. All Supervisors</h2>
         <button class="btn btn-primary mb-2" (click)="loadSupervisors()">Load Supervisors</button>
         <table class="table table-striped">
           <thead>
@@ -34,7 +36,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let supervisor of supervisors">
+          <tr *ngFor="let supervisor of supervisors | paginate: { itemsPerPage: 5, currentPage: currentSupervisorPage }">
             <td>{{ supervisor.id }}</td>
             <td>{{ supervisor.first_name }}</td>
             <td>{{ supervisor.department_name }}</td>
@@ -44,13 +46,14 @@
           </tr>
           </tbody>
         </table>
+        <pagination-controls (pageChange)="currentSupervisorPage = $event"></pagination-controls>
       </div>
     </div>
 
     <!-- Students Section -->
-    <div class="row">
+    <div class="row mb-4">
       <div class="col">
-        <h2>Students</h2>
+        <h2>2. All Students Non-Supervisor</h2>
         <button class="btn btn-primary mb-2" (click)="loadStudents()">Load Students</button>
         <table class="table table-striped">
           <thead>
@@ -62,16 +65,82 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let student of students">
+          <tr *ngFor="let student of students | paginate: { itemsPerPage: 5, currentPage: currentStudentPage }">
             <td>{{ student.id }}</td>
             <td>{{ student.first_name }} {{student.last_name}}</td>
             <td>{{ student.department_name }}</td>
             <td>
-              <button class="btn btn-success btn-sm" (click)="assignSupervisor(student.id, student.department_name,student.department_id)">Assign Supervisor</button>
+              <button class="btn btn-success btn-sm" (click)="assignSupervisor(student.id, student.department_name, student.department_id)">Assign Supervisor</button>
             </td>
           </tr>
           </tbody>
         </table>
+        <pagination-controls (pageChange)="currentStudentPage = $event"></pagination-controls>
+      </div>
+    </div>
+
+    <!-- Supervisors in Department Section -->
+    <div class="row">
+      <div class="col">
+        <h2>4. Supervisors in Department</h2>
+        <select class="form-select mb-2" [(ngModel)]="selectedDepartmentSuper" (change)="loadDepartmentSupervisors(selectedDepartmentSuper)">
+          <option value="">Select Department</option>
+          <option *ngFor="let dept of departments" [value]="dept.id">{{ dept.name }}</option>
+        </select>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let DepartmentSupervisor of departmentSupervisors | paginate: { itemsPerPage: 5, currentPage: currentStudentPage }">
+            <td>{{ DepartmentSupervisor.id }}</td>
+            <td>{{ DepartmentSupervisor.first_name }} {{DepartmentSupervisor.last_name}}</td>
+            <td>{{ DepartmentSupervisor.department_name }}</td>
+            <td>
+              <button class="btn btn-danger btn-sm" (click)="removeSupervisor(DepartmentSupervisor.id)">Remove Supervisor</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="currentDepartmentSupervisorPage = $event"></pagination-controls>
+      </div>
+    </div>
+
+
+    <!-- Students in Department Section -->
+    <div class="row">
+      <div class="col">
+        <h2>3. Students in Department</h2>
+        <select class="form-select mb-2" [(ngModel)]="selectedDepartmentStudent" (change)="loadDepartmentStudents(selectedDepartmentStudent)">
+          <option value="">Select Department</option>
+          <option *ngFor="let dept of departments" [value]="dept.id">{{ dept.name }}</option>
+        </select>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let DepartmentStudent of departmentStudents | paginate: { itemsPerPage: 5, currentPage: currentStudentPage }">
+          <td>{{ DepartmentStudent.id }}</td>
+          <td>{{ DepartmentStudent.first_name }} {{DepartmentStudent.last_name}}</td>
+          <td>{{ DepartmentStudent.department_name }}</td>
+          <td>
+            <button class="btn btn-success btn-sm" (click)="assignSupervisor(DepartmentStudent.id, DepartmentStudent.department_name, DepartmentStudent.department_id)">Assign Supervisor</button>
+          </td>
+          </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="currentDepartmentStudentPage = $event"></pagination-controls>
       </div>
     </div>
   </div>

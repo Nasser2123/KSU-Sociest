@@ -9,13 +9,16 @@
     <div class="col-lg-10">
       <div class="card shadow-sm m-3">
         <div class="card-header bg-light text-dark">
+          <label>Department Name</label>
           <input type="text" class="form-control" [(ngModel)]="editedDepartment.name" placeholder="Department Name">
           <div *ngIf="nameError" class="text-danger mt-2">
             Name must be less than 20 characters.
           </div>
         </div>
         <div class="card-body">
+          <label>Description</label>
           <textarea class="form-control mb-3" placeholder="Department Description" [(ngModel)]="editedDepartment.description"></textarea>
+          <label>Levels</label>
           <select class="form-control mb-3" [(ngModel)]="editedDepartment.level">
             <option *ngFor="let lvl of levels" [value]="lvl">{{ lvl }}</option>
           </select>

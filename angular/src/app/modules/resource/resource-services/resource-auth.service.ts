@@ -68,4 +68,12 @@ export class ResourceAuthService {
 
     return this.http.post(`${this.apiUrl}/department/${departmentId}/resource/${resourceId}/reject`, {}, { headers });
   }
+
+  getAllResources(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+    return this.http.get(`${this.apiUrl}/resources`, {headers:headers});
+  }
+
 }

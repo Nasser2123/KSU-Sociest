@@ -126,6 +126,13 @@ export class AuthService {
 
     return this.http.get(`${this.baseUrl}/supervisors`, { headers });
   }
+  getAllDepartmentSupervisors(departmentId: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
+
+    return this.http.get(`${this.baseUrl}/supervisors/${departmentId}`, { headers });
+  }
   getStudents(departmentId: number): Observable<any> {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -133,7 +140,13 @@ export class AuthService {
 
     return this.http.get(`${this.baseUrl}/students/${departmentId}`, { headers });
   }
+  getDepartmentStudents(departmentId: number): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${localStorage.getItem('token')}`
+    });
 
+    return this.http.get(`${this.baseUrl}/students/${departmentId}`, { headers });
+  }
 
 }
 

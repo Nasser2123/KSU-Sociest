@@ -1,1 +1,45 @@
-<p>search works!</p>
+<div class="container mt-3">
+  <div class="row">
+    <div class="col">
+      <input type="text" class="form-control mb-3" [(ngModel)]="searchTerm" (ngModelChange)="filterResources()" placeholder="Search...">
+
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="filters.name" (ngModelChange)="filterResources()" id="filterName">
+        <label class="form-check-label" for="filterName">Resource Name</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="filters.type" (ngModelChange)="filterResources()" id="filterType">
+        <label class="form-check-label" for="filterType">Type</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="filters.year" (ngModelChange)="filterResources()" id="filterYear">
+        <label class="form-check-label" for="filterYear">Year</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="filters.courseName" (ngModelChange)="filterResources()" id="filterCourseName">
+        <label class="form-check-label" for="filterCourseName">Course Name</label>
+      </div>
+
+      <table class="table table-bordered mt-3">
+        <thead>
+        <tr>
+          <th>Course Slag</th>
+          <th>Course Name</th>
+          <th>Resource Name</th>
+          <th>Resource Type</th>
+          <th>Resource Year</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let resource of filteredResources">
+          <td>{{ resource.course_slag }}</td>
+          <td>{{ resource.course_name }}</td>
+          <td>{{ resource.name }}</td>
+          <td>{{ resource.type }}</td>
+          <td>{{ resource.year }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

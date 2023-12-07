@@ -53,6 +53,7 @@ export class DepartmentFormComponent implements OnInit {
     if (this.isValidForm()) {
       this.departmentService.updateDepartment(this.departmentId, this.editedDepartment).subscribe({
         next: () => {
+          alert('Department Information has been Successfully Updated!');
           this.department = {...this.editedDepartment}; // Update the department details
           this.router.navigate(['../'], { relativeTo: this.route});
         },

@@ -20,6 +20,7 @@ import { ProfileComponent } from './core/authentication/components/profile/profi
 import { ChangePasswordComponent } from './core/authentication/components/change-password/change-password.component';
 import {ChatModule} from "./modules/chat/chat.module";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {NgxPaginationModule} from "ngx-pagination";
 
 
 
@@ -38,9 +39,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     ForgotPasswordComponent,
     ProfileComponent,
     ChangePasswordComponent,
-
-
-  ],
+      ],
   imports: [
     BrowserModule,
     ChatModule,
@@ -49,7 +48,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

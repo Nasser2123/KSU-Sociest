@@ -4,6 +4,8 @@ import {ResourceModel} from "../../../shared/models/resource.model";
 import {ActivatedRoute} from "@angular/router";
 import {AuthService} from "../../authentication/services/auth.service";
 import {UserModel} from "../../../shared/models/user.model";
+import {Department} from "../../../shared/models/department.model";
+import {DepartmentAuthService} from "../../../modules/department/department-services/department-auth.service";
  // Adjust the path as necessary
 
 @Component({
@@ -12,14 +14,26 @@ import {UserModel} from "../../../shared/models/user.model";
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  departments: Department[];
+  selectedDepartmentSuper: string;
+  selectedDepartmentStudent: string;
+
   resources: ResourceModel[] = [];
   departmentId = 1; // Example department ID
   getRole: string;
   students: any[] = [];
   supervisors: any[] = [];
+  departmentStudents: any[] = [];
+  departmentSupervisors: any[] = [];
   name: string;
   courseId: number;
-  constructor(private resourceService: ResourceAuthService, private route: ActivatedRoute, private authService: AuthService) {}
+  currentSupervisorPage: number = 1;
+  currentStudentPage: number = 1;
+  currentResourcePage: number = 1;
+  currentDepartmentStudentPage: number = 1;
+  currentDepartmentSupervisorPage: number = 1;
+
+  constructor(private resourceService: ResourceAuthService, private route: ActivatedRoute, private authService: AuthService, private authDepartment: DepartmentAuthService) {}
 
   ngOnInit() {
     this.getRole = this.authService.getCurrentUserRole();
@@ -37,6 +51,13 @@ export class DashboardComponent implements OnInit {
       this.loadStudents();
       this.loadSupervisors();
     }
+
+    this.authDepartment.getDepartments().subscribe(
+      data => {
+        console.log(data)
+        this.departments = data
+      }
+    )
   }
   loadResources() {
     this.resourceService.getResources(this.departmentId).subscribe(
@@ -141,6 +162,31 @@ export class DashboardComponent implements OnInit {
       error => {
         alert('Error while removing Supervisor!')
         console.error('Error removing supervisor', error)
+      }
+    );
+  }
+
+  loadDepartmentSupervisors(departmentId: string){
+    this.authService.getAllDepartmentSupervisors(+departmentId).subscribe(
+      data => {
+        this.departmentSupervisors = data.data;
+      },
+      error => {
+        console.error('Error loading supervisors', error);
+        // Handle error
+      }
+    );
+  }
+
+
+  loadDepartmentStudents(departmentId: string){
+    this.authService.getDepartmentStudents(+departmentId).subscribe(
+      data => {
+        this.departmentStudents = data.data;
+      },
+      error => {
+        console.error('Error loading students', error);
+        // Handle error
       }
     );
   }
