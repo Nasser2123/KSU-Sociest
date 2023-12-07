@@ -2,18 +2,17 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FileResource extends JsonResource
+class FilesResourse extends JsonResource
 {
     /**
      * Transform the resource into an array.
      *
-     * @param  Request  $request
-     * @return array
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($request): array
+    public function toArray($request)
     {
         return [
             'id'   => $this['id'],
@@ -21,6 +20,9 @@ class FileResource extends JsonResource
             'type' => $this['type'],
             'year' => $this['year'],
             'path' => $this['path'],
+            'course_id' => $this['course']->id,
+            'course_name' => $this['course']->name,
+
 
         ];
     }

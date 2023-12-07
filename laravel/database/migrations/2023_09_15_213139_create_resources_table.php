@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('year');
             $table->boolean('approved')->default(false);
             $table->unsignedBigInteger('course_id');
-            $table->foreign('course_id')->references('id')->on('courses');
+            $table->foreign('course_id')->references('id')->on('courses')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('path');
             $table->timestamps();
 

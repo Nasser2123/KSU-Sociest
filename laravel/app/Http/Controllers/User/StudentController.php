@@ -16,7 +16,16 @@ class StudentController extends Controller
 {
     use HttpResponses ;
 
-    public function index(Department $department):JsonResponse
+    public function index():JsonResponse
+    {
+        $students = Student::with('department')->orderBy('department_id')->get();
+        if ($students->isEmpty()){
+            return $this->error(null ,'There is no student in this ', 404);
+        }
+        return $this->success(StudentResource::collection($students) ,'All Student');
+    }
+
+    public function show(Department $department):JsonResponse
     {
         $students = Student::with('department')->where('department_id' , '=' , $department['id'])->get();
         if ($students->isEmpty()){

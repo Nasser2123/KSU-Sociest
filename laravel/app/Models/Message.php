@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Message extends Model
 {
-    use HasFactory , SoftDeletes;
+    use HasFactory;
     protected $fillable = ['user_id', 'course_id' , 'message'];
 
 

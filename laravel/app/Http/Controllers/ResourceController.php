@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\SupervisorDepartment;
 use App\Http\Requests\Resource\ResourceRequest;
 use App\Http\Resources\FileResource;
+use App\Http\Resources\FilesResourse;
 use App\Models\Course;
 use App\Models\Department;
 use App\Models\Resource;
@@ -69,6 +70,13 @@ class ResourceController extends Controller
             }
         }
         return $this->error(null , 'the resource not approved yet' , 200);
+
+    }
+
+    public function allResources():JsonResponse
+    {
+        $resources = Resource::all()->where('approved' , '=' , '1');
+        return $this->success(FilesResourse::collection($resources), 'All Resources');
 
     }
 

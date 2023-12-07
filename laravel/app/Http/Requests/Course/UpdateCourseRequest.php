@@ -30,7 +30,7 @@ class UpdateCourseRequest extends FormRequest
             'slag' => ['Required' , 'max:7'],
             'description' => ['Required' , 'max:2500'],
             'hours' => ['Required' , 'max:12' , 'numeric'],
-            'prerequisite' => ['max:25'],
+            'prerequisite' => ['max:14'],
             'status' => 'Required',
             'level' => ['Required' ,'max:10', 'numeric']
         ];

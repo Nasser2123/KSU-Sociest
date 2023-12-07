@@ -31,7 +31,7 @@ class RegisterRequest extends FormRequest
             'email' =>['Required','email','ends_with:@student.ksu.edu.sa', 'unique:users'],
             "department_name" =>['Required', 'Exists:departments,name'],
             "department_id" =>['Required', 'matching_department:' . $this->input('department_name')],
-            'password' =>['Required' , 'String' , 'Confirmed' , 'max:16'],
+            'password' =>['Required' , 'String' , 'Confirmed' ,'min:2', 'max:16'],
             'password_confirmation' =>['Required'],
 
         ];

@@ -15,13 +15,22 @@ use Illuminate\Http\JsonResponse;
 class SupervisorController extends Controller
 {
     use HttpResponses;
-    public function index(Department $department): JsonResponse
+    public function index(): JsonResponse
+    {
+        $supervisors = Supervisor::with('department')->orderBy('department_id')->get();
+        if ($supervisors->isEmpty()){
+            return $this->error(null ,'There is no supervisor', 404);
+        }
+        return $this->success(SupervisorResource::collection($supervisors) ,'All supervisors');
+    }
+
+    public function show(Department $department): JsonResponse
     {
         $supervisors = Supervisor::with('department')->where('department_id' , '=' , $department['id'])->get();
         if ($supervisors->isEmpty()){
             return $this->error(null ,'There is no supervisor', 404);
         }
-        return $this->success(SupervisorResource::collection($supervisors) ,'All supervisor belong to ');
+        return $this->success(SupervisorResource::collection($supervisors) ,'All supervisor belong to '.$department['name']);
     }
 
     public function removeSupervisor(User $user):JsonResponse

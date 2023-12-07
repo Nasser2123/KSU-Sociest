@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\MessageSend;
+use App\Helpers\SupervisorDepartment;
 use App\Http\Requests\MessageRequest;
 use App\Models\Course;
 use App\Models\Message;
@@ -35,9 +36,9 @@ class ChatController extends Controller
     public function store(Course $course ,MessageRequest $request): JsonResponse
     {
         $user = Auth::user();
-        $message = Message::create(array_merge($request->all() ,['user_id' => Auth::id() , "course_id" => $course['id']]));
         broadcast(new MessageSend($request['message'] , $course , $user));
-        return $this->success($message, "Message send successfully from ".$user['first_name']." ".$user['last_name']);
+        $message = Message::create(array_merge($request->all() ,['user_id' => Auth::id() , "course_id" => $course['id']]));
+        return $this->success(array_merge(["message" => $message , "first_name" =>$user['first_name'] , "last_name" => $user['last_name'] ]), "Message send successfully");
 
     }
 
@@ -51,7 +52,13 @@ class ChatController extends Controller
      */
     public function destroy(Course $course , Message $message): JsonResponse
     {
+        $department =$course->department()->get();
+
         if (Auth::id() === $message['user_id']){
+            $message->delete();
+            return $this->success(null, 'We delete the Message from this '. $course['slag']);
+        }
+        if (SupervisorDepartment::isSupervisor($department[0])){
             $message->delete();
             return $this->success(null, 'We delete the Message from this '. $course['slag']);
         }

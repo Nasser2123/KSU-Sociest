@@ -50,11 +50,13 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
     Route::group(['middleware' => 'role:Admin'], function () {
         Route::apiResource('department', DepartmentController::class)->only('destroy', 'update', 'store');
 
-        Route::get('supervisors/{department}', [SupervisorController::class , 'index']);
+        Route::get('supervisors', [SupervisorController::class , 'index']);
+        Route::get('supervisors/{department}', [SupervisorController::class , 'show']);
         Route::Post('supervisor/{user}/removeSupervisor', [SupervisorController::class , 'removeSupervisor']);
 
 
-        Route::get('students/{department}', [StudentController::class , 'index']);
+        Route::get('students', [StudentController::class , 'index']);
+        Route::get('students/{department}', [StudentController::class , 'show']);
         Route::Post('student/{user}/addSupervisor', [StudentController::class , 'addSupervisor']);
     });
 
@@ -71,10 +73,10 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
     });
 
 
+    Route::get('resources', [ResourceController::class , 'allResources']);
+
+
     Route::apiResource('course/{course}/message', ChatController::class)->only('index' , 'store' , 'destroy');
-
-
-    Route::apiResource('course/{course}/resource', ResourceController::class);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('user/{user}/change-password', [AuthController::class, 'changePassword']);
 
