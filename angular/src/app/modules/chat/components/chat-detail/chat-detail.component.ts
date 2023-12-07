@@ -50,15 +50,17 @@ export class ChatDetailComponent implements AfterViewChecked {
     });
     const channel = pusher.subscribe(`chat${this.courseId}`);
     channel.bind('message', (data: any) => {
-      console.log('New message from Pusher:', data);
+      // console.log('New message from Pusher:', data);
 
-      // Check if user_id is present
-      // if (data.user_id !== undefined) {
-        this.messages.push(data);
-        console.log('New message from Pusher:', data)
-        this.changeDetector.detectChanges();
-      // } else {
-      // }
+      // Check if user object and user.id are present in the received message
+      if (data.user && data.user.id !== undefined) {
+        // Add a user_id property to the message for easy comparison in the template
+        const messageWithUserId = { ...data, user_id: data.user.id };
+        this.messages.push(messageWithUserId);
+      } else {
+        console.error('user_id is missing in the received message');
+      }
+      this.changeDetector.detectChanges(); // Trigger change detection
     });
 
   }
