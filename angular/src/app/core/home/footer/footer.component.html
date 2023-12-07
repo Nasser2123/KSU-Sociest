@@ -1,34 +1,30 @@
-<footer class="bg-dark text-light py-3">
+<footer class="py-3">
   <div class="container">
     <div class="row">
-      <!-- Logo -->
       <div class="col-12 col-md-3">
-        <img  alt="Logo" class="img-fluid">
+        <img alt="Logo" class="img-fluid" src="./assets/svg/logo.svg">
       </div>
-      <!-- Go to List Links -->
       <div class="col-12 col-md-6">
         <ul class="list-unstyled d-flex justify-content-center">
           <li class="mx-3">
-            <a [routerLink]="['/departments']" routerLinkActive="active" class="text-light">Departments</a>
+            <a [routerLink]="['/department']" routerLinkActive="active" class="text-black">Departments</a>
           </li>
           <li class="mx-3">
-            <a [routerLink]="['/courses']" routerLinkActive="active" class="text-light">Courses</a>
+            <a [routerLink]="['/courses']" routerLinkActive="active" class="text-black">Courses</a>
           </li>
           <li class="mx-3">
-            <a [routerLink]="['/search']" routerLinkActive="active" class="text-light">Search</a>
+            <a [routerLink]="['/search']" routerLinkActive="active" class="text-black">Search</a>
           </li>
         </ul>
       </div>
-      <!-- About Us -->
       <div class="col-12 col-md-3 text-center text-md-right">
         <h5>About Us</h5>
         <span>KSU Society from student to students, all rights reserved 2023</span>
       </div>
     </div>
-    <!-- Contact Us for Support -->
     <div class="row">
       <div class="col-12 text-center">
-        <p>Contact Us for Support: <a href="mailto:supportemail" class="text-light">supportemail</a></p>
+        <p>Contact Us for Support: <a href="mailto:supportemail" class="text-black">supportemail</a></p>
       </div>
     </div>
   </div>

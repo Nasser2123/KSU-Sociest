@@ -2,36 +2,27 @@
   <div class="row justify-content-center">
     <div class="col-md-6">
       <h2 class="text-center mb-4">User Profile</h2>
-      <div class="card">
+      <div class="card shadow-sm">
         <div class="card-body">
-          <div class="form-group">
-            <label for="firstName">User ID:</label>
+          <div class="form-group mb-3">
+            <label for="id" class="form-label">User ID:</label>
             <input id="id" class="form-control" [value]="user.id" disabled>
           </div>
-          <div class="form-group">
-            <label for="firstName">First Name:</label>
+          <div class="form-group mb-3">
+            <label for="firstName" class="form-label">First Name:</label>
             <input id="firstName" class="form-control" [value]="user.first_name" disabled>
           </div>
-          <div class="form-group">
-            <label for="lastName">Last Name:</label>
+          <div class="form-group mb-3">
+            <label for="lastName" class="form-label">Last Name:</label>
             <input id="lastName" class="form-control" [value]="user.last_name" disabled>
           </div>
-          <div class="form-group">
-            <label for="email">Role:</label>
-            <input id="email" class="form-control" [value]="user.role" disabled>
+          <div class="form-group mb-3">
+            <label for="role" class="form-label">Role:</label>
+            <input id="role" class="form-control" [value]="user.role" disabled>
           </div>
-<!--          <div class="form-group">-->
-<!--            <label for="email">Password:</label>-->
-<!--            <input id="password" class="form-control" value="******" disabled>-->
-<!--          </div>-->
-<!--          <div class="form-group" *ngIf="isEditing">-->
-<!--            <label for="email">Confirm Password:</label>-->
-<!--            <input id="passwordConfirmation" class="form-control" [value]="user.password_confirmation" disabled>-->
-<!--          </div>-->
           <div class="text-center mt-4" *ngIf="!isEditing">
-            <button class="btn btn-dark" (click)="editProfile()">Change Password</button>
+            <button class="btn btn-primary" (click)="editProfile()">Change Password</button>
           </div>
-
         </div>
       </div>
     </div>

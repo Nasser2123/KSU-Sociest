@@ -9,11 +9,12 @@ import {AuthService} from "../../../../core/authentication/services/auth.service
 @Component({
   selector: 'app-course-list',
   templateUrl: './course-list.component.html',
-  styleUrls: ['./course-list.component.css']
+  styleUrls: ['./course-list.component.scss']
 })
 export class CourseListComponent {
   courses: Course[] = [];
   filteredCourses: Course[] = [];
+  isLoading = false;
   constructor(private courseService: CourseAuthService, private router: Router, private route: ActivatedRoute, private authService: AuthService) {}
 
   ngOnInit() {
@@ -22,6 +23,7 @@ export class CourseListComponent {
         // console.log("Received data:", data); // Debugging line
         this.courses = data;
         this.filteredCourses = data;
+        this.isLoading = false;
       },
       error: (err) => console.error(err),
       // complete: () => console.log('Department data retrieval complete')

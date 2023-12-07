@@ -9,7 +9,7 @@ import {ResourceModel} from "../../../../shared/models/resource.model";
 @Component({
   selector: 'app-course-detail',
   templateUrl: './course-detail.component.html',
-  styleUrls: ['./course-detail.component.css']
+  styleUrls: ['./course-detail.component.scss']
 })
 export class CourseDetailComponent implements OnInit {
   course: Course | null = null;

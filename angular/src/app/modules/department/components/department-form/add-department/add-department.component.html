@@ -1,6 +1,6 @@
 <div class="container mt-4" *ngIf="getRole == 'Admin'">
-  <h2>Add Department</h2>
-  <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()">
+  <h2 class="text-center mb-4">Add Department</h2>
+  <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()" class="card shadow-sm p-4">
     <div class="mb-3">
       <label for="name" class="form-label">Name</label>
       <input type="text" class="form-control" id="name" formControlName="name">
@@ -18,6 +18,8 @@
         <option *ngFor="let lvl of levels" [value]="lvl">{{ lvl }}</option>
       </select>
     </div>
-    <button type="submit" class="btn btn-dark m-3" [disabled]="!departmentForm.valid">Add Department</button>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary" [disabled]="!departmentForm.valid">Add Department</button>
+    </div>
   </form>
 </div>

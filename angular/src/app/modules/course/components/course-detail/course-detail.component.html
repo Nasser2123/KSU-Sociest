@@ -4,11 +4,11 @@
   </div>
 </div>
 
-<div *ngIf="!isLoading && course" class="container m-5">
+<div *ngIf="!isLoading && course" class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-lg-10">
       <div class="card shadow-sm">
-        <div class="card-header bg-dark text-white">
+        <div class="card-header bg-primary text-white">
           <h3 class="mb-0">{{ course.name }}</h3>
         </div>
         <div class="card-body">
@@ -16,30 +16,31 @@
           <p class="card-text">Course hours: {{ course.hours }}</p>
           <p class="card-text">Course level: {{ course.level }}</p>
         </div>
-        <div *ngIf="getRole == 'Supervisor'" class="edit-department">
-          <button class="btn btn-dark m-1 float-end" (click)="editCourse()">Edit Course</button>
+        <div *ngIf="getRole == 'Supervisor'" class="card-footer text-end">
+          <button class="btn btn-secondary" (click)="editCourse()">Edit Course</button>
         </div>
       </div>
-      <div *ngIf="isLogin" class="chat-section container mt-4">
-        <h4>Department Chat</h4>
-        <button class="btn btn-dark" (click)="goToChat(courseId, course.name)">Go To {{course.name}} Chat</button>
+      <div *ngIf="isLogin" class="chat-section mt-4">
+        <h4 class="text-center">Department Chat</h4>
+        <button class="btn btn-primary d-block mx-auto" (click)="goToChat(courseId, course.name)">Go To {{course.name}} Chat</button>
       </div>
-      <div *ngIf="getRole == 'Supervisor' || getRole == 'Student'" class="edit-department">
-        <button class="btn btn-dark m-1 float-end" (click)="addResource()">Add Resource</button>
+      <div *ngIf="getRole == 'Supervisor' || getRole == 'Student'" class="text-end mt-3">
+        <button class="btn btn-secondary" (click)="addResource()">Add Resource</button>
       </div>
       <h3 class="mt-3">Course Resources:</h3>
       <div class="row">
         <div class="col-md-6" *ngFor="let resource of resources">
-          <div class="card mb-3">
+          <div class="card mb-3 shadow-sm">
             <div class="card-body">
               <h5 class="card-title">{{ resource.name }}</h5>
               <h6 class="card-subtitle mb-2 text-muted">{{ resource.id }}</h6>
-              <p class="card-text">Hours: {{ resource.type }}</p>
-              <p class="card-text">Level: {{ resource.year }}</p>
-
-              <button class="btn btn-dark" (click)="downloadResource(resource.id??0, resource.name)">Download</button>
-              <div *ngIf="getRole == 'Supervisor'" class="edit-department float-end">
-                <button class="btn btn-dark float-start" (click)="removeResource(resource.id??0)">Delete Course</button>
+              <p class="card-text">Type: {{ resource.type }}</p>
+              <p class="card-text">Year: {{ resource.year }}</p>
+              <div class="text-center">
+                <button class="btn btn-primary" (click)="downloadResource(resource.id??0, resource.name)">Download</button>
+                <div *ngIf="getRole == 'Supervisor'" class="mt-3">
+                  <button class="btn btn-danger" (click)="removeResource(resource.id??0)">Delete Resource</button>
+                </div>
               </div>
             </div>
           </div>
@@ -49,13 +50,10 @@
   </div>
 </div>
 
-
 <ng-template #noCourse>
   <div class="container mt-5">
-    <div class="alert alert-warning" role="alert">
+    <div class="alert alert-warning text-center" role="alert">
       Course not found.
     </div>
   </div>
 </ng-template>
-
-

@@ -4,15 +4,14 @@
   </div>
 </div>
 
-<div *ngIf="course" class="container m-5">
+<div *ngIf="course" class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-lg-10">
       <div class="card shadow-sm">
-        <div class="card-header bg-dark text-white">
+        <div class="card-header bg-primary text-white">
           <input type="text" class="form-control" placeholder="Course Name" [(ngModel)]="editedCourse.name">
         </div>
         <div class="card-body">
-
           <label class="form-label">Slag</label>
           <input type="text" class="form-control mb-3" maxlength="6" placeholder="Course Slag" [(ngModel)]="editedCourse.slag">
 
@@ -42,22 +41,22 @@
           </select>
         </div>
 
-        <div class="card-footer">
-          <button class="btn btn-dark" (click)="onSubmit()">Save Changes</button>
+        <div class="card-footer text-center">
+          <button class="btn btn-primary" (click)="onSubmit()">Save Changes</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div *ngIf="getRole == 'Supervisor'" class="chat-section container mt-4">
+  <div *ngIf="getRole == 'Supervisor'" class="chat-section container mt-4 text-center">
     <h4>Course Chat</h4>
-    <button class="btn btn-dark">Go To {{course.name}} Chat</button>
+    <button class="btn btn-primary">Go To {{course.name}} Chat</button>
   </div>
 </div>
 
 <ng-template #noCourse>
   <div class="container mt-5">
-    <div class="alert alert-warning" role="alert">
+    <div class="alert alert-warning text-center" role="alert">
       Course not found.
     </div>
   </div>

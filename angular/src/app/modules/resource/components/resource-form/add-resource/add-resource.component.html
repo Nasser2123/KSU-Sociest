@@ -1,19 +1,25 @@
-<form [formGroup]="resourceForm" (ngSubmit)="onSubmit()" class="text-light bg-white p-3 rounded">
+<form [formGroup]="resourceForm" (ngSubmit)="onSubmit()" class="container mt-4 card shadow-sm p-4 bg-white">
   <div class="mb-3">
-    <input type="text" formControlName="name" placeholder="Resource Name" class="form-control bg-secondary text-white">
+    <label for="resourceName" class="form-label">Resource Name</label>
+    <input type="text" formControlName="name" id="resourceName" placeholder="Resource Name" class="form-control">
   </div>
 
   <div class="mb-3">
-    <input type="text" formControlName="type" placeholder="Resource Type" class="form-control bg-secondary text-white">
+    <label for="resourceType" class="form-label">Resource Type</label>
+    <input type="text" formControlName="type" id="resourceType" placeholder="Resource Type" class="form-control">
   </div>
 
   <div class="mb-3">
-    <input type="text" formControlName="year" placeholder="Year" class="form-control bg-secondary text-white">
+    <label for="resourceYear" class="form-label">Year</label>
+    <input type="text" formControlName="year" id="resourceYear" placeholder="Year" class="form-control">
   </div>
 
   <div class="mb-3">
-    <input type="file" (change)="onFileChange({event : $event})" class="form-control bg-secondary text-white">
+    <label for="fileUpload" class="form-label">Upload File</label>
+    <input type="file" (change)="onFileChange({event : $event})" id="fileUpload" class="form-control">
   </div>
 
-  <button type="submit" [disabled]="!resourceForm.valid" class="btn btn-light">Upload Resource</button>
+  <div class="text-center">
+    <button type="submit" [disabled]="!resourceForm.valid" class="btn btn-primary">Upload Resource</button>
+  </div>
 </form>

@@ -19,6 +19,8 @@ import { ForgotPasswordComponent } from './core/authentication/components/forgot
 import { ProfileComponent } from './core/authentication/components/profile/profile.component';
 import { ChangePasswordComponent } from './core/authentication/components/change-password/change-password.component';
 import {ChatModule} from "./modules/chat/chat.module";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+
 
 
 @NgModule({
@@ -37,6 +39,7 @@ import {ChatModule} from "./modules/chat/chat.module";
     ProfileComponent,
     ChangePasswordComponent,
 
+
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ import {ChatModule} from "./modules/chat/chat.module";
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,26 +1,19 @@
 <div class="container my-4">
   <div class="chat-box card shadow">
-    <div class="card-header bg-black text-white">
+    <div class="card-header bg-primary text-white">
       <h5 class="mb-0">{{courseName}} Chat</h5>
     </div>
-    <div class="card-body" #chatContainer style="height: 400px; overflow-y: auto;">
+    <div class="card-body" #chatContainer style="height: 500px; overflow-y: auto;">
       <ul class="list-unstyled">
-        <li *ngFor="let message of messages" class="mb-2">
-          <div class="row">
-            <div [ngClass]="message.user_id == currentUserId ? 'col-md-8 offset-md-4 text-right' : 'col-md-8 text-left'">
-              <div *ngIf="message.user_id == currentUserId" class="d-inline-block text-right">
-                <span class="badge bg-primary text-white">{{ currentUserFirstName }}</span>
-              </div>
-              <div class="badge bg-dark">
-                <p class="mb-0 text-white">{{ message.message }}</p>
-              </div>
-              <div *ngIf="message.user_id != currentUserId" class="d-inline-block text-left">
-                <span class="badge bg-secondary text-white">{{ senderName }}</span>
-              </div>
-              <div class="d-block">
-                <small class="text-muted">{{ message.created_at | date: 'short' }}</small>
-                <button *ngIf="(isSupervisor && depatrmentId) || message.user_id == currentUserId" class="btn btn-danger btn-sm m-1" (click)="deleteMessage(message.id)">Delete</button>
-              </div>
+        <li *ngFor="let message of messages; let i = index" class="mb-2">
+          <div [ngClass]="{'text-right': message.user_id == currentUserId, 'text-left': message.user_id != currentUserId}" class="d-flex">
+            <div class="message-bubble w-50" [ngClass]="{'ml-auto mine': message.user_id == currentUserId, 'mr-auto theirs': message.user_id != currentUserId}">
+              <span class="badge" [ngClass]="{'bg-primary': message.user_id == currentUserId, 'bg-secondary': message.user_id != currentUserId}">
+                {{ message.user_id == currentUserId ? currentUserFirstName : senderName }}
+              </span>
+              <p class="mb-1">{{ message.message }}</p>
+              <small class="text-muted">{{ message.created_at | date: 'short' }}</small>
+              <button *ngIf="selectedMessageIndex === i && ((isSupervisor && depatrmentId) || message.user_id == currentUserId)" class="btn btn-danger btn-sm m-1" (click)="deleteMessage(message.id); $event.stopPropagation();">Delete</button>
             </div>
           </div>
         </li>
@@ -30,10 +23,9 @@
       <div class="input-group">
         <input [(ngModel)]="newMessage" type="text" class="form-control" placeholder="Type a message...">
         <div class="input-group-append">
-          <button class="btn btn-success" (click)="sendMessage()">Send</button>
+          <button class="btn btn-primary" (click)="sendMessage()">Send</button>
         </div>
       </div>
     </div>
   </div>
 </div>
-

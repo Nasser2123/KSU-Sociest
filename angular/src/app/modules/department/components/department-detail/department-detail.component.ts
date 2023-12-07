@@ -1,8 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { DepartmentAuthService } from '../../department-services/department-auth.service';
-import {Department} from "../../../../shared/models/department.model";
-import {AuthGuard} from "../../../../core/authentication/services/auth.guard";
 import {AuthService} from "../../../../core/authentication/services/auth.service";
 import {CourseAuthService} from "../../../course/components/course-services/course-auth.service";
 import {Course} from "../../../../shared/models/course.model";
@@ -10,7 +8,7 @@ import {Course} from "../../../../shared/models/course.model";
 @Component({
   selector: 'app-department-detail',
   templateUrl: './department-detail.component.html',
-  styleUrls: ['./department-detail.component.css']
+  styleUrls: ['./department-detail.component.scss']
 })
 export class DepartmentDetailComponent implements OnInit {
   isLogin = this.authService.isLoggedIn();

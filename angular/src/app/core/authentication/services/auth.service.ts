@@ -15,7 +15,9 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-
+  // getStudentById(): Observable<any>{
+  //   return this.http.get(this.baseUrl)
+  // }
   // Check if a token exists in local storage
   private hasToken(): boolean {
     const token = localStorage.getItem('token');

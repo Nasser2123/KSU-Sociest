@@ -1,0 +1,16 @@
+.message-bubble {
+  padding: 10px;
+  border-radius: 10px;
+  display: inline-block;
+  max-width: 80%;
+}
+
+.mine {
+  background-color: #dcf8c6; /* Light green background for user's messages */
+  text-align: right;
+}
+
+.theirs {
+  background-color: #e9ecef; /* Light grey background for others' messages */
+  text-align: left;
+}

@@ -1,0 +1,153 @@
+/* You can add global styles to this file, and also import other style files */
+// Importing Fonts from Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Merriweather:wght@400;700&display=swap');
+
+// Color Scheme
+$primary-color: #4a90e2; // A vibrant blue for primary elements
+$secondary-color: #ff9800; // A bright orange for secondary elements
+$background-color: #f4f4f4; // A light grey for backgrounds
+$text-color: #333; // A darker shade for text for readability
+$accent-color: #4caf50; // A green for accents and success messages
+
+// Typography
+$body-font: 'Merriweather', serif;
+$heading-font: 'Roboto', sans-serif;
+
+// Base styles
+body {
+  font-family: $body-font;
+  color: $text-color;
+  background-color: $background-color;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $heading-font;
+  margin-top: 0;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// Buttons
+.btn {
+  background-color: $primary-color;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
+
+// Cards
+.card {
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+// Forms
+input, textarea, select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+
+  .navbar {
+    background-color: $primary-color;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+
+    .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+      text-decoration: none;
+      color: white;
+    }
+
+    // Mobile Menu Button
+    .menu-toggle {
+      display: none;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+
+    // Navigation Links
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+
+      li {
+        margin-left: 20px;
+
+        a {
+          text-decoration: none;
+          color: white;
+          transition: color 0.3s;
+
+          &:hover {
+            color: $secondary-color;
+          }
+        }
+      }
+    }
+
+    // Responsive Design for Mobile Navigation
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none; // Hide the nav links by default on mobile
+        flex-direction: column;
+        width: 100%;
+        text-align: left;
+        padding: 10px 0;
+
+        li {
+          margin: 5px 0;
+        }
+      }
+
+      .menu-toggle {
+        display: inline-block; // Show menu toggle button on small screens
+      }
+
+      // When the menu is active (toggled)
+      &.active {
+        .nav-links {
+          display: flex; // Display the nav links when active
+        }
+      }
+    }
+  }
+
+}
+
