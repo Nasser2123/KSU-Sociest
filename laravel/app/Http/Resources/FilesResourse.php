@@ -22,6 +22,8 @@ class FilesResourse extends JsonResource
             'path' => $this['path'],
             'course_id' => $this['course']->id,
             'course_name' => $this['course']->name,
+            'course_slag' => $this['course']->slag,
+
 
 
         ];

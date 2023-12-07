@@ -65,8 +65,8 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
 
     Route::group(['middleware' => 'role:Supervisor'], function () {
         Route::apiResource('department/{department}/course', CourseController::class)->only('destroy', 'update', 'store');
-        Route::get('department/{department}/resource', [ResourceController::class , 'all']);
 
+        Route::get('department/{department}/resource', [ResourceController::class , 'all']);
         Route::get('downloadResource/{resource}', [ResourceController::class , 'download']);
         Route::post('department/{department}/resource/{resource}/approve', [ResourceController::class , 'approve']);
         Route::post('department/{department}/resource/{resource}/reject', [ResourceController::class , 'reject']);
@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth:sanctum', 'verified'], function () {
 
     Route::get('resources', [ResourceController::class , 'allResources']);
 
+    Route::apiResource('course/{course}/resource', ResourceController::class);
 
     Route::apiResource('course/{course}/message', ChatController::class)->only('index' , 'store' , 'destroy');
     Route::post('logout', [AuthController::class, 'logout']);
