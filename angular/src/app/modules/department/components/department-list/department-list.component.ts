@@ -9,11 +9,13 @@ import {Department} from "../../../../shared/models/department.model";
 @Component({
   selector: 'app-department-list',
   templateUrl: './department-list.component.html',
-  styleUrls: ['./department-list.component.css']
+  styleUrls: ['./department-list.component.scss']
 })
 export class DepartmentListComponent implements OnInit {
   departments: Department[] = [];
   isAdmin: boolean = false;
+  isLoading = true; // To handle loading state
+
   constructor(private departmentService: DepartmentAuthService, private router: Router, private route: ActivatedRoute, private authService: AuthService) {}
 
   ngOnInit() {
@@ -22,6 +24,7 @@ export class DepartmentListComponent implements OnInit {
       next: (data) => {
         // console.log("Received data:", data); // Debugging line
         this.departments = data;
+        this.isLoading = false;
       },
       error: (err) => console.error(err),
       // complete: () => console.log('Department data retrieval complete')

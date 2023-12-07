@@ -5,7 +5,7 @@ import {HttpClient} from "@angular/common/http";
 @Component({
   selector: 'app-admin',
   templateUrl: './reset-password.component.html',
-  styleUrls: ['./reset-password.component.css']
+  styleUrls: ['./reset-password.component.scss']
 })
 export class ResetPasswordComponent implements OnInit {
   token: string | null;

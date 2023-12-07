@@ -7,7 +7,7 @@ import { AuthService } from "../../../../core/authentication/services/auth.servi
 @Component({
   selector: 'app-course-form',
   templateUrl: './course-form.component.html',
-  styleUrls: ['./course-form.component.css']
+  styleUrls: ['./course-form.component.scss']
 })
 export class CourseFormComponent implements OnInit {
   isLoading = true;

@@ -7,7 +7,7 @@ import { AuthService } from "../../../../core/authentication/services/auth.servi
 @Component({
   selector: 'app-department-list',
   templateUrl: './department-form.component.html',
-  styleUrls: ['./department-form.component.css']
+  styleUrls: ['./department-form.component.scss']
 })
 export class DepartmentFormComponent implements OnInit {
   isLoading = true;
@@ -16,7 +16,7 @@ export class DepartmentFormComponent implements OnInit {
   departmentId: number;
   getRole: string;
   nameError: boolean = false;
-  levels: number[] = Array.from({length: 10}, (_, i) => i + 1); // Array of levels from 1 to 20
+  levels: number[] = Array.from({length: 3}, (_, i) => i + 8); // Array of levels from 1 to 20
 
   constructor(
     private departmentService: DepartmentAuthService,

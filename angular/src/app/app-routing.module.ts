@@ -10,9 +10,6 @@ import {ForgotPasswordComponent} from "./core/authentication/components/forgot-p
 import {ProfileComponent} from "./core/authentication/components/profile/profile.component";
 import {ChangePasswordComponent} from "./core/authentication/components/change-password/change-password.component";
 import {ResetPasswordComponent} from "./core/authentication/components/reset-password/reset-password.component";
-import {AddResourceComponent} from "./modules/resource/components/resource-form/add-resource/add-resource.component";
-import {CourseDetailComponent} from "./modules/course/components/course-detail/course-detail.component";
-import {ChatListComponent} from "./modules/chat/components/chat-list/chat-list.component";
 import {ChatDetailComponent} from "./modules/chat/components/chat-detail/chat-detail.component";
 
 const routes: Routes = [

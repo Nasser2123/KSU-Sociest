@@ -12,12 +12,13 @@ import {AddDepartmentComponent} from "./components/department-form/add-departmen
 
 
 
+
 @NgModule({
   declarations: [
     DepartmentDetailComponent,
     DepartmentListComponent,
     DepartmentFormComponent,
-    AddDepartmentComponent
+    AddDepartmentComponent,
   ],
     imports: [
         CommonModule,

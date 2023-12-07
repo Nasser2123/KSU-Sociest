@@ -7,12 +7,12 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 @Component({
   selector: 'app-add-department',
   templateUrl: './add-department.component.html',
-  styleUrls: ['./add-department.component.css']
+  styleUrls: ['./add-department.component.scss']
 })
 export class AddDepartmentComponent implements OnInit {
   departmentForm: FormGroup;
   getRole: string;
-  levels: number[] = Array.from({length: 10}, (_, i) => i + 1); // Levels from 1 to 20
+  levels: number[] = Array.from({length: 3}, (_, i) => i + 8); // Levels from 1 to 20
 
   constructor(
     private departmentService: DepartmentAuthService,

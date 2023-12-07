@@ -1,6 +1,6 @@
 <div class="container mt-4">
-  <h2>Add New Course</h2>
-  <form [formGroup]="courseForm" (ngSubmit)="onSubmit()">
+  <h2 class="text-center mb-4">Add New Course</h2>
+  <form [formGroup]="courseForm" (ngSubmit)="onSubmit()" class="card shadow-sm p-4">
     <div class="mb-3">
       <label for="name" class="form-label">Course Name</label>
       <input type="text" class="form-control" id="name" formControlName="name">
@@ -52,6 +52,8 @@
       </select>
     </div>
 
-    <button type="submit" class="btn btn-dark m-3" [disabled]="!courseForm.valid">Add Course</button>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary" [disabled]="!courseForm.valid">Add Course</button>
+    </div>
   </form>
 </div>

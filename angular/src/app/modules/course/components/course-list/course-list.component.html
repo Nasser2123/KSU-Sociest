@@ -1,3 +1,10 @@
+<div *ngIf="isLoading" class="text-center">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+
 <div class="container mt-5">
   <div class="row">
     <!-- Search Input with Bootstrap Styling -->
@@ -7,14 +14,14 @@
 
     <!-- Displaying Courses in Card Layout Based on Filtered Courses -->
     <div *ngFor="let course of filteredCourses" class="col-md-6 mb-4">
-      <div class="card h-100"> <!-- 'h-100' makes all cards of equal height -->
-        <div class="card-body d-flex flex-column"> <!-- Flexbox for layout -->
+      <div class="card h-100 shadow-sm"> <!-- 'h-100' for equal height, 'shadow-sm' for subtle shadow -->
+        <div class="card-body d-flex flex-column"> <!-- Flexbox layout -->
           <h5 class="card-title">{{ course.name }}</h5>
           <p class="card-text">Course ID: {{ course.slag }}</p>
           <p class="card-text">Credit Hours: {{ course.hours }}</p>
           <p class="card-text">Number of levels: {{ course.level }}</p>
-          <div class="mt-auto"> <!-- Pushes content to bottom -->
-            <button class="btn btn-dark">View Details</button> <!-- Example button -->
+          <div class="mt-auto"> <!-- Pushes button to bottom -->
+            <button class="btn btn-primary">View Details</button> <!-- Updated button style -->
           </div>
         </div>
       </div>
@@ -22,7 +29,7 @@
 
     <!-- No Results Message with Bootstrap Alert -->
     <div *ngIf="filteredCourses.length === 0" class="col-12">
-      <div class="alert alert-warning" role="alert">
+      <div class="alert alert-warning text-center" role="alert">
         No courses found.
       </div>
     </div>
